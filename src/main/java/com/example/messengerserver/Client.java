@@ -4,31 +4,31 @@ import chessModel.Game;
 import javafx.scene.layout.VBox;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server {
+@SuppressWarnings("CallToPrintStackTrace")
+public class Client {
 
     private Socket socket;
-    private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    public Server(ServerSocket serverSocket) {
+    private BufferedReader bufferedReader;
+
+    public Client(Socket socket) {
         try {
-            this.socket = serverSocket.accept();
+            this.socket = socket;
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException e) {
-            System.out.println("Error creating server.");
-            //noinspection CallToPrintStackTrace
+            System.out.println("Error creating client");
             e.printStackTrace();
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
     }
 
-    public void sendMessageToClient(String messageToClient) {
+    public void sendMessageToServer(String messageToServer) {
         try {
-            Game.executeMove(messageToClient, true);
-            bufferedWriter.write(messageToClient);
+            Game.executeMove(messageToServer, false);
+            bufferedWriter.write(messageToServer);
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (IOException e) {
@@ -39,16 +39,15 @@ public class Server {
         }
     }
 
-    public void receiveMessageFromClient(VBox vBox) {
+    public void receiveMessageFromServer(VBox vBox) {
         new Thread(new Runnable() {
-            @SuppressWarnings("CallToPrintStackTrace")
             @Override
             public void run() {
                 while (socket.isConnected()) {
                     try {
-                        String messageFromClient = bufferedReader.readLine();
-                        Game.executeMove(messageFromClient, false);
-                        ServerController.addLabel(messageFromClient, vBox);
+                        String messageFromServer = bufferedReader.readLine();
+                        Game.executeMove(messageFromServer, true);
+                        ClientController.addLabel(messageFromServer, vBox);
                     } catch (IOException e ) {
                         e.printStackTrace();
                         System.out.println("Error receiving message from the client");
@@ -72,9 +71,7 @@ public class Server {
                 socket.close();
             }
         } catch (IOException e) {
-            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
     }
-
 }

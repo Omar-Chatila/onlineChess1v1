@@ -23,7 +23,7 @@ import java.net.ServerSocket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class ServerController implements Initializable {
 
     @FXML private Button button_send;
     @FXML private ScrollPane sp_main;

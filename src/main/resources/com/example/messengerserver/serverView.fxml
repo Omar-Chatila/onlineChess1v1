@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:controller="com.example.messengerserver.Controller"
+<AnchorPane fx:controller="com.example.messengerserver.ServerController"
             prefHeight="396" prefWidth="478"
             xmlns:fx="http://javafx.com/fxml">
         <children>
