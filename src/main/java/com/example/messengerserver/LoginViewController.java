@@ -33,6 +33,8 @@ public class LoginViewController {
     private ToggleGroup toggleGroup;
     @FXML
     private Button whitePieceColor;
+    @FXML
+    private Button connectButton;
 
     private Main main;
 
@@ -63,33 +65,29 @@ public class LoginViewController {
     void serverToggle(ActionEvent event) {
         this.ipField.setDisable(true);
         main.setServer(true);
+        this.connectButton.setVisible(false);
+        this.blackPieceColor.setVisible(true);
+        this.whitePieceColor.setVisible(true);
+        this.randomPieceColor.setVisible(true);
     }
 
     @FXML
     void clientToggle(ActionEvent event) {
         this.ipField.setDisable(false);
         main.setServer(false);
+        this.connectButton.setVisible(true);
+        this.blackPieceColor.setVisible(false);
+        this.whitePieceColor.setVisible(false);
+        this.randomPieceColor.setVisible(false);
+    }
+
+    @FXML
+    void connectClient(ActionEvent event) {
+        connect();
     }
 
     private void connect() {
-        int port = 0;
-        if (!this.portField.getText().isEmpty()) {
-            port = Integer.parseInt(this.portField.getText());
-            if (port > 1 && port <= 65535) {
-                main.setPort(port);
-            }
-        }
-        RadioButton selected = (RadioButton) toggleGroup.getSelectedToggle();
-        if (selected.getText().equals("Client")) {
-            main.setServer(false);
-            String ip = this.ipField.getText();
-            ClientController.setIp_Address(ip);
-            ClientController.setPortNr(port);
-            main.setIpAddress(ip);
-        } else {
-            main.setServer(true);
-            ServerController.setServerPort(port);
-        }
+        setParameters();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -119,6 +117,26 @@ public class LoginViewController {
                 }
             }
         });
+    }
 
+    private void setParameters() {
+        int port = 0;
+        if (!this.portField.getText().isEmpty()) {
+            port = Integer.parseInt(this.portField.getText());
+            if (port > 1 && port <= 65535) {
+                main.setPort(port);
+            }
+        }
+        RadioButton selected = (RadioButton) toggleGroup.getSelectedToggle();
+        if (selected.getText().equals("Client")) {
+            main.setServer(false);
+            String ip = this.ipField.getText();
+            ClientController.setIp_Address(ip);
+            ClientController.setPortNr(port);
+            main.setIpAddress(ip);
+        } else {
+            main.setServer(true);
+            ServerController.setServerPort(port);
+        }
     }
 }
