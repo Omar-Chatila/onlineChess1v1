@@ -50,15 +50,7 @@ public class ServerController implements Initializable {
             throw new RuntimeException(e);
         }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
-            GridPane gridPane = loader.load();
-            // Set the loaded GridPane as a child of the AnchorPane
-            chessBoardPane.getChildren().add(gridPane);
-            // Adjust the size of the GridPane to fill the AnchorPane
-            AnchorPane.setTopAnchor(gridPane, 0.0);
-            AnchorPane.setBottomAnchor(gridPane, 0.0);
-            AnchorPane.setLeftAnchor(gridPane, 0.0);
-            AnchorPane.setRightAnchor(gridPane, 0.0);
+            loadChessBoard();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,5 +115,22 @@ public class ServerController implements Initializable {
 
     public static void setServerPort(int serverPort) {
         ServerController.serverPort = serverPort;
+    }
+
+    private void loadChessBoard() throws Exception {
+        FXMLLoader loader = null;
+        if (Main.isWhite()) {
+            loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
+        } else {
+            loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
+        }
+        GridPane gridPane = loader.load();
+        // Set the loaded GridPane as a child of the AnchorPane
+        chessBoardPane.getChildren().add(gridPane);
+        // Adjust the size of the GridPane to fill the AnchorPane
+        AnchorPane.setTopAnchor(gridPane, 0.0);
+        AnchorPane.setBottomAnchor(gridPane, 0.0);
+        AnchorPane.setLeftAnchor(gridPane, 0.0);
+        AnchorPane.setRightAnchor(gridPane, 0.0);
     }
 }

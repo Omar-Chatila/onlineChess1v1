@@ -10,17 +10,17 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    private boolean white;
+    private static boolean white;
     private boolean isServer;
     private String ipAddress;
     private int port;
 
-    public boolean isWhite() {
+    public static boolean isWhite() {
         return white;
     }
 
-    public void setWhite(boolean white) {
-        this.white = white;
+    public static void setWhite(boolean w) {
+        white = w;
     }
 
     public boolean isServer() {
@@ -45,14 +45,6 @@ public class Main extends Application {
 
     public void setPort(int port) {
         this.port = port;
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
     }
 
     private Stage primaryStage;

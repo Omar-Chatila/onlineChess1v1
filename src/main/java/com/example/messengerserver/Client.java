@@ -46,9 +46,14 @@ public class Client {
                 while (socket.isConnected()) {
                     try {
                         String messageFromServer = bufferedReader.readLine();
-                        Game.executeMove(messageFromServer, true);
-                        ClientController.addLabel(messageFromServer, vBox);
-                    } catch (IOException e ) {
+                        System.out.println("Message" + messageFromServer);
+                        if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
+                            Main.setWhite(messageFromServer.equals("true"));
+                        } else {
+                            Game.executeMove(messageFromServer, true);
+                            ClientController.addLabel(messageFromServer, vBox);
+                        }
+                    } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Error receiving message from the client");
                         closeEverything(socket, bufferedReader, bufferedWriter);

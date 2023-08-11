@@ -49,20 +49,8 @@ public class ClientController implements Initializable {
         try {
             client = new Client(new Socket(ip_Address, portNr));
             System.out.println("Connected to server");
+            client.receiveMessageFromServer(vbox_messages);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
-            GridPane gridPane = loader.load();
-            // Set the loaded GridPane as a child of the AnchorPane
-            chessBoardPane.getChildren().add(gridPane);
-            // Adjust the size of the GridPane to fill the AnchorPane
-            AnchorPane.setTopAnchor(gridPane, 0.0);
-            AnchorPane.setBottomAnchor(gridPane, 0.0);
-            AnchorPane.setLeftAnchor(gridPane, 0.0);
-            AnchorPane.setRightAnchor(gridPane, 0.0);
-        } catch (Exception e) {
             e.printStackTrace();
         }
         vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
@@ -71,7 +59,13 @@ public class ClientController implements Initializable {
                 sp_main.setVvalue((Double) t1);
             }
         });
-        client.receiveMessageFromServer(vbox_messages);
+        //client.receiveMessageFromServer(vbox_messages);
+        System.out.println("Jetzt? " + Main.isWhite());
+        try {
+            loadChessBoard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         button_send.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -123,5 +117,23 @@ public class ClientController implements Initializable {
 
     public static void setPortNr(int portNr) {
         ClientController.portNr = portNr;
+    }
+
+    private void loadChessBoard() throws Exception {
+        FXMLLoader loader = null;
+        System.out.println("Main is white?" + Main.isWhite());
+        if (Main.isWhite()) {
+            loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
+        } else {
+            loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
+        }
+        GridPane gridPane = loader.load();
+        // Set the loaded GridPane as a child of the AnchorPane
+        chessBoardPane.getChildren().add(gridPane);
+        // Adjust the size of the GridPane to fill the AnchorPane
+        AnchorPane.setTopAnchor(gridPane, 0.0);
+        AnchorPane.setBottomAnchor(gridPane, 0.0);
+        AnchorPane.setLeftAnchor(gridPane, 0.0);
+        AnchorPane.setRightAnchor(gridPane, 0.0);
     }
 }

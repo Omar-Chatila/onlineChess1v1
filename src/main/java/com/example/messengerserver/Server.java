@@ -12,11 +12,15 @@ public class Server {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+
     public Server(ServerSocket serverSocket) {
         try {
             this.socket = serverSocket.accept();
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            bufferedWriter.write(Main.isWhite() + "");
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
         } catch (IOException e) {
             System.out.println("Error creating server.");
             //noinspection CallToPrintStackTrace
@@ -49,7 +53,7 @@ public class Server {
                         String messageFromClient = bufferedReader.readLine();
                         Game.executeMove(messageFromClient, false);
                         ServerController.addLabel(messageFromClient, vBox);
-                    } catch (IOException e ) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Error receiving message from the client");
                         closeEverything(socket, bufferedReader, bufferedWriter);

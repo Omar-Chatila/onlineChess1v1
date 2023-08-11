@@ -36,7 +36,7 @@ public class LoginViewController {
     @FXML
     private Button connectButton;
 
-    private Main main;
+    private final Main main;
 
     public LoginViewController() {
         this.main = new Main();
@@ -45,19 +45,19 @@ public class LoginViewController {
     @FXML
     void randomPieces(ActionEvent event) {
         boolean white = Math.random() < 0.5;
-        main.setWhite(white);
+        Main.setWhite(white);
         connect();
     }
 
     @FXML
     void whitePieces(ActionEvent event) {
-        main.setWhite(true);
+        Main.setWhite(true);
         connect();
     }
 
     @FXML
     void blackPieces(ActionEvent event) {
-        main.setWhite(false);
+        Main.setWhite(false);
         connect();
     }
 
