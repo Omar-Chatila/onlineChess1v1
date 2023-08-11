@@ -24,6 +24,6 @@
               <Button fx:id="whitePieceColor" mnemonicParsing="false" onAction="#whitePieces" prefHeight="50.0" prefWidth="50.0" text="W" />
          </children>
       </HBox>
-      <Button fx:id="connectButton" layoutX="316.0" layoutY="217.0" mnemonicParsing="false" onAction="#connectClient" prefHeight="34.0" prefWidth="71.0" text="Button" />
+      <Button fx:id="connectButton" layoutX="316.0" layoutY="217.0" mnemonicParsing="false" onAction="#connectClient" prefHeight="34.0" prefWidth="71.0" text="Button" visible="false" />
     </children>
 </AnchorPane>

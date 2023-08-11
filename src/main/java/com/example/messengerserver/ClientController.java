@@ -6,12 +6,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,10 +29,16 @@ import java.util.ResourceBundle;
 @SuppressWarnings("CallToPrintStackTrace")
 public class ClientController implements Initializable {
 
-    @FXML private Button button_send;
-    @FXML private ScrollPane sp_main;
-    @FXML private TextField tf_message;
-    @FXML private VBox vbox_messages;
+    @FXML
+    private Button button_send;
+    @FXML
+    private ScrollPane sp_main;
+    @FXML
+    private TextField tf_message;
+    @FXML
+    private VBox vbox_messages;
+    @FXML
+    private AnchorPane chessBoardPane;
 
     private static String ip_Address;
     private static int portNr;
@@ -43,8 +52,22 @@ public class ClientController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
+            GridPane gridPane = loader.load();
+            // Set the loaded GridPane as a child of the AnchorPane
+            chessBoardPane.getChildren().add(gridPane);
+            // Adjust the size of the GridPane to fill the AnchorPane
+            AnchorPane.setTopAnchor(gridPane, 0.0);
+            AnchorPane.setBottomAnchor(gridPane, 0.0);
+            AnchorPane.setLeftAnchor(gridPane, 0.0);
+            AnchorPane.setRightAnchor(gridPane, 0.0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                 sp_main.setVvalue((Double) t1);
             }
         });
@@ -56,13 +79,13 @@ public class ClientController implements Initializable {
                 if (!messageToSend.isEmpty()) {
                     HBox hBox = new HBox();
                     hBox.setAlignment(Pos.CENTER_RIGHT);
-                    hBox.setPadding(new Insets(5,5,5,10));
+                    hBox.setPadding(new Insets(5, 5, 5, 10));
                     Text text = new Text(messageToSend);
                     TextFlow textFlow = new TextFlow(text);
                     textFlow.setStyle("fx-color: rgb(239,242,255);" +
                             "-fx-background-color: rgb(15,125,242);" +
                             "-fx-background-radius: 20px;");
-                    textFlow.setPadding(new Insets(5,10,5,10));
+                    textFlow.setPadding(new Insets(5, 10, 5, 10));
                     text.setFill(Color.color(0.934, 0.945, 0.996));
                     hBox.getChildren().add(textFlow);
                     vbox_messages.getChildren().add(hBox);
@@ -72,17 +95,18 @@ public class ClientController implements Initializable {
             }
         });
     }
+
     public static void addLabel(String msgFromServer, VBox vBox) {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.setPadding(new Insets(5,5,5,10));
+        hBox.setPadding(new Insets(5, 5, 5, 10));
 
         Text text = new Text(msgFromServer);
         TextFlow textFlow = new TextFlow(text);
 
         textFlow.setStyle("-fx-background-color: rgb(233,233,235);" +
                 "-fx-background-radius: 20px;");
-        textFlow.setPadding(new Insets(5,10,5,10));
+        textFlow.setPadding(new Insets(5, 10, 5, 10));
         hBox.getChildren().add(textFlow);
 
         Platform.runLater(new Runnable() {
