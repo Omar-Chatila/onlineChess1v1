@@ -31,12 +31,14 @@ public class ClientController implements Initializable {
     @FXML private TextField tf_message;
     @FXML private VBox vbox_messages;
 
+    private static String ip_Address;
+    private static int portNr;
     private Client client;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            client = new Client(new Socket("localhost", 1234));
+            client = new Client(new Socket(ip_Address, portNr));
             System.out.println("Connected to server");
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,5 +91,13 @@ public class ClientController implements Initializable {
                 vBox.getChildren().add(hBox);
             }
         });
+    }
+
+    public static void setIp_Address(String ip_Address) {
+        ClientController.ip_Address = ip_Address;
+    }
+
+    public static void setPortNr(int portNr) {
+        ClientController.portNr = portNr;
     }
 }

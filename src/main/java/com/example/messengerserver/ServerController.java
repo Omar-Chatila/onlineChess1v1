@@ -30,12 +30,13 @@ public class ServerController implements Initializable {
     @FXML private TextField tf_message;
     @FXML private VBox vbox_messages;
 
+    private static int serverPort;
     private Server server;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            server = new Server(new ServerSocket(1234));
+            server = new Server(new ServerSocket(serverPort));
         } catch (IOException e) {
             System.out.println("Error creating Server");
             throw new RuntimeException(e);
@@ -95,5 +96,8 @@ public class ServerController implements Initializable {
                 vBox.getChildren().add(hBox);
             }
         });
+    }
+    public static void setServerPort(int serverPort) {
+        ServerController.serverPort = serverPort;
     }
 }
