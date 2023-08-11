@@ -84,13 +84,12 @@ public class LoginViewController {
                 main.setIpAddress(ip);
             }
         }
-        if (main.isServer()) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    Scene scene = null;
                     if (main.isServer()) {
                         try {
+                            System.out.println("CLient");
                             Parent mainWindowParent = FXMLLoader.load(getClass().getResource("serverView.fxml"));
                             Scene mainWindowScene = new Scene(mainWindowParent);
                             Stage window = (Stage) whitePieceColor.getScene().getWindow();
@@ -100,10 +99,20 @@ public class LoginViewController {
                             throw new RuntimeException(e);
                         }
                     } else {
-
+                        System.out.println("CLient");
+                        try {
+                            Parent mainWindowParent = null;
+                            mainWindowParent = FXMLLoader.load(getClass().getResource("clientView.fxml"));
+                            Scene mainWindowScene = new Scene(mainWindowParent);
+                            Stage window = (Stage) whitePieceColor.getScene().getWindow();
+                            window.setScene(mainWindowScene);
+                            window.show();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
             });
-        }
+
     }
 }
