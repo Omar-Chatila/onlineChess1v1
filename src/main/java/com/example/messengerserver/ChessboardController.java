@@ -20,7 +20,6 @@ public class ChessboardController {
 
     @FXML
     private void initialize() {
-        System.out.println(chessboardGrid.getParent());
         // Set up drag detection for each piece button
         for (Node node : chessboardGrid.getChildren()) {
             if (node instanceof StackPane current) {
@@ -37,18 +36,15 @@ public class ChessboardController {
                 current.setAccessibleText(square);
                 for (Node button : current.getChildren()) {
                     if (button instanceof Button currentButton) {
-                        System.out.println(button);
                         currentButton.setOnDragDetected(new EventHandler<MouseEvent>() {
                             public void handle(MouseEvent event) {
                                 Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
-                                System.out.println(currentButton);
                                 // Add image to the dragboard
                                 ClipboardContent content = new ClipboardContent();
                                 content.putImage(((ImageView) currentButton.getGraphic()).getImage());
                                 String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
                                 String movedP = imageUrl.substring(imageUrl.length() - 6);
                                 movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
-                                System.out.println("Moved Piece: " + movedPiece);
                                 db.setContent(content);
                                 // Save reference to selected piece
                                 selectedPiece = currentButton;
