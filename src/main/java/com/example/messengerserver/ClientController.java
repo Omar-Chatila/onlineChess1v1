@@ -1,16 +1,13 @@
 package com.example.messengerserver;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -39,7 +36,8 @@ public class ClientController implements Initializable {
     private VBox vbox_messages;
     @FXML
     private AnchorPane chessBoardPane;
-
+    @FXML
+    private Label roleLabel;
     private static String ip_Address;
     private static int portNr;
     private Client client;
@@ -53,41 +51,37 @@ public class ClientController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                sp_main.setVvalue((Double) t1);
-            }
-        });
-        //client.receiveMessageFromServer(vbox_messages);
-        System.out.println("Jetzt? " + Main.isWhite());
+        vbox_messages.heightProperty().addListener((observableValue, number, t1) -> sp_main.setVvalue((Double) t1));
         try {
             loadChessBoard();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        button_send.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String messageToSend = tf_message.getText();
-                if (!messageToSend.isEmpty()) {
-                    HBox hBox = new HBox();
-                    hBox.setAlignment(Pos.CENTER_RIGHT);
-                    hBox.setPadding(new Insets(5, 5, 5, 10));
-                    Text text = new Text(messageToSend);
-                    TextFlow textFlow = new TextFlow(text);
-                    textFlow.setStyle("fx-color: rgb(239,242,255);" +
-                            "-fx-background-color: rgb(15,125,242);" +
-                            "-fx-background-radius: 20px;");
-                    textFlow.setPadding(new Insets(5, 10, 5, 10));
-                    text.setFill(Color.color(0.934, 0.945, 0.996));
-                    hBox.getChildren().add(textFlow);
-                    vbox_messages.getChildren().add(hBox);
-                    client.sendMessageToServer(messageToSend);
-                    tf_message.clear();
-                }
+        button_send.setOnAction(actionEvent -> {
+            String messageToSend = tf_message.getText();
+            if (!messageToSend.isEmpty()) {
+                HBox hBox = new HBox();
+                hBox.setAlignment(Pos.CENTER_RIGHT);
+                hBox.setPadding(new Insets(5, 5, 5, 10));
+                Text text = new Text(messageToSend);
+                TextFlow textFlow = new TextFlow(text);
+                textFlow.setStyle("fx-color: rgb(239,242,255);" +
+                        "-fx-background-color: rgb(15,125,242);" +
+                        "-fx-background-radius: 20px;");
+                textFlow.setPadding(new Insets(5, 10, 5, 10));
+                text.setFill(Color.color(0.934, 0.945, 0.996));
+                hBox.getChildren().add(textFlow);
+                vbox_messages.getChildren().add(hBox);
+                client.sendMessageToServer(messageToSend);
+                tf_message.clear();
             }
         });
+        try {
+            loadChessBoard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        roleLabel.setText("Chess - " + (!Main.isWhite() ? "White" : "Black"));
     }
 
     public static void addLabel(String msgFromServer, VBox vBox) {
@@ -102,13 +96,7 @@ public class ClientController implements Initializable {
                 "-fx-background-radius: 20px;");
         textFlow.setPadding(new Insets(5, 10, 5, 10));
         hBox.getChildren().add(textFlow);
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                vBox.getChildren().add(hBox);
-            }
-        });
+        Platform.runLater(() -> vBox.getChildren().add(hBox));
     }
 
     public static void setIp_Address(String ip_Address) {
@@ -120,7 +108,7 @@ public class ClientController implements Initializable {
     }
 
     private void loadChessBoard() throws Exception {
-        FXMLLoader loader = null;
+        FXMLLoader loader;
         System.out.println("Main is white?" + Main.isWhite());
         if (Main.isWhite()) {
             loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));

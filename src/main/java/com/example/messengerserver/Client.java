@@ -8,7 +8,6 @@ import java.net.Socket;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class Client {
-
     private Socket socket;
     private BufferedWriter bufferedWriter;
     private BufferedReader bufferedReader;
@@ -40,25 +39,22 @@ public class Client {
     }
 
     public void receiveMessageFromServer(VBox vBox) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (socket.isConnected()) {
-                    try {
-                        String messageFromServer = bufferedReader.readLine();
-                        System.out.println("Message" + messageFromServer);
-                        if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
-                            Main.setWhite(messageFromServer.equals("true"));
-                        } else {
-                            Game.executeMove(messageFromServer, true);
-                            ClientController.addLabel(messageFromServer, vBox);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        System.out.println("Error receiving message from the client");
-                        closeEverything(socket, bufferedReader, bufferedWriter);
-                        break;
+        new Thread(() -> {
+            while (socket.isConnected()) {
+                try {
+                    String messageFromServer = bufferedReader.readLine();
+                    System.out.println("Message" + messageFromServer);
+                    if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
+                        Main.setWhite(messageFromServer.equals("true"));
+                    } else {
+                        Game.executeMove(messageFromServer, true);
+                        ClientController.addLabel(messageFromServer, vBox);
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Error receiving message from the client");
+                    closeEverything(socket, bufferedReader, bufferedWriter);
+                    break;
                 }
             }
         }).start();

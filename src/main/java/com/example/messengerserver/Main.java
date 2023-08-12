@@ -12,8 +12,16 @@ public class Main extends Application {
 
     private static boolean white;
     private boolean isServer;
-    private String ipAddress;
-    private int port;
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        Game.initialize(Game.board);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Chess-Game");
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public static boolean isWhite() {
         return white;
@@ -29,35 +37,6 @@ public class Main extends Application {
 
     public void setServer(boolean server) {
         isServer = server;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    private Stage primaryStage;
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        primaryStage = stage;
-        Game.initialize(Game.board);
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("Chess-Game");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     public static void main(String[] args) {

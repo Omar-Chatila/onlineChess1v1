@@ -17,7 +17,7 @@
                 <VBox fx:id="vbox_messages" prefHeight="375.0" prefWidth="88.0" />
             </content>
         </ScrollPane>
-        <Label layoutX="71.0" layoutY="17.0" text="Chess - Black">
+        <Label fx:id="roleLabel" layoutX="71.0" layoutY="17.0" text="Chess - Black">
             <font>
                 <Font name="Arial Rounded MT Bold" size="23" />
             </font>

@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -40,6 +41,8 @@ public class ServerController implements Initializable {
     private AnchorPane chessBoardPane;
     private static int serverPort;
     private Server server;
+    @FXML
+    private Label roleLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,6 +57,7 @@ public class ServerController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        roleLabel.setText("Chess - " + (Main.isWhite() ? "White" : "Black"));
         // Load the other FXML file
 
         vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
@@ -118,7 +122,7 @@ public class ServerController implements Initializable {
     }
 
     private void loadChessBoard() throws Exception {
-        FXMLLoader loader = null;
+        FXMLLoader loader;
         if (Main.isWhite()) {
             loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
         } else {
