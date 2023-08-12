@@ -40,18 +40,21 @@ public class LoginViewController {
     void randomPieces() {
         boolean white = Math.random() < 0.5;
         Main.setWhite(white);
+        Main.setIsMyTurn(white);
         connect();
     }
 
     @FXML
     void whitePieces() {
         Main.setWhite(true);
+        Main.setIsMyTurn(true);
         connect();
     }
 
     @FXML
     void blackPieces() {
         Main.setWhite(false);
+        Main.setIsMyTurn(false);
         connect();
     }
 

@@ -30,16 +30,19 @@ public class Server {
     }
 
     public void sendMessageToClient(String messageToClient) {
-        try {
-            Game.executeMove(messageToClient, true);
-            bufferedWriter.write(messageToClient);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
-        } catch (IOException e) {
-            //noinspection CallToPrintStackTrace
-            e.printStackTrace();
-            System.out.println("Error sending message to client");
-            closeEverything(socket, bufferedReader, bufferedWriter);
+        if (Main.isIsMyTurn()) {
+            try {
+                Game.executeMove(messageToClient, Main.isWhite());
+                bufferedWriter.write(messageToClient);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+                Main.setIsMyTurn(!Main.isIsMyTurn());
+            } catch (IOException e) {
+                //noinspection CallToPrintStackTrace
+                e.printStackTrace();
+                System.out.println("Error sending message to client");
+                closeEverything(socket, bufferedReader, bufferedWriter);
+            }
         }
     }
 
@@ -51,8 +54,9 @@ public class Server {
                 while (socket.isConnected()) {
                     try {
                         String messageFromClient = bufferedReader.readLine();
-                        Game.executeMove(messageFromClient, false);
+                        Game.executeMove(messageFromClient, !Main.isWhite());
                         ServerController.addLabel(messageFromClient, vBox);
+                        Main.setIsMyTurn(!Main.isIsMyTurn());
                     } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Error receiving message from the client");

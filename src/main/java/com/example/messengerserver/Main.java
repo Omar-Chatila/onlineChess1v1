@@ -11,6 +11,9 @@ import java.io.IOException;
 public class Main extends Application {
 
     private static boolean white;
+
+
+    private static boolean isMyTurn;
     private boolean isServer;
 
     @Override
@@ -37,6 +40,14 @@ public class Main extends Application {
 
     public void setServer(boolean server) {
         isServer = server;
+    }
+
+    public static boolean isIsMyTurn() {
+        return isMyTurn;
+    }
+
+    public static void setIsMyTurn(boolean isMyTurn) {
+        Main.isMyTurn = isMyTurn;
     }
 
     public static void main(String[] args) {

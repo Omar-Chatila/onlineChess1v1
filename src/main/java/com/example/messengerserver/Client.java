@@ -26,10 +26,13 @@ public class Client {
 
     public void sendMessageToServer(String messageToServer) {
         try {
-            Game.executeMove(messageToServer, false);
-            bufferedWriter.write(messageToServer);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
+            if (Main.isIsMyTurn()) {
+                Game.executeMove(messageToServer, !Main.isWhite());
+                bufferedWriter.write(messageToServer);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+                Main.setIsMyTurn(!Main.isIsMyTurn());
+            }
         } catch (IOException e) {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
@@ -47,7 +50,8 @@ public class Client {
                     if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                         Main.setWhite(messageFromServer.equals("true"));
                     } else {
-                        Game.executeMove(messageFromServer, true);
+                        Game.executeMove(messageFromServer, Main.isWhite());
+                        Main.setIsMyTurn(!Main.isIsMyTurn());
                         ClientController.addLabel(messageFromServer, vBox);
                     }
                 } catch (IOException e) {

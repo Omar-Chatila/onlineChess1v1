@@ -87,8 +87,10 @@ public class ServerController implements Initializable {
                     textFlow.setPadding(new Insets(5, 10, 5, 10));
                     text.setFill(Color.color(0.934, 0.945, 0.996));
                     hBox.getChildren().add(textFlow);
-                    vbox_messages.getChildren().add(hBox);
-                    server.sendMessageToClient(messageToSend);
+                    if (Main.isIsMyTurn()) {
+                        vbox_messages.getChildren().add(hBox);
+                        server.sendMessageToClient(messageToSend);
+                    }
                     tf_message.clear();
                 }
             }
