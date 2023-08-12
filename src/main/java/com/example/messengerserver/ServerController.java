@@ -57,7 +57,7 @@ public class ServerController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        roleLabel.setText("Chess - " + (Main.isWhite() ? "White" : "Black"));
+        roleLabel.setText("Chess - " + (Main.isServerWhite() ? "White" : "Black"));
         // Load the other FXML file
 
         vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
@@ -125,7 +125,7 @@ public class ServerController implements Initializable {
 
     private void loadChessBoard() throws Exception {
         FXMLLoader loader;
-        if (Main.isWhite()) {
+        if (Main.isServerWhite()) {
             loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
         } else {
             loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));

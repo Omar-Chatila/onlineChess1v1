@@ -10,11 +10,9 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    private static boolean white;
-
-
+    private static boolean serverIswhite;
     private static boolean isMyTurn;
-    private boolean isServer;
+    private static boolean isServer;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -26,19 +24,19 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static boolean isWhite() {
-        return white;
+    public static boolean isServerWhite() {
+        return serverIswhite;
     }
 
-    public static void setWhite(boolean w) {
-        white = w;
+    public static void setServerIswhite(boolean w) {
+        serverIswhite = w;
     }
 
-    public boolean isServer() {
+    public static boolean isServer() {
         return isServer;
     }
 
-    public void setServer(boolean server) {
+    public static void setServer(boolean server) {
         isServer = server;
     }
 

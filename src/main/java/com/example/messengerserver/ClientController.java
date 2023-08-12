@@ -83,7 +83,7 @@ public class ClientController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        roleLabel.setText("Chess - " + (!Main.isWhite() ? "White" : "Black"));
+        roleLabel.setText("Chess - " + (!Main.isServerWhite() ? "White" : "Black"));
     }
 
     public static void addLabel(String msgFromServer, VBox vBox) {
@@ -111,8 +111,8 @@ public class ClientController implements Initializable {
 
     private void loadChessBoard() throws Exception {
         FXMLLoader loader;
-        System.out.println("Main is white?" + Main.isWhite());
-        if (Main.isWhite()) {
+        System.out.println("Main is white?" + Main.isServerWhite());
+        if (Main.isServerWhite()) {
             loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
         } else {
             loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));

@@ -27,7 +27,7 @@ public class Client {
     public void sendMessageToServer(String messageToServer) {
         try {
             if (Main.isIsMyTurn()) {
-                Game.executeMove(messageToServer, !Main.isWhite());
+                Game.executeMove(messageToServer, !Main.isServerWhite());
                 bufferedWriter.write(messageToServer);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -48,9 +48,9 @@ public class Client {
                     String messageFromServer = bufferedReader.readLine();
                     System.out.println("Message" + messageFromServer);
                     if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
-                        Main.setWhite(messageFromServer.equals("true"));
+                        Main.setServerIswhite(messageFromServer.equals("true"));
                     } else {
-                        Game.executeMove(messageFromServer, Main.isWhite());
+                        Game.executeMove(messageFromServer, Main.isServerWhite());
                         Main.setIsMyTurn(!Main.isIsMyTurn());
                         ClientController.addLabel(messageFromServer, vBox);
                     }

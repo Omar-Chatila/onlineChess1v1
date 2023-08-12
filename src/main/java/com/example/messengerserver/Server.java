@@ -18,7 +18,7 @@ public class Server {
             this.socket = serverSocket.accept();
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            bufferedWriter.write(Main.isWhite() + "");
+            bufferedWriter.write(Main.isServerWhite() + "");
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (IOException e) {
@@ -32,7 +32,7 @@ public class Server {
     public void sendMessageToClient(String messageToClient) {
         if (Main.isIsMyTurn()) {
             try {
-                Game.executeMove(messageToClient, Main.isWhite());
+                Game.executeMove(messageToClient, Main.isServerWhite());
                 bufferedWriter.write(messageToClient);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -54,7 +54,7 @@ public class Server {
                 while (socket.isConnected()) {
                     try {
                         String messageFromClient = bufferedReader.readLine();
-                        Game.executeMove(messageFromClient, !Main.isWhite());
+                        Game.executeMove(messageFromClient, !Main.isServerWhite());
                         ServerController.addLabel(messageFromClient, vBox);
                         Main.setIsMyTurn(!Main.isIsMyTurn());
                     } catch (IOException e) {

@@ -20,13 +20,20 @@ public class ChessboardController {
 
     @FXML
     private void initialize() {
+        System.out.println(chessboardGrid.getParent());
         // Set up drag detection for each piece button
         for (Node node : chessboardGrid.getChildren()) {
             if (node instanceof StackPane current) {
                 Integer rowIndexConstraint = GridPane.getRowIndex(current);
                 Integer columnIndexConstraint = GridPane.getColumnIndex(current);
-                String square = Character.toString('a' + Objects.requireNonNullElse(columnIndexConstraint, 0))
-                        + (8 - Objects.requireNonNullElse(rowIndexConstraint, 0));
+                String square = "";
+                if (Main.isServerWhite() && Main.isServer()) {
+                    square = Character.toString('a' + Objects.requireNonNullElse(columnIndexConstraint, 0))
+                            + (8 - Objects.requireNonNullElse(rowIndexConstraint, 0));
+                } else {
+                    square = Character.toString('h' - Objects.requireNonNullElse(columnIndexConstraint, 0))
+                            + (Objects.requireNonNullElse(rowIndexConstraint, 0) + 1);
+                }
                 current.setAccessibleText(square);
                 for (Node button : current.getChildren()) {
                     if (button instanceof Button currentButton) {
