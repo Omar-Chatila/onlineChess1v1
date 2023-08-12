@@ -30,7 +30,7 @@
       <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <StackPane>
+      <StackPane accessibleText="a8">
          <children>
             <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
             <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
@@ -44,7 +44,7 @@
             </Button>
          </children>
       </StackPane>
-      <StackPane GridPane.columnIndex="1">
+      <StackPane accessibleText="b8" GridPane.columnIndex="1">
          <children>
             <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
             <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
@@ -93,14 +93,14 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/bK.png" />
+                        <Image url="@../../../images/bQ.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
          </children>
       </StackPane>
-      <StackPane GridPane.columnIndex="2">
+      <StackPane accessibleText="c8" GridPane.columnIndex="2">
          <children>
             <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
             <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
@@ -121,7 +121,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/bQ.png" />
+                        <Image url="@../../../images/bK.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -561,7 +561,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/wQ.png" />
+                        <Image url="@../../../images/wK.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -603,7 +603,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/wK.png" />
+                        <Image url="@../../../images/wQ.png" />
                      </image>
                   </ImageView>
                </graphic>
