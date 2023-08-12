@@ -62,7 +62,7 @@ public class ChessboardController {
                                     // Remove the piece from its original position
                                     String file = "";
                                     if (movedPiece.isEmpty()) {
-                                        file = Character.toString('a' + GridPane.getColumnIndex(selectedPiece.getParent()));
+                                        file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
                                     }
                                     ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                                     // Add the piece to the new position
