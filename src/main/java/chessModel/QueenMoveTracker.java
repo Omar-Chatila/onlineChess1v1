@@ -25,11 +25,11 @@ public class QueenMoveTracker {
             int i = 1;
             while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
                 String squareContent = board[rank + i * dy[d]][file + i * dx[d]];
-                if (squareContent.matches("[Q]") && white) {
+                if (squareContent.matches("Q") && white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "Q";
                     return true;
-                } else if (squareContent.matches("[q]") && !white) {
+                } else if (squareContent.matches("q") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "q";
                     return true;

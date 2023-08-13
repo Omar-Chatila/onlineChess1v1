@@ -8,20 +8,20 @@ public class Game {
     public static List<String> moveList = new ArrayList<>();
     public static String[][] board = new String[8][8];
 
-    private static String[][] movePieces(String move, boolean white) throws Exception { // Fehlermeldung bei falschen Zug fehlt , check fehlt
+    private static String[][] movePieces(String move, boolean white) throws Exception {
         boolean legal = true;
         String currentPiece = Character.toString(move.charAt(0));
         if (!currentPiece.matches("[NKBRQ]")) {
             legal = PawnMoveTracker.movePawn(board, move, white);
-        } else if (currentPiece.matches("[N]")) {
+        } else if (currentPiece.matches("N")) {
             legal = KnightMoveTracker.validateKnight(board, move, white);
-        } else if (currentPiece.matches("[R]")) {
+        } else if (currentPiece.matches("R")) {
             legal = RookMoveTracker.validateRook(board, move, white);
-        } else if (currentPiece.matches("[B]")) {
+        } else if (currentPiece.matches("B")) {
             legal = BishopMoveTracker.validateBishop(board, move, white);
-        } else if (currentPiece.matches("[Q]")) {
+        } else if (currentPiece.matches("Q")) {
             legal = QueenMoveTracker.validateQueen(board, move, white);
-        } else if (currentPiece.matches("[K]")) {
+        } else if (currentPiece.matches("K")) {
             legal = KingMoveTracker.validateKing(board, move, white);
         }
         if (!legal) {

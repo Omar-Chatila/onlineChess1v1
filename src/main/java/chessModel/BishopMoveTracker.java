@@ -25,11 +25,11 @@ public class BishopMoveTracker {
             int i = 1;
             while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
                 String squareContent = board[rank + i * dy[d]][file + i * dx[d]];
-                if (squareContent.matches("[B]") && white) {
+                if (squareContent.matches("B") && white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "B";
                     return true;
-                } else if (squareContent.matches("[b]") && !white) {
+                } else if (squareContent.matches("b") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "b";
                     return true;

@@ -3,6 +3,8 @@ module com.example.messengerserver {
     requires javafx.fxml;
 
 
-    opens com.example.messengerserver to javafx.fxml;
-    exports com.example.messengerserver;
+    opens com.example.controller to javafx.fxml;
+    exports com.example.controller;
+    exports Networking;
+    opens Networking to javafx.fxml;
 }

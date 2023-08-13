@@ -25,11 +25,11 @@ public class KingMoveTracker {
             int i = 1;
             if (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
                 String squareContent = board[rank + i * dy[d]][file + i * dx[d]];
-                if (squareContent.matches("[K]") && white) {
+                if (squareContent.matches("K") && white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "K";
                     return true;
-                } else if (squareContent.matches("[k]") && !white) {
+                } else if (squareContent.matches("k") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "k";
                     return true;

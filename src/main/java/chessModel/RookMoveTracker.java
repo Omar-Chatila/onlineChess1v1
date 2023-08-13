@@ -26,11 +26,11 @@ public class RookMoveTracker {
             int i = 1;
             while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
                 String squareContent = board[rank + i * dy[d]][file + i * dx[d]];
-                if (squareContent.matches("[R]") && white) {
+                if (squareContent.matches("R") && white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "R";
                     return true;
-                } else if (squareContent.matches("[r]") && !white) {
+                } else if (squareContent.matches("r") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "r";
                     return true;

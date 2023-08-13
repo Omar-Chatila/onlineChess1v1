@@ -1,6 +1,8 @@
-package com.example.messengerserver;
+package Networking;
 
 import chessModel.Game;
+import com.example.controller.Main;
+import com.example.controller.ServerController;
 import javafx.scene.layout.VBox;
 
 import java.io.*;

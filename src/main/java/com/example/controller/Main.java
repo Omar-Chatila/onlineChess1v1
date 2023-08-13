@@ -1,4 +1,4 @@
-package com.example.messengerserver;
+package com.example.controller;
 
 import chessModel.Game;
 import javafx.application.Application;

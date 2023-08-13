@@ -1,6 +1,6 @@
-package com.example.messengerserver;
+package com.example.controller;
 
-import chessModel.ApplicationData;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import util.ApplicationData;
 
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class ChessboardController {
             if (node instanceof StackPane current) {
                 Integer rowIndexConstraint = GridPane.getRowIndex(current);
                 Integer columnIndexConstraint = GridPane.getColumnIndex(current);
-                String square = "";
+                String square;
                 if (Main.isServerWhite() && Main.isServer()) {
                     square = Character.toString('a' + Objects.requireNonNullElse(columnIndexConstraint, 0))
                             + (8 - Objects.requireNonNullElse(rowIndexConstraint, 0));
@@ -90,18 +91,10 @@ public class ChessboardController {
                             }
                         });
 
-                        currentButton.setOnDragDone(new EventHandler<DragEvent>() {
-                            public void handle(DragEvent event) {
-                                event.consume();
-                            }
-                        });
+                        currentButton.setOnDragDone(Event::consume);
                     }
                 }
             }
         }
-    }
-
-    private static String constructMove() {
-        return null;
     }
 }

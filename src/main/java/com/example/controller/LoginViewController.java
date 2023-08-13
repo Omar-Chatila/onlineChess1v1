@@ -1,4 +1,4 @@
-package com.example.messengerserver;
+package com.example.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;

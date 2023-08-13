@@ -1,6 +1,6 @@
-package com.example.messengerserver;
+package com.example.controller;
 
-import chessModel.ApplicationData;
+import Networking.Client;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import util.ApplicationData;
 
 import java.io.IOException;
 import java.net.Socket;

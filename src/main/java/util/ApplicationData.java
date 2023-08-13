@@ -1,10 +1,10 @@
-package chessModel;
+package util;
 
-import com.example.messengerserver.Client;
-import com.example.messengerserver.Server;
+import Networking.Client;
+import Networking.Server;
 
 public class ApplicationData {
-    private static ApplicationData instance = new ApplicationData();
+    private static final ApplicationData instance = new ApplicationData();
     private String sharedData;
     private Client client;
     private Server server;

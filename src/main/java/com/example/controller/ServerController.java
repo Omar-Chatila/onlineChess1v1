@@ -1,6 +1,6 @@
-package com.example.messengerserver;
+package com.example.controller;
 
-import chessModel.ApplicationData;
+import Networking.Server;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import util.ApplicationData;
 
 import java.io.IOException;
 import java.net.ServerSocket;
