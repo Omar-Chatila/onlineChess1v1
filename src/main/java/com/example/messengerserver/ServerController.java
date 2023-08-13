@@ -1,5 +1,6 @@
 package com.example.messengerserver;
 
+import chessModel.ApplicationData;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -48,6 +49,7 @@ public class ServerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             server = new Server(new ServerSocket(serverPort));
+            ApplicationData.getInstance().setServer(server);
         } catch (IOException e) {
             System.out.println("Error creating Server");
             throw new RuntimeException(e);

@@ -1,5 +1,6 @@
 package com.example.messengerserver;
 
+import chessModel.ApplicationData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +47,7 @@ public class ClientController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             client = new Client(new Socket(ip_Address, portNr));
+            ApplicationData.getInstance().setClient(client);
             System.out.println("Connected to server");
             client.receiveMessageFromServer(vbox_messages);
         } catch (IOException e) {

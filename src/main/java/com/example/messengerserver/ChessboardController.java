@@ -1,5 +1,6 @@
 package com.example.messengerserver;
 
+import chessModel.ApplicationData;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -51,6 +52,7 @@ public class ChessboardController {
                             }
                         });
 
+
                         currentButton.setOnDragOver(new EventHandler<DragEvent>() {
                             public void handle(DragEvent event) {
                                 if (event.getGestureSource() != currentButton && event.getDragboard().hasImage()) {
@@ -76,6 +78,11 @@ public class ChessboardController {
                                         move = movedPiece + file + "x" + cell.getAccessibleText();
                                     }
                                     System.out.println(move);
+                                    if (Main.isServer()) {
+                                        ApplicationData.getInstance().getServer().sendMessageToClient(move);
+                                    } else {
+                                        ApplicationData.getInstance().getClient().sendMessageToServer(move);
+                                    }
                                     cell.getChildren().add(selectedPiece);
                                     selectedPiece = null;
                                     event.setDropCompleted(true);
