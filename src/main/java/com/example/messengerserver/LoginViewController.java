@@ -30,11 +30,6 @@ public class LoginViewController {
     private Button whitePieceColor;
     @FXML
     private Button connectButton;
-    private final Main main;
-
-    public LoginViewController() {
-        this.main = new Main();
-    }
 
     @FXML
     void randomPieces() {
@@ -61,7 +56,7 @@ public class LoginViewController {
     @FXML
     void serverToggle() {
         this.ipField.setDisable(true);
-        main.setServer(true);
+        Main.setServer(true);
         this.connectButton.setVisible(false);
         this.blackPieceColor.setVisible(true);
         this.whitePieceColor.setVisible(true);
@@ -71,7 +66,7 @@ public class LoginViewController {
     @FXML
     void clientToggle() {
         this.ipField.setDisable(false);
-        main.setServer(false);
+        Main.setServer(false);
         this.connectButton.setVisible(true);
         this.blackPieceColor.setVisible(false);
         this.whitePieceColor.setVisible(false);
@@ -88,7 +83,7 @@ public class LoginViewController {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                if (main.isServer()) {
+                if (Main.isServer()) {
                     try {
                         System.out.println("Server");
                         Parent mainWindowParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("serverView.fxml")));
@@ -122,12 +117,12 @@ public class LoginViewController {
         }
         RadioButton selected = (RadioButton) toggleGroup.getSelectedToggle();
         if (selected.getText().equals("Client")) {
-            main.setServer(false);
+            Main.setServer(false);
             String ip = this.ipField.getText();
             ClientController.setIp_Address(ip);
             ClientController.setPortNr(port);
         } else {
-            main.setServer(true);
+            Main.setServer(true);
             ServerController.setServerPort(port);
         }
     }
