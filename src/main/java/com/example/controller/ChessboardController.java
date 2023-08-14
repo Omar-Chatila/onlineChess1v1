@@ -136,6 +136,9 @@ public class ChessboardController {
             public void run() {
                 Button b = (Button) finalStartCell.getChildren().remove(1);
                 finalEndCell.getChildren().add(b);
+                if (finalEndCell.getChildren().size() == 3) {
+                    finalEndCell.getChildren().remove(1);
+                }
             }
         });
 
