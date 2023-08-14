@@ -54,7 +54,10 @@ public class ClientController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        vbox_messages.heightProperty().addListener((observableValue, number, t1) -> sp_main.setVvalue((Double) t1));
+        vbox_messages.heightProperty().addListener((observableValue, number, t1) -> {
+            sp_main.setVvalue((Double) t1);
+            System.out.println("new message");
+        });
         try {
             loadChessBoard();
         } catch (Exception e) {
@@ -128,5 +131,6 @@ public class ClientController implements Initializable {
         AnchorPane.setBottomAnchor(gridPane, 0.0);
         AnchorPane.setLeftAnchor(gridPane, 0.0);
         AnchorPane.setRightAnchor(gridPane, 0.0);
+        ApplicationData.getInstance().setChessboardController(loader.getController());
     }
 }

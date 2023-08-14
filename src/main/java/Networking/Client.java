@@ -4,6 +4,7 @@ import chessModel.Game;
 import com.example.controller.ClientController;
 import com.example.controller.Main;
 import javafx.scene.layout.VBox;
+import util.ApplicationData;
 
 import java.io.*;
 import java.net.Socket;
@@ -29,12 +30,15 @@ public class Client {
     public void sendMessageToServer(String messageToServer) {
         try {
             if (Main.isIsMyTurn()) {
-                Game.executeMove(messageToServer, !Main.isServerWhite());
-                bufferedWriter.write(messageToServer);
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-                Main.setIsMyTurn(!Main.isIsMyTurn());
+                if (!messageToServer.matches("[0-9]{2}\\.[0-9]{2}")) {
+                    Game.executeMove(messageToServer, !Main.isServerWhite());
+                    Main.setIsMyTurn(!Main.isIsMyTurn());
+                }
             }
+            bufferedWriter.write(messageToServer);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
         } catch (IOException e) {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
@@ -48,13 +52,18 @@ public class Client {
             while (socket.isConnected()) {
                 try {
                     String messageFromServer = bufferedReader.readLine();
-                    System.out.println("Message" + messageFromServer);
+                    System.out.println("message from server: " + messageFromServer);
                     if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                         Main.setServerIswhite(messageFromServer.equals("true"));
                     } else {
-                        Game.executeMove(messageFromServer, Main.isServerWhite());
-                        Main.setIsMyTurn(!Main.isIsMyTurn());
-                        ClientController.addLabel(messageFromServer, vBox);
+                        if (!messageFromServer.matches("[0-9]{2}\\.[0-9]{2}")) {
+                            Game.executeMove(messageFromServer, Main.isServerWhite());
+                            Main.setIsMyTurn(!Main.isIsMyTurn());
+                            ClientController.addLabel(messageFromServer, vBox);
+                        } else {
+                            System.out.println("hier");
+                            ApplicationData.getInstance().getChessboardController().updateBoard(messageFromServer);
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

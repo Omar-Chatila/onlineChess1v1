@@ -141,5 +141,6 @@ public class ServerController implements Initializable {
         AnchorPane.setBottomAnchor(gridPane, 0.0);
         AnchorPane.setLeftAnchor(gridPane, 0.0);
         AnchorPane.setRightAnchor(gridPane, 0.0);
+        ApplicationData.getInstance().setChessboardController(loader.getController());
     }
 }

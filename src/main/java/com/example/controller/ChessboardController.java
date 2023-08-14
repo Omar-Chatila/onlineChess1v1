@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import util.ApplicationData;
+import util.IntIntPair;
 
 import java.util.Objects;
 
@@ -19,6 +21,8 @@ public class ChessboardController {
     private Button selectedPiece;
     public static String movedPiece;
     public static String move;
+    private IntIntPair startingSquare;
+    private IntIntPair destinationSquare;
 
     @FXML
     private void initialize() {
@@ -42,6 +46,8 @@ public class ChessboardController {
                             public void handle(MouseEvent event) {
                                 Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
                                 // Add image to the dragboard
+                                startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(current), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(current), 0));
+                                System.out.println("Row: " + startingSquare.getRow() + "Column: " + startingSquare.getColumn());
                                 ClipboardContent content = new ClipboardContent();
                                 content.putImage(((ImageView) currentButton.getGraphic()).getImage());
                                 String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
@@ -73,6 +79,7 @@ public class ChessboardController {
                                     ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                                     // Add the piece to the new position
                                     StackPane cell = (StackPane) currentButton.getParent();
+                                    destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
                                     move = movedPiece + cell.getAccessibleText();
                                     if (cell.getChildren().size() == 2) {
                                         cell.getChildren().remove(1);
@@ -81,8 +88,10 @@ public class ChessboardController {
                                     System.out.println(move);
                                     if (Main.isServer()) {
                                         ApplicationData.getInstance().getServer().sendMessageToClient(move);
+                                        ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
                                     } else {
                                         ApplicationData.getInstance().getClient().sendMessageToServer(move);
+                                        ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
                                     }
                                     cell.getChildren().add(selectedPiece);
                                     selectedPiece = null;
@@ -96,5 +105,39 @@ public class ChessboardController {
                 }
             }
         }
+    }
+
+    public void updateBoard(String opponentMove) {
+        System.out.println("transform " + opponentMove);
+        int startRow = 7 - Character.getNumericValue(opponentMove.charAt(0));
+        int startCol = 7 - Character.getNumericValue(opponentMove.charAt(1));
+        int destRow = 7 - Character.getNumericValue(opponentMove.charAt(3));
+        int destCol = 7 - Character.getNumericValue(opponentMove.charAt(4));
+        StackPane startCell = null;
+        for (Node node : chessboardGrid.getChildren()) {
+            if (Objects.requireNonNullElse(GridPane.getRowIndex(node), 0) == startRow && Objects.requireNonNullElse(GridPane.getColumnIndex(node), 0) == startCol) {
+                startCell = (StackPane) node;
+            }
+        }
+        StackPane endCell = null;
+        for (Node node : chessboardGrid.getChildren()) {
+            if (Objects.requireNonNullElse(GridPane.getRowIndex(node), 0) == destRow && Objects.requireNonNullElse(GridPane.getColumnIndex(node), 0) == destCol) {
+                endCell = (StackPane) node;
+            }
+        }
+        StackPane finalStartCell = startCell;
+        StackPane finalEndCell = endCell;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Button b = (Button) finalStartCell.getChildren().remove(1);
+                finalEndCell.getChildren().add(b);
+            }
+        });
+
+        System.out.println(startCell.getAccessibleText());
+        System.out.println(endCell.getAccessibleText());
+
+
     }
 }
