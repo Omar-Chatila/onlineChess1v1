@@ -45,9 +45,7 @@ public class ChessboardController {
                         currentButton.setOnDragDetected(new EventHandler<MouseEvent>() {
                             public void handle(MouseEvent event) {
                                 Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
-                                // Add image to the dragboard
-                                startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(current), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(current), 0));
-                                System.out.println("Row: " + startingSquare.getRow() + "Column: " + startingSquare.getColumn());
+                                startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
                                 ClipboardContent content = new ClipboardContent();
                                 content.putImage(((ImageView) currentButton.getGraphic()).getImage());
                                 String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
@@ -70,32 +68,36 @@ public class ChessboardController {
 
                         currentButton.setOnDragDropped(new EventHandler<DragEvent>() {
                             public void handle(DragEvent event) {
-                                if (selectedPiece != null) {
-                                    // Remove the piece from its original position
-                                    String file = "";
-                                    if (movedPiece.isEmpty()) {
-                                        file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
+                                if (Main.isIsMyTurn()) {
+                                    if (selectedPiece != null) {
+                                        // Remove the piece from its original position
+                                        String file = "";
+                                        if (movedPiece.isEmpty()) {
+                                            file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
+                                        }
+                                        ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                                        // Add the piece to the new position
+                                        StackPane cell = (StackPane) currentButton.getParent();
+                                        destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
+                                        move = movedPiece + cell.getAccessibleText();
+                                        if (cell.getChildren().size() == 2) {
+                                            cell.getChildren().remove(1);
+                                            move = movedPiece + file + "x" + cell.getAccessibleText();
+                                        }
+                                        System.out.println(move);
+                                        if (Main.isServer()) {
+                                            ApplicationData.getInstance().getServer().sendMessageToClient(move);
+                                            ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
+                                        } else {
+                                            ApplicationData.getInstance().getClient().sendMessageToServer(move);
+                                            ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
+                                        }
+                                        cell.getChildren().add(selectedPiece);
+                                        GridPane.setRowIndex(current, destinationSquare.getRow());
+                                        GridPane.setColumnIndex(current, destinationSquare.getColumn());
+                                        selectedPiece = null;
+                                        event.setDropCompleted(true);
                                     }
-                                    ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
-                                    // Add the piece to the new position
-                                    StackPane cell = (StackPane) currentButton.getParent();
-                                    destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
-                                    move = movedPiece + cell.getAccessibleText();
-                                    if (cell.getChildren().size() == 2) {
-                                        cell.getChildren().remove(1);
-                                        move = movedPiece + file + "x" + cell.getAccessibleText();
-                                    }
-                                    System.out.println(move);
-                                    if (Main.isServer()) {
-                                        ApplicationData.getInstance().getServer().sendMessageToClient(move);
-                                        ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
-                                    } else {
-                                        ApplicationData.getInstance().getClient().sendMessageToServer(move);
-                                        ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
-                                    }
-                                    cell.getChildren().add(selectedPiece);
-                                    selectedPiece = null;
-                                    event.setDropCompleted(true);
                                 }
                             }
                         });
@@ -127,6 +129,8 @@ public class ChessboardController {
         }
         StackPane finalStartCell = startCell;
         StackPane finalEndCell = endCell;
+        System.out.println(startCell.getAccessibleText());
+        System.out.println(endCell.getAccessibleText());
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -134,9 +138,6 @@ public class ChessboardController {
                 finalEndCell.getChildren().add(b);
             }
         });
-
-        System.out.println(startCell.getAccessibleText());
-        System.out.println(endCell.getAccessibleText());
 
 
     }
