@@ -41,6 +41,7 @@ public class ChessboardController {
                 current.setAccessibleText(square);
                 for (Node button : current.getChildren()) {
                     if (button instanceof Button currentButton) {
+                        currentButton.setStyle(currentButton.getStyle() + "-fx-background-radius: 0;");
                         currentButton.setOnDragDetected(new EventHandler<MouseEvent>() {
                             public void handle(MouseEvent event) {
                                 Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
@@ -55,8 +56,6 @@ public class ChessboardController {
                                 selectedPiece = currentButton;
                             }
                         });
-
-
                         currentButton.setOnDragOver(new EventHandler<DragEvent>() {
                             public void handle(DragEvent event) {
                                 if (event.getGestureSource() != currentButton && event.getDragboard().hasImage()) {
@@ -98,7 +97,6 @@ public class ChessboardController {
                                 }
                             }
                         });
-
                         currentButton.setOnDragDone(Event::consume);
                     }
                 }
@@ -124,9 +122,8 @@ public class ChessboardController {
                 endCell = (StackPane) node;
             }
         }
-
-        Button b = (Button) startCell.getChildren().remove(1);
-        endCell.getChildren().add(b);
+        Button movingPiece = (Button) startCell.getChildren().remove(1);
+        endCell.getChildren().add(movingPiece);
         if (endCell.getChildren().size() == 3) {
             endCell.getChildren().remove(1);
         }
