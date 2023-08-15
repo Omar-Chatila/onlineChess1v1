@@ -31,7 +31,7 @@ public class ChessboardController {
                 Integer rowIndexConstraint = GridPane.getRowIndex(current);
                 Integer columnIndexConstraint = GridPane.getColumnIndex(current);
                 String square;
-                if (Main.isServerWhite() && Main.isServer()) {
+                if (GameStates.isServerWhite() && GameStates.isServer()) {
                     square = Character.toString('a' + Objects.requireNonNullElse(columnIndexConstraint, 0))
                             + (8 - Objects.requireNonNullElse(rowIndexConstraint, 0));
                 } else {
@@ -66,7 +66,7 @@ public class ChessboardController {
 
                         currentButton.setOnDragDropped(new EventHandler<DragEvent>() {
                             public void handle(DragEvent event) {
-                                if (Main.isIsMyTurn()) {
+                                if (GameStates.isIsMyTurn()) {
                                     if (selectedPiece != null) {
                                         // Remove the piece from its original position
                                         String file = "";
@@ -83,7 +83,7 @@ public class ChessboardController {
                                             move = movedPiece + file + "x" + cell.getAccessibleText();
                                         }
                                         System.out.println(move);
-                                        if (Main.isServer()) {
+                                        if (GameStates.isServer()) {
                                             ApplicationData.getInstance().getServer().sendMessageToClient(move);
                                             ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
                                         } else {

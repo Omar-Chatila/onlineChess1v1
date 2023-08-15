@@ -60,7 +60,7 @@ public class ServerController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        roleLabel.setText("Chess - " + (Main.isServerWhite() ? "White" : "Black"));
+        roleLabel.setText("Chess - " + (GameStates.isServerWhite() ? "White" : "Black"));
         // Load the other FXML file
 
         vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
@@ -90,7 +90,7 @@ public class ServerController implements Initializable {
                     textFlow.setPadding(new Insets(5, 10, 5, 10));
                     text.setFill(Color.color(0.934, 0.945, 0.996));
                     hBox.getChildren().add(textFlow);
-                    if (Main.isIsMyTurn()) {
+                    if (GameStates.isIsMyTurn()) {
                         vbox_messages.getChildren().add(hBox);
                         server.sendMessageToClient(messageToSend);
                     }
@@ -128,7 +128,7 @@ public class ServerController implements Initializable {
 
     private void loadChessBoard() throws Exception {
         FXMLLoader loader;
-        if (Main.isServerWhite()) {
+        if (GameStates.isServerWhite()) {
             loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
         } else {
             loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));

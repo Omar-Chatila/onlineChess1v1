@@ -1,7 +1,7 @@
 package Networking;
 
 import chessModel.Game;
-import com.example.controller.Main;
+import com.example.controller.GameStates;
 import com.example.controller.ServerController;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
@@ -22,7 +22,7 @@ public class Server {
             this.socket = serverSocket.accept();
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            bufferedWriter.write(Main.isServerWhite() + "");
+            bufferedWriter.write(GameStates.isServerWhite() + "");
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (IOException e) {
@@ -35,11 +35,11 @@ public class Server {
 
     public void sendMessageToClient(String messageToClient) {
         try {
-            if (Main.isIsMyTurn()) {
+            if (GameStates.isIsMyTurn()) {
                 if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}")) {
                     System.out.println("Wie oft?");
-                    Game.executeMove(messageToClient, Main.isServerWhite());
-                    Main.setIsMyTurn(!Main.isIsMyTurn());
+                    Game.executeMove(messageToClient, GameStates.isServerWhite());
+                    GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                 }
             }
             bufferedWriter.write(messageToClient);
@@ -64,9 +64,9 @@ public class Server {
                         String messageFromClient = bufferedReader.readLine();
                         System.out.println("message from client: " + messageFromClient);
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}")) {
-                            Game.executeMove(messageFromClient, !Main.isServerWhite());
+                            Game.executeMove(messageFromClient, !GameStates.isServerWhite());
                             ServerController.addLabel(messageFromClient, vBox);
-                            Main.setIsMyTurn(!Main.isIsMyTurn());
+                            GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                         } else {
                             System.out.println("hier");
                             Platform.runLater(new Runnable() {

@@ -34,29 +34,29 @@ public class LoginViewController {
     @FXML
     void randomPieces() {
         boolean white = Math.random() < 0.5;
-        Main.setServerIswhite(white);
-        Main.setIsMyTurn(white);
+        GameStates.setServerIswhite(white);
+        GameStates.setIsMyTurn(white);
         connect();
     }
 
     @FXML
     void whitePieces() {
-        Main.setServerIswhite(true);
-        Main.setIsMyTurn(true);
+        GameStates.setServerIswhite(true);
+        GameStates.setIsMyTurn(true);
         connect();
     }
 
     @FXML
     void blackPieces() {
-        Main.setServerIswhite(false);
-        Main.setIsMyTurn(false);
+        GameStates.setServerIswhite(false);
+        GameStates.setIsMyTurn(false);
         connect();
     }
 
     @FXML
     void serverToggle() {
         this.ipField.setDisable(true);
-        Main.setServer(true);
+        GameStates.setServer(true);
         this.connectButton.setVisible(false);
         this.blackPieceColor.setVisible(true);
         this.whitePieceColor.setVisible(true);
@@ -66,7 +66,7 @@ public class LoginViewController {
     @FXML
     void clientToggle() {
         this.ipField.setDisable(false);
-        Main.setServer(false);
+        GameStates.setServer(false);
         this.connectButton.setVisible(true);
         this.blackPieceColor.setVisible(false);
         this.whitePieceColor.setVisible(false);
@@ -83,7 +83,7 @@ public class LoginViewController {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                if (Main.isServer()) {
+                if (GameStates.isServer()) {
                     try {
                         System.out.println("Server");
                         Parent mainWindowParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("serverView.fxml")));
@@ -117,12 +117,12 @@ public class LoginViewController {
         }
         RadioButton selected = (RadioButton) toggleGroup.getSelectedToggle();
         if (selected.getText().equals("Client")) {
-            Main.setServer(false);
+            GameStates.setServer(false);
             String ip = this.ipField.getText();
             ClientController.setIp_Address(ip);
             ClientController.setPortNr(port);
         } else {
-            Main.setServer(true);
+            GameStates.setServer(true);
             ServerController.setServerPort(port);
         }
     }

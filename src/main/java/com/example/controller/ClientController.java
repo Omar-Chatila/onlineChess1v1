@@ -77,7 +77,7 @@ public class ClientController implements Initializable {
                 textFlow.setPadding(new Insets(5, 10, 5, 10));
                 text.setFill(Color.color(0.934, 0.945, 0.996));
                 hBox.getChildren().add(textFlow);
-                if (Main.isIsMyTurn()) {
+                if (GameStates.isIsMyTurn()) {
                     vbox_messages.getChildren().add(hBox);
                     client.sendMessageToServer(messageToSend);
                 }
@@ -89,7 +89,7 @@ public class ClientController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        roleLabel.setText("Chess - " + (!Main.isServerWhite() ? "White" : "Black"));
+        roleLabel.setText("Chess - " + (!GameStates.isServerWhite() ? "White" : "Black"));
     }
 
     public static void addLabel(String msgFromServer, VBox vBox) {
@@ -117,8 +117,8 @@ public class ClientController implements Initializable {
 
     private void loadChessBoard() throws Exception {
         FXMLLoader loader;
-        System.out.println("Main is white?" + Main.isServerWhite());
-        if (Main.isServerWhite()) {
+        System.out.println("Main is white?" + GameStates.isServerWhite());
+        if (GameStates.isServerWhite()) {
             loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
         } else {
             loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));

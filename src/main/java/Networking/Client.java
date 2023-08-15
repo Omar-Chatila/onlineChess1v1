@@ -2,7 +2,7 @@ package Networking;
 
 import chessModel.Game;
 import com.example.controller.ClientController;
-import com.example.controller.Main;
+import com.example.controller.GameStates;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import util.ApplicationData;
@@ -30,10 +30,10 @@ public class Client {
 
     public void sendMessageToServer(String messageToServer) {
         try {
-            if (Main.isIsMyTurn()) {
+            if (GameStates.isIsMyTurn()) {
                 if (!messageToServer.matches("[0-9]{2}\\.[0-9]{2}")) {
-                    Game.executeMove(messageToServer, !Main.isServerWhite());
-                    Main.setIsMyTurn(!Main.isIsMyTurn());
+                    Game.executeMove(messageToServer, !GameStates.isServerWhite());
+                    GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                 }
             }
             bufferedWriter.write(messageToServer);
@@ -55,11 +55,11 @@ public class Client {
                     String messageFromServer = bufferedReader.readLine();
                     System.out.println("message from server: " + messageFromServer);
                     if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
-                        Main.setServerIswhite(messageFromServer.equals("true"));
+                        GameStates.setServerIswhite(messageFromServer.equals("true"));
                     } else {
                         if (!messageFromServer.matches("[0-9]{2}\\.[0-9]{2}")) {
-                            Game.executeMove(messageFromServer, Main.isServerWhite());
-                            Main.setIsMyTurn(!Main.isIsMyTurn());
+                            Game.executeMove(messageFromServer, GameStates.isServerWhite());
+                            GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                             ClientController.addLabel(messageFromServer, vBox);
                         } else {
                             System.out.println("hier");
