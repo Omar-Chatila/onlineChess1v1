@@ -105,6 +105,33 @@ public class Game {
         print(chessBoard);
     }
 
+    public static boolean kingChecked(boolean white) {
+        boolean checked = false;
+        for (int rank = 0; rank < 8; rank++) {
+            for (int file = 0; file < 8; file++) {
+                if (white) {
+                    switch (board[rank][file]) {
+                        case "q" -> checked |= QueenMoveTracker.checksKing(board, rank, file, true);
+                        case "b" -> checked |= BishopMoveTracker.checksKing(board, rank, file, true);
+                        case "n" -> checked |= KnightMoveTracker.checksKing(board, rank, file, true);
+                        case "r" -> checked |= RookMoveTracker.checksKing(board, rank, file, true);
+                        case "p" -> checked |= PawnMoveTracker.checksKing(board, rank, file, true);
+                    }
+                } else {
+                    switch (board[rank][file]) {
+                        case "Q" -> checked |= QueenMoveTracker.checksKing(board, rank, file, false);
+                        case "B" -> checked |= BishopMoveTracker.checksKing(board, rank, file, false);
+                        case "N" -> checked |= KnightMoveTracker.checksKing(board, rank, file, false);
+                        case "R" -> checked |= RookMoveTracker.checksKing(board, rank, file, false);
+                        case "P" -> checked |= PawnMoveTracker.checksKing(board, rank, file, false);
+                    }
+                }
+            }
+            if (checked) break;
+        }
+        return checked;
+    }
+
     public static void executeMove(String move, boolean white) {
         try {
             moveList.add(move);

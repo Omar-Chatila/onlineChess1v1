@@ -1,6 +1,9 @@
 package chessModel;
 
 public class BishopMoveTracker {
+    private static final int[] dx = {-1, 1, -1, 1};
+    private static final int[] dy = {-1, 1, 1, -1};
+
     public static boolean validateBishop(String[][] board, String move, boolean white) {
         if (!move.contains("x")) {
             int file = move.charAt(1) - 'a';
@@ -19,8 +22,6 @@ public class BishopMoveTracker {
     }
 
     private static boolean validateBishopHelper(String[][] board, int rank, int file, boolean white) {
-        int[] dx = {-1, 1, -1, 1};
-        int[] dy = {-1, 1, 1, -1};
         for (int d = 0; d < 4; d++) {
             int i = 1;
             while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
@@ -34,6 +35,24 @@ public class BishopMoveTracker {
                     board[rank][file] = "b";
                     return true;
                 } else if (!squareContent.matches("[bB.]")) {
+                    break;
+                }
+                i++;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checksKing(String[][] board, int rank, int file, boolean white) {
+        for (int d = 0; d < 4; d++) {
+            int i = 1;
+            while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
+                String squareContent = board[rank + i * dy[d]][file + i * dx[d]];
+                if (!white && squareContent.equals("k")) {
+                    return true;
+                } else if (white && squareContent.equals("K")) {
+                    return true;
+                } else if (!squareContent.equals(".")) {
                     break;
                 }
                 i++;

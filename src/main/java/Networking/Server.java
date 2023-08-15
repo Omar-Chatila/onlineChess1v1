@@ -39,6 +39,7 @@ public class Server {
                 if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}")) {
                     System.out.println("Wie oft?");
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
+                    System.out.println("Black King in check? " + Game.kingChecked(!GameStates.isServerWhite()));
                     GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                 }
             }
@@ -62,13 +63,12 @@ public class Server {
                 while (socket.isConnected()) {
                     try {
                         String messageFromClient = bufferedReader.readLine();
-                        System.out.println("message from client: " + messageFromClient);
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}")) {
                             Game.executeMove(messageFromClient, !GameStates.isServerWhite());
+                            System.out.println("My King in check? " + Game.kingChecked(GameStates.isServerWhite()));
                             ServerController.addLabel(messageFromClient, vBox);
                             GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                         } else {
-                            System.out.println("hier");
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {

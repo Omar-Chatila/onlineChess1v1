@@ -1,6 +1,6 @@
 package chessModel;
 
-public class KingMoveTracker {
+public class KingMoveTracker { // TODO check if king is in other king's space
     public static boolean validateKing(String[][] board, String move, boolean white) {
         if (!move.contains("x")) {
             int file = move.charAt(1) - 'a';

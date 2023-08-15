@@ -1,7 +1,7 @@
 package chessModel;
 
 public class PawnMoveTracker {
-    public static boolean validatePawn(String[][] board, String move, boolean white) {
+    private static boolean validatePawn(String[][] board, String move, boolean white) {
         if (!move.contains("x")) {
             int file = move.charAt(0) - 'a';
             int rank = Character.getNumericValue(move.charAt(1));
@@ -80,5 +80,21 @@ public class PawnMoveTracker {
             return true;
         }
         return false;
+    }
+
+    public static boolean checksKing(String[][] board, int rank, int file, boolean white) {
+        if (!white) {
+            if (isValidSquare(rank - 1, file - 1) && board[rank - 1][file - 1].equals("k")) {
+                return true;
+            } else return isValidSquare(rank - 1, file + 1) && board[rank - 1][file + 1].equals("k");
+        } else {
+            if (isValidSquare(rank + 1, file - 1) && board[rank + 1][file - 1].equals("k")) {
+                return true;
+            } else return isValidSquare(rank + 1, file + 1) && board[rank + 1][file + 1].equals("k");
+        }
+    }
+
+    private static boolean isValidSquare(int rank, int file) {
+        return rank >= 0 && rank < 8 && file >= 0 && file < 8;
     }
 }
