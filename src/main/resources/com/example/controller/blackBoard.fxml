@@ -44,7 +44,7 @@
                 </Button>
             </children>
         </StackPane>
-        <StackPane GridPane.columnIndex="1">
+        <StackPane style="-fx-background-color: darkgrey;" GridPane.columnIndex="1">
             <children>
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
@@ -299,7 +299,7 @@
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
             </children>
         </StackPane>
-        <StackPane GridPane.columnIndex="2" GridPane.rowIndex="4">
+        <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="4">
             <children>
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
             </children>
@@ -354,7 +354,7 @@
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
             </children>
         </StackPane>
-        <StackPane GridPane.columnIndex="2" GridPane.rowIndex="3">
+        <StackPane style="-fx-background-color: darkgrey;" GridPane.columnIndex="2" GridPane.rowIndex="3">
             <children>
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
             </children>

@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -93,8 +92,6 @@ public class ChessboardController {
                                             ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
                                         }
                                         cell.getChildren().add(selectedPiece);
-                                        GridPane.setRowIndex(current, destinationSquare.getRow());
-                                        GridPane.setColumnIndex(current, destinationSquare.getColumn());
                                         selectedPiece = null;
                                         event.setDropCompleted(true);
                                     }
@@ -127,21 +124,11 @@ public class ChessboardController {
                 endCell = (StackPane) node;
             }
         }
-        StackPane finalStartCell = startCell;
-        StackPane finalEndCell = endCell;
-        System.out.println(startCell.getAccessibleText());
-        System.out.println(endCell.getAccessibleText());
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Button b = (Button) finalStartCell.getChildren().remove(1);
-                finalEndCell.getChildren().add(b);
-                if (finalEndCell.getChildren().size() == 3) {
-                    finalEndCell.getChildren().remove(1);
-                }
-            }
-        });
 
-
+        Button b = (Button) startCell.getChildren().remove(1);
+        endCell.getChildren().add(b);
+        if (endCell.getChildren().size() == 3) {
+            endCell.getChildren().remove(1);
+        }
     }
 }

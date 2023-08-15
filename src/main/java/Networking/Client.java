@@ -3,6 +3,7 @@ package Networking;
 import chessModel.Game;
 import com.example.controller.ClientController;
 import com.example.controller.Main;
+import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import util.ApplicationData;
 
@@ -62,7 +63,12 @@ public class Client {
                             ClientController.addLabel(messageFromServer, vBox);
                         } else {
                             System.out.println("hier");
-                            ApplicationData.getInstance().getChessboardController().updateBoard(messageFromServer);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ApplicationData.getInstance().getChessboardController().updateBoard(messageFromServer);
+                                }
+                            });
                         }
                     }
                 } catch (IOException e) {

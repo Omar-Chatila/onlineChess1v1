@@ -3,6 +3,7 @@ package Networking;
 import chessModel.Game;
 import com.example.controller.Main;
 import com.example.controller.ServerController;
+import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import util.ApplicationData;
 
@@ -68,7 +69,12 @@ public class Server {
                             Main.setIsMyTurn(!Main.isIsMyTurn());
                         } else {
                             System.out.println("hier");
-                            ApplicationData.getInstance().getChessboardController().updateBoard(messageFromClient);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ApplicationData.getInstance().getChessboardController().updateBoard(messageFromClient);
+                                }
+                            });
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
