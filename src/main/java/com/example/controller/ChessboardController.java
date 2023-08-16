@@ -97,7 +97,7 @@ public class ChessboardController {
                                 }
                             }
                         });
-                        currentButton.setOnDragDone(Event::consume);
+                        currentButton.setOnDragDone(Event::consume);  // TODO Hier drag drp canceln bei illegalen moves
                     }
                 }
             }
