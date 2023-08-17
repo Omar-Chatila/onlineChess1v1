@@ -4,7 +4,7 @@ public class KnightMoveTracker {
     private static final int[] offsetY = {-2, -1, 1, 2, -2, -1, 1, 2};
     private static final int[] offsetX = {-1, -2, -2, -1, 1, 2, 2, 1};
 
-    public static boolean validateKnight(String[][] board, String move, boolean white) { // z�ge wie NEd5 oder N5e4 //																					// ber�cksichtigen fehlt
+    public static boolean validateKnight(String[][] board, String move, boolean white) { // TODO: zuege wie NEd5 oder N5e4 //																					// ber�cksichtigen fehlt
         if (!move.contains("x")) {
             int file = move.charAt(1) - 'a';
             int rank = 8 - Character.getNumericValue(move.charAt(2));
@@ -16,11 +16,11 @@ public class KnightMoveTracker {
                     if (board[rankY][fileX].equals("N") && white) {
                         board[rankY][fileX] = ".";
                         board[rank][file] = "N";
-                        return true;
+                        return !Game.kingChecked(true);
                     } else if (board[rankY][fileX].equals("n") && !white) {
                         board[rankY][fileX] = ".";
                         board[rank][file] = "n";
-                        return true;
+                        return !Game.kingChecked(false);
                     }
                 }
             }
@@ -36,14 +36,14 @@ public class KnightMoveTracker {
                         if (board[rank][file].matches("[npkqrb]")) {
                             board[rankY][fileX] = ".";
                             board[rank][file] = "N";
-                            return true;
                         }
+                        return !Game.kingChecked(true);
                     } else if (board[rankY][fileX].equals("n") && !white) {
                         if (board[rank][file].matches("[NPKBRQ]")) {
                             board[rankY][fileX] = ".";
                             board[rank][file] = "n";
-                            return true;
                         }
+                        return !Game.kingChecked(false);
                     }
                 }
             }

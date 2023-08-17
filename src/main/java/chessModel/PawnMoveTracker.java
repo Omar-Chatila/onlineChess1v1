@@ -63,7 +63,7 @@ public class PawnMoveTracker {
                 }
                 board[rank][file] = "p";
             }
-            return true;
+            return !Game.kingChecked(white);
         } else if (validatePawn(board, move, white) && move.contains("x")) {
             int pawnFile = move.charAt(0) - 'a';
             int capFile = move.charAt(2) - 'a';
@@ -77,7 +77,7 @@ public class PawnMoveTracker {
                 board[pawnRank][pawnFile] = ".";
                 board[capRank][capFile] = "p";
             }
-            return true;
+            return !Game.kingChecked(white);
         }
         return false;
     }

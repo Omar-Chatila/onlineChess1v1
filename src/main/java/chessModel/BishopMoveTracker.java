@@ -29,11 +29,11 @@ public class BishopMoveTracker {
                 if (squareContent.matches("B") && white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "B";
-                    return true;
+                    return !Game.kingChecked(true);
                 } else if (squareContent.matches("b") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "b";
-                    return true;
+                    return !Game.kingChecked(false);
                 } else if (!squareContent.matches("[bB.]")) {
                     break;
                 }

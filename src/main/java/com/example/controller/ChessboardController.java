@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import chessModel.Game;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +18,10 @@ import java.util.Objects;
 public class ChessboardController {
     @FXML
     private GridPane chessboardGrid;
+    @FXML
+    private Button whiteKingButton;
+    @FXML
+    private Button blackKingButton;
     private Button selectedPiece;
     public static String movedPiece;
     public static String move;
@@ -98,6 +103,7 @@ public class ChessboardController {
                                                 cell.getChildren().add(selectedPiece);
                                             }
                                         }
+                                        updateCheckStatus();
                                         selectedPiece = null;
                                         event.setDropCompleted(true);
                                     }
@@ -111,7 +117,22 @@ public class ChessboardController {
         }
     }
 
+    private void updateCheckStatus() {
+        System.out.println("White King checked: " + Game.kingChecked(true) + "\n Black checked: " + Game.kingChecked(false));
+        if (Game.kingChecked(false)) {
+            blackKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+        } else if (!Game.kingChecked(false)) {
+            blackKingButton.setStyle("-fx-background-color: transparent;");
+        }
+        if (Game.kingChecked(true)) {
+            whiteKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+        } else if (!Game.kingChecked(true)) {
+            whiteKingButton.setStyle("-fx-background-color: transparent;");
+        }
+    }
+
     public void updateBoard(String opponentMove) {
+        updateCheckStatus();
         System.out.println("transform " + opponentMove);
         int startRow = 7 - Character.getNumericValue(opponentMove.charAt(0));
         int startCol = 7 - Character.getNumericValue(opponentMove.charAt(1));
@@ -129,7 +150,9 @@ public class ChessboardController {
                 endCell = (StackPane) node;
             }
         }
+        assert startCell != null;
         Button movingPiece = (Button) startCell.getChildren().remove(1);
+        assert endCell != null;
         endCell.getChildren().add(movingPiece);
         if (endCell.getChildren().size() == 3) {
             endCell.getChildren().remove(1);

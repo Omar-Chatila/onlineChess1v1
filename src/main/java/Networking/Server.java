@@ -42,7 +42,6 @@ public class Server {
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                     }
-                    System.out.println("Black King in check? " + Game.kingChecked(!GameStates.isServerWhite()));
                 }
             }
             bufferedWriter.write(messageToClient);
@@ -68,7 +67,6 @@ public class Server {
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}")) {
                             ApplicationData.getInstance().setIllegalMove(false);
                             Game.executeMove(messageFromClient, !GameStates.isServerWhite());
-                            System.out.println("My King in check? " + Game.kingChecked(GameStates.isServerWhite()));
                             if (!ApplicationData.getInstance().isIllegalMove()) {
                                 ServerController.addLabel(messageFromClient, vBox);
                             }

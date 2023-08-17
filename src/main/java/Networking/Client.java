@@ -33,7 +33,6 @@ public class Client {
             if (GameStates.isIsMyTurn()) {
                 if (!messageToServer.matches("[0-9]{2}\\.[0-9]{2}")) {
                     Game.executeMove(messageToServer, !GameStates.isServerWhite());
-                    System.out.println("Other King in check? " + Game.kingChecked(GameStates.isServerWhite()));
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                     }
@@ -62,7 +61,6 @@ public class Client {
                         if (!messageFromServer.matches("[0-9]{2}\\.[0-9]{2}")) {
                             ApplicationData.getInstance().setIllegalMove(false);
                             Game.executeMove(messageFromServer, GameStates.isServerWhite());
-                            System.out.println("My King in check? " + Game.kingChecked(!GameStates.isServerWhite()));
                             if (!ApplicationData.getInstance().isIllegalMove()) {
                                 GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                             }
