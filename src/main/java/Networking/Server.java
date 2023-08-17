@@ -39,8 +39,10 @@ public class Server {
                 if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}")) {
                     System.out.println("Wie oft?");
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
+                    if (!ApplicationData.getInstance().isIllegalMove()) {
+                        GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                    }
                     System.out.println("Black King in check? " + Game.kingChecked(!GameStates.isServerWhite()));
-                    GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                 }
             }
             bufferedWriter.write(messageToClient);
@@ -64,15 +66,22 @@ public class Server {
                     try {
                         String messageFromClient = bufferedReader.readLine();
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}")) {
+                            ApplicationData.getInstance().setIllegalMove(false);
                             Game.executeMove(messageFromClient, !GameStates.isServerWhite());
                             System.out.println("My King in check? " + Game.kingChecked(GameStates.isServerWhite()));
-                            ServerController.addLabel(messageFromClient, vBox);
-                            GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                            if (!ApplicationData.getInstance().isIllegalMove()) {
+                                ServerController.addLabel(messageFromClient, vBox);
+                            }
+                            if (!ApplicationData.getInstance().isIllegalMove()) {
+                                GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                            }
                         } else {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ApplicationData.getInstance().getChessboardController().updateBoard(messageFromClient);
+                                    if (!ApplicationData.getInstance().isIllegalMove()) {
+                                        ApplicationData.getInstance().getChessboardController().updateBoard(messageFromClient);
+                                    }
                                 }
                             });
                         }

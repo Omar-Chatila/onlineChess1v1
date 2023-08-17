@@ -44,6 +44,7 @@ public class ChessboardController {
                         currentButton.setStyle(currentButton.getStyle() + "-fx-background-radius: 0;");
                         currentButton.setOnDragDetected(new EventHandler<MouseEvent>() {
                             public void handle(MouseEvent event) {
+                                ApplicationData.getInstance().setIllegalMove(false);
                                 Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
                                 startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
                                 ClipboardContent content = new ClipboardContent();
@@ -73,16 +74,15 @@ public class ChessboardController {
                                         if (movedPiece.isEmpty()) {
                                             file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
                                         }
-                                        ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                                         // Add the piece to the new position
                                         StackPane cell = (StackPane) currentButton.getParent();
                                         destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
                                         move = movedPiece + cell.getAccessibleText();
                                         if (cell.getChildren().size() == 2) {
-                                            cell.getChildren().remove(1);
                                             move = movedPiece + file + "x" + cell.getAccessibleText();
                                         }
                                         System.out.println(move);
+
                                         if (GameStates.isServer()) {
                                             ApplicationData.getInstance().getServer().sendMessageToClient(move);
                                             ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
@@ -90,7 +90,13 @@ public class ChessboardController {
                                             ApplicationData.getInstance().getClient().sendMessageToServer(move);
                                             ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
                                         }
-                                        cell.getChildren().add(selectedPiece);
+                                        if (!ApplicationData.getInstance().isIllegalMove()) {
+                                            if (cell.getChildren().size() == 2) {
+                                                cell.getChildren().remove(1);
+                                            }
+                                            ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                                            cell.getChildren().add(selectedPiece);
+                                        }
                                         selectedPiece = null;
                                         event.setDropCompleted(true);
                                     }

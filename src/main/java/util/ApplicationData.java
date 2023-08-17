@@ -10,6 +10,7 @@ public class ApplicationData {
     private Client client;
     private Server server;
     private ChessboardController chessboardController;
+    private boolean illegalMove;
 
     private ApplicationData() {
 
@@ -51,4 +52,11 @@ public class ApplicationData {
         this.chessboardController = chessboardController;
     }
 
+    public boolean isIllegalMove() {
+        return illegalMove;
+    }
+
+    public void setIllegalMove(boolean illegalMove) {
+        this.illegalMove = illegalMove;
+    }
 }

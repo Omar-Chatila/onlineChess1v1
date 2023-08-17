@@ -1,5 +1,8 @@
 package chessModel;
 
+import Exceptions.IllegalMoveException;
+import util.ApplicationData;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +11,7 @@ public class Game {
     public static List<String> moveList = new ArrayList<>();
     public static String[][] board = new String[8][8];
 
-    private static String[][] movePieces(String move, boolean white) throws Exception {
+    private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
         String currentPiece = Character.toString(move.charAt(0));
         if (!currentPiece.matches("[NKBRQ]")) {
@@ -25,7 +28,8 @@ public class Game {
             legal = KingMoveTracker.validateKing(board, move, white);
         }
         if (!legal) {
-            throw new Exception("Illegal Move: " + move);
+            ApplicationData.getInstance().setIllegalMove(true);
+            throw new IllegalMoveException(move);
         }
         return board;
     }
@@ -134,8 +138,8 @@ public class Game {
 
     public static void executeMove(String move, boolean white) {
         try {
-            moveList.add(move);
             map(movePieces(move, white));
+            moveList.add(move);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
