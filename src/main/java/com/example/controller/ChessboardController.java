@@ -69,7 +69,6 @@ public class ChessboardController {
                             public void handle(DragEvent event) {
                                 if (GameStates.isIsMyTurn()) {
                                     if (selectedPiece != null) {
-                                        // Remove the piece from its original position
                                         String file = "";
                                         if (movedPiece.isEmpty()) {
                                             file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
@@ -82,20 +81,22 @@ public class ChessboardController {
                                             move = movedPiece + file + "x" + cell.getAccessibleText();
                                         }
                                         System.out.println(move);
-
-                                        if (GameStates.isServer()) {
-                                            ApplicationData.getInstance().getServer().sendMessageToClient(move);
-                                            ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
-                                        } else {
-                                            ApplicationData.getInstance().getClient().sendMessageToServer(move);
-                                            ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
-                                        }
-                                        if (!ApplicationData.getInstance().isIllegalMove()) {
-                                            if (cell.getChildren().size() == 2) {
-                                                cell.getChildren().remove(1);
+                                        if (!(movedPiece.isEmpty() && startingSquare.getRow() <= destinationSquare.getRow() && (!move.contains("x") && startingSquare.getColumn() != destinationSquare.getColumn())
+                                                || (move.contains("x") && Math.abs(startingSquare.getColumn() - destinationSquare.getColumn()) != 1))) {
+                                            if (GameStates.isServer()) {
+                                                ApplicationData.getInstance().getServer().sendMessageToClient(move);
+                                                ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
+                                            } else {
+                                                ApplicationData.getInstance().getClient().sendMessageToServer(move);
+                                                ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
                                             }
-                                            ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
-                                            cell.getChildren().add(selectedPiece);
+                                            if (!ApplicationData.getInstance().isIllegalMove()) {
+                                                if (cell.getChildren().size() == 2) {
+                                                    cell.getChildren().remove(1);
+                                                }
+                                                ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                                                cell.getChildren().add(selectedPiece);
+                                            }
                                         }
                                         selectedPiece = null;
                                         event.setDropCompleted(true);
