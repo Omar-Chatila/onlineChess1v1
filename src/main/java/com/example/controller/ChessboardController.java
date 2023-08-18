@@ -76,7 +76,11 @@ public class ChessboardController {
                                     if (selectedPiece != null) {
                                         String file = "";
                                         if (movedPiece.isEmpty()) {
-                                            file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
+                                            if (GameStates.isServerWhite() && GameStates.isServer()) {
+                                                file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
+                                            } else {
+                                                file = Character.toString('h' - Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
+                                            }
                                         }
                                         // Add the piece to the new position
                                         StackPane cell = (StackPane) currentButton.getParent();

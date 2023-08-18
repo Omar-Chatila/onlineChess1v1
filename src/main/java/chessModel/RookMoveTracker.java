@@ -29,11 +29,11 @@ public class RookMoveTracker {
                 if (squareContent.matches("R") && white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "R";
-                    return Game.kingChecked(false);
+                    return !Game.kingChecked(true);
                 } else if (squareContent.matches("r") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "r";
-                    return Game.kingChecked(false);
+                    return !Game.kingChecked(false);
                 } else if (!squareContent.matches("[rR.]")) {
                     break;
                 }

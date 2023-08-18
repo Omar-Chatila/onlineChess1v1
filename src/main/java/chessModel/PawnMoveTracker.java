@@ -69,7 +69,6 @@ public class PawnMoveTracker {
             int capFile = move.charAt(2) - 'a';
             int capRank = 8 - Character.getNumericValue(move.charAt(3));
             int pawnRank = white ? capRank + 1 : capRank - 1;
-
             if (white) {
                 board[pawnRank][pawnFile] = ".";
                 board[capRank][capFile] = "P";
@@ -77,8 +76,10 @@ public class PawnMoveTracker {
                 board[pawnRank][pawnFile] = ".";
                 board[capRank][capFile] = "p";
             }
+            System.out.println("*****" + !Game.kingChecked(white));
             return !Game.kingChecked(white);
         }
+        System.out.println("*****" + !Game.kingChecked(white));
         return false;
     }
 

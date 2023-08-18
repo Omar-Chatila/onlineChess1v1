@@ -32,7 +32,7 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                 } else if (squareContent.matches("k") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "k";
-                    return !Game.kingChecked(true);
+                    return !Game.kingChecked(false);
                 }
             }
         }

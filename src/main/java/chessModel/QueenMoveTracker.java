@@ -7,11 +7,11 @@ public class QueenMoveTracker {
     public static boolean validateQueen(String[][] board, String move, boolean white) {
         if (!move.contains("x")) {
             int file = move.charAt(1) - 'a';
-            int rank = 8 - Character.getNumericValue(move.charAt(2));
+            int rank = 7 - Character.getNumericValue(move.charAt(2));
             return validateQueenHelper(board, rank, file, white);
         } else {
             int file = move.charAt(2) - 'a';
-            int rank = 8 - Character.getNumericValue(move.charAt(3));
+            int rank = 7 - Character.getNumericValue(move.charAt(3));
             if (!white && board[rank][file].matches("[NPKBRQ]")) {
                 return validateQueenHelper(board, rank, file, false);
             } else if (white && board[rank][file].matches("[npkqrb]")) {
@@ -33,7 +33,7 @@ public class QueenMoveTracker {
                 } else if (squareContent.matches("q") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "q";
-                    return Game.kingChecked(false);
+                    return !Game.kingChecked(false);
                 } else if (!squareContent.matches("[qQ.]")) {
                     break;
                 }
