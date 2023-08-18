@@ -90,23 +90,23 @@ public class ChessboardController {
                                             move = movedPiece + file + "x" + cell.getAccessibleText();
                                         }
                                         System.out.println(move);
-                                        if (!(movedPiece.isEmpty() && startingSquare.getRow() <= destinationSquare.getRow() && (!move.contains("x") && startingSquare.getColumn() != destinationSquare.getColumn())
-                                                || (move.contains("x") && Math.abs(startingSquare.getColumn() - destinationSquare.getColumn()) != 1))) {
-                                            if (GameStates.isServer()) {
-                                                ApplicationData.getInstance().getServer().sendMessageToClient(move);
-                                                ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
-                                            } else {
-                                                ApplicationData.getInstance().getClient().sendMessageToServer(move);
-                                                ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
-                                            }
-                                            if (!ApplicationData.getInstance().isIllegalMove()) {
-                                                if (cell.getChildren().size() == 2) {
-                                                    cell.getChildren().remove(1);
-                                                }
-                                                ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
-                                                cell.getChildren().add(selectedPiece);
-                                            }
+
+                                        if (GameStates.isServer()) {
+                                            ApplicationData.getInstance().getServer().sendMessageToClient(move);
+                                            ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare.toString());
+                                        } else {
+                                            ApplicationData.getInstance().getClient().sendMessageToServer(move);
+                                            ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare.toString());
                                         }
+                                        if (!ApplicationData.getInstance().isIllegalMove()) {
+                                            System.out.println("Legal");
+                                            if (cell.getChildren().size() == 2) {
+                                                cell.getChildren().remove(1);
+                                            }
+                                            ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                                            cell.getChildren().add(selectedPiece);
+                                        }
+
                                         updateCheckStatus();
                                         selectedPiece = null;
                                         event.setDropCompleted(true);
