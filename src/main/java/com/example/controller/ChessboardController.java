@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import chessModel.BishopMoveTracker;
 import chessModel.Game;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -56,7 +57,34 @@ public class ChessboardController {
                                 content.putImage(((ImageView) currentButton.getGraphic()).getImage());
                                 String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
                                 String movedP = imageUrl.substring(imageUrl.length() - 6);
+                                System.out.println("moved piece  " + movedP);
+                                boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
                                 movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
+                                System.out.println("startpunkt: " + startingSquare.getRow() + "," + startingSquare.getColumn());
+                                if (movedPiece.matches("[bB]")) {
+                                    System.out.println(BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece));
+                                    for (String coord : BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece)) {
+                                        for (Node node : chessboardGrid.getChildren()) {
+                                            StackPane highlight = (StackPane) node;
+                                            int rf = Integer.parseInt(coord);
+                                            int row = Character.getNumericValue(highlight.getAccessibleText().charAt(1));
+                                            int col = Character.getNumericValue(highlight.getAccessibleText().charAt(0));
+                                            System.out.println("Reihe: " + row + " Col: " + col);
+                                            if (row == rf / 10
+                                                    && col == rf % 10) {
+                                                highlight.getChildren().get(0).setStyle("-fx-background-color: transparent;" +
+                                                        "                                                -fx-background-radius: 0;" +
+                                                        "                                                -fx-shape: \"M 50 50 L 50 60 Q 50 70 60 70 L 70 70 Q 80 70 80 60 L 80 50 Q 80 40 70 40 L 60 40 Q 50 40 50 50 Z\";" +
+                                                        "                                                -fx-fill: rgba(128, 128, 128, 0.5);" +
+                                                        "                                                -fx-padding: 5;");
+                                            }
+
+                                        }
+                                    }
+
+                                }
+
+
                                 db.setContent(content);
                                 // Save reference to selected piece
                                 selectedPiece = currentButton;
@@ -105,9 +133,8 @@ public class ChessboardController {
                                             }
                                             ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                                             cell.getChildren().add(selectedPiece);
+                                            updateCheckStatus();
                                         }
-
-                                        updateCheckStatus();
                                         selectedPiece = null;
                                         event.setDropCompleted(true);
                                     }

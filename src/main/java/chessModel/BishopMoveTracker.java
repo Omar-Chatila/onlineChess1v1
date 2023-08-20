@@ -1,5 +1,8 @@
 package chessModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BishopMoveTracker {
     private static final int[] dx = {-1, 1, -1, 1};
     private static final int[] dy = {-1, 1, 1, -1};
@@ -41,6 +44,25 @@ public class BishopMoveTracker {
             }
         }
         return false;
+    }
+
+    public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
+        List<String> moves = new ArrayList<>();
+        for (int d = 0; d < 4; d++) {
+            int i = 1;
+            while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
+                String squareContent = board[rank + i * dy[d]][file + i * dx[d]];
+                if (squareContent.matches("[.pqrnb]") && white) {
+                    moves.add((rank + i * dy[d]) + "" + (file + i * dx[d]));
+                } else if (squareContent.matches("[.PQRNB]") && !white) {
+                    moves.add((rank + i * dy[d]) + "" + (file + i * dx[d]));
+                } else {
+                    break;
+                }
+                i++;
+            }
+        }
+        return moves;
     }
 
     public static boolean checksKing(String[][] board, int rank, int file, boolean white) {
