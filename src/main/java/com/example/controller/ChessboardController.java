@@ -150,11 +150,17 @@ public class ChessboardController {
         System.out.println("White King checked: " + Game.kingChecked(true) + "\n Black checked: " + Game.kingChecked(false));
         if (Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+            if (Game.checkMated(false)) {
+                System.out.println("Game over - White won");
+            }
         } else if (!Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: transparent;");
         }
         if (Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+            if (Game.checkMated(true)) {
+                System.out.println("Game over - Black won");
+            }
         } else if (!Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: transparent;");
         }
@@ -226,22 +232,24 @@ public class ChessboardController {
     }
 
     private void setOnDragDetection(Button currentButton) {
-        ApplicationData.getInstance().setIllegalMove(false);
-        Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
-        startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
-        ClipboardContent content = new ClipboardContent();
-        content.putImage(((ImageView) currentButton.getGraphic()).getImage());
-        String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
-        String movedP = imageUrl.substring(imageUrl.length() - 6);
-        System.out.println("moved piece  " + movedP);
-        boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
-        movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
-        System.out.println("startpunkt: " + startingSquare.getRow() + "," + startingSquare.getColumn());
-        if (!movedPiece.isEmpty()) {
-            highlightPossibleSquares(movedPiece, isWhitePiece);
+        if (!GameStates.isGameOver()) {
+            ApplicationData.getInstance().setIllegalMove(false);
+            Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
+            startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
+            ClipboardContent content = new ClipboardContent();
+            content.putImage(((ImageView) currentButton.getGraphic()).getImage());
+            String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
+            String movedP = imageUrl.substring(imageUrl.length() - 6);
+            System.out.println("moved piece  " + movedP);
+            boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
+            movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
+            System.out.println("startpunkt: " + startingSquare.getRow() + "," + startingSquare.getColumn());
+            if (!movedPiece.isEmpty()) {
+                highlightPossibleSquares(movedPiece, isWhitePiece);
+            }
+            db.setContent(content);
+            // Save reference to selected piece
+            selectedPiece = currentButton;
         }
-        db.setContent(content);
-        // Save reference to selected piece
-        selectedPiece = currentButton;
     }
 }

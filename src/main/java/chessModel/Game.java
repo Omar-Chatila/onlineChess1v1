@@ -1,6 +1,7 @@
 package chessModel;
 
 import Exceptions.IllegalMoveException;
+import com.example.controller.GameStates;
 import util.ApplicationData;
 
 import java.util.ArrayList;
@@ -69,6 +70,45 @@ public class Game {
 
     public static boolean kingChecked(boolean white) {
         return kingChecked(white, Game.board);
+    }
+
+    public static boolean checkMated(boolean white) {
+        boolean checkMate = false;
+        if (kingChecked(white)) {
+            for (int rank = 0; rank < 8; rank++) {
+                for (int file = 0; file < 8; file++) {
+                    if (white) {
+                        switch (board[rank][file]) {
+                            case "Q" -> checkMate |= !QueenMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
+                            case "B" ->
+                                    checkMate |= !BishopMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
+                            case "N" ->
+                                    checkMate |= !KnightMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
+                            case "R" -> checkMate |= !RookMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
+                            case "K" -> checkMate |= !KingMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
+                        }
+                    }
+                }
+            }
+            for (int rank = 0; rank < 8; rank++) {
+                for (int file = 0; file < 8; file++) {
+                    if (!white) {
+                        switch (board[rank][file]) {
+                            case "q" ->
+                                    checkMate |= !QueenMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
+                            case "b" ->
+                                    checkMate |= !BishopMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
+                            case "n" ->
+                                    checkMate |= !KnightMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
+                            case "r" -> checkMate |= !RookMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
+                            case "k" -> checkMate |= !KingMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
+                        }
+                    }
+                }
+            }
+        }
+        GameStates.setGameOver(checkMate);
+        return checkMate;
     }
 
     public static void executeMove(String move, boolean white) {

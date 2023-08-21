@@ -2,8 +2,17 @@ package com.example.controller;
 
 public class GameStates {
     private static boolean serverIswhite;
-    static boolean isMyTurn;
+    private static boolean isMyTurn;
     private static boolean isServer;
+    private static boolean gameOver;
+
+    public static boolean isGameOver() {
+        return gameOver;
+    }
+
+    public static void setGameOver(boolean gameOver) {
+        GameStates.gameOver = gameOver;
+    }
 
     public static boolean isServerWhite() {
         return serverIswhite;
