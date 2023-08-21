@@ -67,14 +67,15 @@ public class ChessboardController {
         movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
         System.out.println("startpunkt: " + startingSquare.getRow() + "," + startingSquare.getColumn());
         if (movedPiece.matches("[bB]")) {
+            System.out.println(isWhitePiece);
             System.out.println(BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece));
+            /*
             for (String coord : BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece)) {
                 for (Node node : chessboardGrid.getChildren()) {
                     StackPane highlight = (StackPane) node;
                     int rf = Integer.parseInt(coord);
                     int row = Character.getNumericValue(highlight.getAccessibleText().charAt(1));
                     int col = Character.getNumericValue(highlight.getAccessibleText().charAt(0));
-                    System.out.println("Reihe: " + row + " Col: " + col);
                     if (row == rf / 10
                             && col == rf % 10) {
                         highlight.getChildren().get(0).setStyle("-fx-background-color: transparent;" +
@@ -86,7 +87,7 @@ public class ChessboardController {
 
                 }
             }
-
+*/
         }
         db.setContent(content);
         // Save reference to selected piece

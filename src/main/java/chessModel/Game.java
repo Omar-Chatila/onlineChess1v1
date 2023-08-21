@@ -77,39 +77,7 @@ public class Game {
         System.out.println();
     }
 
-    public static void map(String[][] board) {
-        String[][] chessBoard = new String[8][8];
-        boolean white = true;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                white = !white;
-                switch (board[i][j]) {
-                    case "p" -> chessBoard[i][j] = "♟";
-                    case "k" -> chessBoard[i][j] = "♚";
-                    case "b" -> chessBoard[i][j] = "♝";
-                    case "q" -> chessBoard[i][j] = "♛";
-                    case "r" -> chessBoard[i][j] = "♜";
-                    case "n" -> chessBoard[i][j] = "♞";
-                    case "P" -> chessBoard[i][j] = "♙";
-                    case "K" -> chessBoard[i][j] = "♔";
-                    case "B" -> chessBoard[i][j] = "♗";
-                    case "Q" -> chessBoard[i][j] = "♕";
-                    case "R" -> chessBoard[i][j] = "♖";
-                    case "N" -> chessBoard[i][j] = "♘";
-                    default -> {
-                        if (white) {
-                            chessBoard[i][j] = "□";
-                        } else {
-                            chessBoard[i][j] = "■";
-                        }
-                    }
-                }
-            }
-        }
-        print(chessBoard);
-    }
-
-    public static boolean kingChecked(boolean white) {
+    public static boolean kingChecked(boolean white, String[][] board) {
         boolean checked = false;
         for (int rank = 0; rank < 8; rank++) {
             for (int file = 0; file < 8; file++) {
@@ -136,9 +104,13 @@ public class Game {
         return checked;
     }
 
+    public static boolean kingChecked(boolean white) {
+        return kingChecked(white, Game.board);
+    }
+
     public static void executeMove(String move, boolean white) {
         try {
-            map(movePieces(move, white));
+            print(movePieces(move, white));
             moveList.add(move);
         } catch (Exception e) {
             // TODO Auto-generated catch block

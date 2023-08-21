@@ -17,6 +17,7 @@ target/
 .idea/misc.xml
 .idea/uiDesigner.xml
 .idea/vcs.xml
+.idea/codeStyles/
 out/artifacts/messenger_server/messenger_server.jar
 out/artifacts/messenger_server_jar/messenger-server.jar
 
