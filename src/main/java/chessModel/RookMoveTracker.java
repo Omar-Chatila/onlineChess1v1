@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static util.GameHelper.copyBoard;
+import static util.GameHelper.print;
 
 public class RookMoveTracker {
     private static final int[] dx = {0, 0, -1, 1};
@@ -73,7 +74,7 @@ public class RookMoveTracker {
         }
         List<String> moves = new ArrayList<>();
         String[][] copy = copyBoard(board);
-        Game.print(copy);
+        print(copy);
         for (int d = 0; d < 4; d++) {
             int i = 1;
             while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {

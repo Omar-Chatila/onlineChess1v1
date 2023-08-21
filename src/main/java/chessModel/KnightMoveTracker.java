@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static util.GameHelper.copyBoard;
+import static util.GameHelper.print;
 
 public class KnightMoveTracker {
     private static final int[] offsetY = {-2, -1, 1, 2, -2, -1, 1, 2};
@@ -77,7 +78,7 @@ public class KnightMoveTracker {
         }
         List<String> moves = new ArrayList<>();
         String[][] copy = copyBoard(board);
-        Game.print(copy);
+        print(copy);
         for (int d = 0; d < 8; d++) {
             if (isValidSquare(rank + offsetY[d], file + offsetX[d])) {
                 String squareContent = copy[rank + offsetY[d]][file + offsetX[d]];
