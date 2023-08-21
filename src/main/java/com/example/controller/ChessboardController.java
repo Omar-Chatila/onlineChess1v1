@@ -84,11 +84,17 @@ public class ChessboardController {
             IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
             move = movedPiece + cell.getAccessibleText();
             if (cell.getChildren().size() == 2) {
-                move = movedPiece + file + "x" + cell.getAccessibleText();
+                if (!move.contains("O")) {
+                    move = movedPiece + file + "x" + cell.getAccessibleText();
+                }
             }
             System.out.println(move);
-            if (Game.board[7][4].equals("K") && move.equals("Kg1") || Game.board[0][4].equals("k") && move.equals("Kg8")) {
+            if (Game.board[7][4].equals("K") && (move.equals("Kg1") || move.equals("Kh1"))
+                    || Game.board[0][4].equals("k") && (move.equals("Kg8") || move.equals("Kh8"))) {
                 move = "O-O";
+            } else if (Game.board[7][4].equals("K") && (move.equals("Kc1") || move.equals("Kb1") || move.equals("Ka1"))
+                    || Game.board[0][4].equals("k") && (move.equals("Kb8") || move.equals("Kc8") || move.equals("Ka8"))) {
+                move = "O-O-O";
             }
             if (GameStates.isServer()) {
                 ApplicationData.getInstance().getServer().sendMessageToClient(move);
@@ -99,19 +105,33 @@ public class ChessboardController {
                     } else {
                         ApplicationData.getInstance().getServer().sendMessageToClient("70.72");
                     }
+                } else if (move.equals("O-O-O")) {
+                    if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
+                        ApplicationData.getInstance().getServer().sendMessageToClient("70.73");
+                    } else {
+                        ApplicationData.getInstance().getServer().sendMessageToClient("77.74");
+                    }
                 }
             } else {
                 ApplicationData.getInstance().getClient().sendMessageToServer(move);
                 ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare);
                 if (move.equals("O-O")) {
+                    // Rook move for castling short
                     if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
                         ApplicationData.getInstance().getClient().sendMessageToServer("77.75");
                     } else {
                         ApplicationData.getInstance().getClient().sendMessageToServer("70.72");
                     }
+                } else if (move.equals("O-O-O")) {
+                    // Rook move for castling long
+                    if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
+                        ApplicationData.getInstance().getClient().sendMessageToServer("70.73");
+                    } else {
+                        ApplicationData.getInstance().getClient().sendMessageToServer("77.74");
+                    }
                 }
             }
-            if (!ApplicationData.getInstance().isIllegalMove() && !move.equals("O-O")) {
+            if (!ApplicationData.getInstance().isIllegalMove() && !move.equals("O-O") && !move.equals("O-O-O")) {
                 System.out.println("Legal");
                 if (cell.getChildren().size() == 2) {
                     cell.getChildren().remove(1);
@@ -119,26 +139,39 @@ public class ChessboardController {
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                 cell.getChildren().add(selectedPiece);
                 updateCheckStatus();
-            } else if (move.equals("O-O")) {
-
+            } else if (move.equals("O-O") || move.equals("O-O-O")) {
                 if (GameStates.isServerWhite() && GameStates.isServer() || !GameStates.isServerWhite() && !GameStates.isServer()) {
-                    StackPane kingSquare = getPaneFromCoordinate(new IntIntPair(7, 6));
-                    StackPane rookSquare = getPaneFromCoordinate(new IntIntPair(7, 5));
+                    StackPane kingSquare = null;
+                    StackPane rookSquare = null;
+                    if (move.equals("O-O")) {
+                        kingSquare = getPaneFromCoordinate(new IntIntPair(7, 6));
+                        rookSquare = getPaneFromCoordinate(new IntIntPair(7, 5));
+                    } else {
+                        kingSquare = getPaneFromCoordinate(new IntIntPair(7, 2));
+                        rookSquare = getPaneFromCoordinate(new IntIntPair(7, 3));
+                    }
                     Button kingButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 4)).getChildren().get(1);
-                    Button rookButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 7)).getChildren().get(1);
+                    Button rookButton = (Button) getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 7 : 0)).getChildren().get(1);
                     kingSquare.getChildren().add(kingButton);
                     rookSquare.getChildren().add(rookButton);
                     getPaneFromCoordinate(new IntIntPair(7, 4)).getChildren().remove(1);
-                    getPaneFromCoordinate(new IntIntPair(7, 7)).getChildren().remove(1);
+                    getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 7 : 0)).getChildren().remove(1);
                 } else {
-                    StackPane kingSquare = getPaneFromCoordinate(new IntIntPair(7, 1));
-                    StackPane rookSquare = getPaneFromCoordinate(new IntIntPair(7, 2));
+                    StackPane kingSquare = null;
+                    StackPane rookSquare = null;
+                    if (move.equals("O-O")) {
+                        kingSquare = getPaneFromCoordinate(new IntIntPair(7, 1));
+                        rookSquare = getPaneFromCoordinate(new IntIntPair(7, 2));
+                    } else {
+                        kingSquare = getPaneFromCoordinate(new IntIntPair(7, 5)); // long castle anpassen
+                        rookSquare = getPaneFromCoordinate(new IntIntPair(7, 4));
+                    }
                     Button kingButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 3)).getChildren().get(1);
-                    Button rookButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 0)).getChildren().get(1);
+                    Button rookButton = (Button) getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 0 : 7)).getChildren().get(1);
                     kingSquare.getChildren().add(kingButton);
                     rookSquare.getChildren().add(rookButton);
                     getPaneFromCoordinate(new IntIntPair(7, 3)).getChildren().remove(1);
-                    getPaneFromCoordinate(new IntIntPair(7, 0)).getChildren().remove(1);
+                    getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 0 : 7)).getChildren().remove(1);
                 }
             }
             selectedPiece = null;
@@ -191,7 +224,6 @@ public class ChessboardController {
         }
         assert list != null;
         for (String coordinate : list) {
-            System.out.println("Koordinate" + coordinate);
             IntIntPair c = new IntIntPair(Character.getNumericValue(coordinate.charAt(0)), Character.getNumericValue(coordinate.charAt(1)));
             StackPane square = getPaneFromCoordinate(c);
             Button b = (Button) square.getChildren().get(0);

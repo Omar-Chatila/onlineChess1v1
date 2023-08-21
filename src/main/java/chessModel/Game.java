@@ -16,7 +16,7 @@ public class Game {
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
-        if (move.equals("O-O")) {
+        if (move.equals("O-O") || move.equals("O-O-O")) {
             legal = KingMoveTracker.validateKing(board, move, white);
         } else {
             String currentPiece = Character.toString(move.charAt(0));
