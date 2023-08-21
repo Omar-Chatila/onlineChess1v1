@@ -1,11 +1,11 @@
 package com.example.controller;
 
-import chessModel.BishopMoveTracker;
-import chessModel.Game;
+import chessModel.*;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -16,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import util.ApplicationData;
 import util.IntIntPair;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ChessboardController {
@@ -66,34 +67,13 @@ public class ChessboardController {
         boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
         movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
         System.out.println("startpunkt: " + startingSquare.getRow() + "," + startingSquare.getColumn());
-        if (movedPiece.matches("[bB]")) {
-            System.out.println(isWhitePiece);
-            System.out.println(BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece));
-            /*
-            for (String coord : BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece)) {
-                for (Node node : chessboardGrid.getChildren()) {
-                    StackPane highlight = (StackPane) node;
-                    int rf = Integer.parseInt(coord);
-                    int row = Character.getNumericValue(highlight.getAccessibleText().charAt(1));
-                    int col = Character.getNumericValue(highlight.getAccessibleText().charAt(0));
-                    if (row == rf / 10
-                            && col == rf % 10) {
-                        highlight.getChildren().get(0).setStyle("-fx-background-color: transparent;" +
-                                "                                                -fx-background-radius: 0;" +
-                                "                                                -fx-shape: \"M 50 50 L 50 60 Q 50 70 60 70 L 70 70 Q 80 70 80 60 L 80 50 Q 80 40 70 40 L 60 40 Q 50 40 50 50 Z\";" +
-                                "                                                -fx-fill: rgba(128, 128, 128, 0.5);" +
-                                "                                                -fx-padding: 5;");
-                    }
-
-                }
-            }
-*/
+        if (!movedPiece.isEmpty()) {
+            highlightPossibleSquares(movedPiece, isWhitePiece);
         }
         db.setContent(content);
         // Save reference to selected piece
         selectedPiece = currentButton;
     }
-
 
     private void setButtonListeners(Button currentButton) {
         currentButton.setStyle(currentButton.getStyle() + "-fx-background-radius: 0;");
@@ -108,6 +88,7 @@ public class ChessboardController {
     }
 
     private void setOnDragDropped(Button currentButton, DragEvent event) {
+        clearHighlighting();
         if (GameStates.isIsMyTurn() && selectedPiece != null) {
             String file = "";
             if (movedPiece.isEmpty()) {
@@ -169,6 +150,41 @@ public class ChessboardController {
             }
         }
         return result;
+    }
+
+    private void highlightPossibleSquares(String movedPiece, boolean isWhitePiece) {
+        List<String> list = null;
+        if (movedPiece.matches("[bB]")) {
+            list = BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+        } else if (movedPiece.matches("[nN]")) {
+            list = KnightMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+        } else if (movedPiece.matches("[qQ]")) {
+            list = QueenMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+        } else if (movedPiece.matches("[rR]")) {
+            list = RookMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+        } else if (movedPiece.matches("[kK]]")) {
+            list = KingMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+        }
+        assert list != null;
+        for (String coordinate : list) {
+            System.out.println("Koordinate" + coordinate);
+            IntIntPair c = new IntIntPair(Character.getNumericValue(coordinate.charAt(0)), Character.getNumericValue(coordinate.charAt(1)));
+            StackPane square = getPaneFromCoordinate(c);
+            Button b = (Button) square.getChildren().get(0);
+            Image highlight = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/transparent.png")));
+            ImageView h = new ImageView(highlight);
+            b.setGraphic(h);
+        }
+    }
+
+    private void clearHighlighting() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                StackPane square = getPaneFromCoordinate(new IntIntPair(i, j));
+                Button button = (Button) square.getChildren().get(0);
+                button.setGraphic(null); // Remove the graphic (highlight image)
+            }
+        }
     }
 
     public void updateBoard(String opponentMove) {

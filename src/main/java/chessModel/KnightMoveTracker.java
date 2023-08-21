@@ -95,12 +95,8 @@ public class KnightMoveTracker {
                     }
                 } else if (white && squareContent.matches("[bqrnp]")) {
                     moves.add(toAdd);
-                    break;
                 } else if (!white && squareContent.matches("[BQRNP]")) {
                     moves.add((7 - (rank + offsetY[d])) + "" + (7 - (file + offsetX[d])));
-                    break;
-                } else {
-                    break;
                 }
                 copy = copyBoard(board);
             }
