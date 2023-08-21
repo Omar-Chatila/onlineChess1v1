@@ -3,6 +3,8 @@ package chessModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static util.GameHelper.copyBoard;
+
 public class BishopMoveTracker {
     private static final int[] dx = {-1, 1, -1, 1};
     private static final int[] dy = {-1, 1, 1, -1};
@@ -47,9 +49,13 @@ public class BishopMoveTracker {
     }
 
     public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
-        System.out.println("Rank: " + rank + " - " + "File: " + file);
+        if (!white) {
+            rank = 7 - rank;
+            file = 7 - file;
+        }
         List<String> moves = new ArrayList<>();
         String[][] copy = copyBoard(board);
+        Game.print(copy);
         for (int d = 0; d < 4; d++) {
             int i = 1;
             while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
@@ -58,14 +64,18 @@ public class BishopMoveTracker {
                 if (squareContent.equals(".")) {
                     copy[rank + i * dy[d]][file + i * dx[d]] = white ? "B" : "b";
                     copy[rank][file] = ".";
-                    Game.print(copy);
-                    if (!Game.kingChecked(white, copy))
-                        moves.add(toAdd);
+                    if (!Game.kingChecked(white, copy)) {
+                        if (white) {
+                            moves.add(toAdd);
+                        } else {
+                            moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
+                        }
+                    }
                 } else if (white && squareContent.matches("[bqrnp]")) {
                     moves.add(toAdd);
                     break;
                 } else if (!white && squareContent.matches("[BQRNP]")) {
-                    moves.add(toAdd);
+                    moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
                     break;
                 } else {
                     break;
@@ -75,15 +85,6 @@ public class BishopMoveTracker {
             }
         }
         return moves;
-    }
-
-
-    private static String[][] copyBoard(String[][] board) {
-        String[][] copy = new String[8][8];
-        for (int i = 0; i < board.length; i++) {
-            System.arraycopy(board[i], 0, copy[i], 0, board[i].length);
-        }
-        return copy;
     }
 
     public static boolean checksKing(String[][] board, int rank, int file, boolean white) {

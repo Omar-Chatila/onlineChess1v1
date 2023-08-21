@@ -1,5 +1,10 @@
 package chessModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static util.GameHelper.copyBoard;
+
 public class KnightMoveTracker {
     private static final int[] offsetY = {-2, -1, 1, 2, -2, -1, 1, 2};
     private static final int[] offsetX = {-1, -2, -2, -1, 1, 2, 2, 1};
@@ -63,6 +68,43 @@ public class KnightMoveTracker {
             }
         }
         return false;
+    }
+
+    public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
+        if (!white) {
+            rank = 7 - rank;
+            file = 7 - file;
+        }
+        List<String> moves = new ArrayList<>();
+        String[][] copy = copyBoard(board);
+        Game.print(copy);
+        for (int d = 0; d < 8; d++) {
+            if (isValidSquare(rank + offsetY[d], file + offsetX[d])) {
+                String squareContent = copy[rank + offsetY[d]][file + offsetX[d]];
+                String toAdd = (rank + offsetY[d]) + "" + (file + offsetX[d]);
+                if (squareContent.equals(".")) {
+                    copy[rank + offsetY[d]][file + offsetX[d]] = white ? "N" : "n";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(white, copy)) {
+                        if (white) {
+                            moves.add(toAdd);
+                        } else {
+                            moves.add((7 - (rank + offsetY[d])) + "" + (7 - (file + offsetX[d])));
+                        }
+                    }
+                } else if (white && squareContent.matches("[bqrnp]")) {
+                    moves.add(toAdd);
+                    break;
+                } else if (!white && squareContent.matches("[BQRNP]")) {
+                    moves.add((7 - (rank + offsetY[d])) + "" + (7 - (file + offsetX[d])));
+                    break;
+                } else {
+                    break;
+                }
+                copy = copyBoard(board);
+            }
+        }
+        return moves;
     }
 
     private static boolean isValidSquare(int rank, int file) {
