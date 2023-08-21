@@ -55,25 +55,6 @@ public class ChessboardController {
         current.setAccessibleText(square);
     }
 
-    private void setOnDragDetection(Button currentButton) {
-        ApplicationData.getInstance().setIllegalMove(false);
-        Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
-        startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
-        ClipboardContent content = new ClipboardContent();
-        content.putImage(((ImageView) currentButton.getGraphic()).getImage());
-        String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
-        String movedP = imageUrl.substring(imageUrl.length() - 6);
-        System.out.println("moved piece  " + movedP);
-        boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
-        movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
-        System.out.println("startpunkt: " + startingSquare.getRow() + "," + startingSquare.getColumn());
-        if (!movedPiece.isEmpty()) {
-            highlightPossibleSquares(movedPiece, isWhitePiece);
-        }
-        db.setContent(content);
-        // Save reference to selected piece
-        selectedPiece = currentButton;
-    }
 
     private void setButtonListeners(Button currentButton) {
         currentButton.setStyle(currentButton.getStyle() + "-fx-background-radius: 0;");
@@ -106,15 +87,31 @@ public class ChessboardController {
                 move = movedPiece + file + "x" + cell.getAccessibleText();
             }
             System.out.println(move);
-
+            if (Game.board[7][4].equals("K") && move.equals("Kg1") || Game.board[0][4].equals("k") && move.equals("Kg8")) {
+                move = "O-O";
+            }
             if (GameStates.isServer()) {
                 ApplicationData.getInstance().getServer().sendMessageToClient(move);
                 ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare);
+                if (move.equals("O-O")) {
+                    if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
+                        ApplicationData.getInstance().getServer().sendMessageToClient("77.75");
+                    } else {
+                        ApplicationData.getInstance().getServer().sendMessageToClient("70.72");
+                    }
+                }
             } else {
                 ApplicationData.getInstance().getClient().sendMessageToServer(move);
                 ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare);
+                if (move.equals("O-O")) {
+                    if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
+                        ApplicationData.getInstance().getClient().sendMessageToServer("77.75");
+                    } else {
+                        ApplicationData.getInstance().getClient().sendMessageToServer("70.72");
+                    }
+                }
             }
-            if (!ApplicationData.getInstance().isIllegalMove()) {
+            if (!ApplicationData.getInstance().isIllegalMove() && !move.equals("O-O")) {
                 System.out.println("Legal");
                 if (cell.getChildren().size() == 2) {
                     cell.getChildren().remove(1);
@@ -122,6 +119,27 @@ public class ChessboardController {
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                 cell.getChildren().add(selectedPiece);
                 updateCheckStatus();
+            } else if (move.equals("O-O")) {
+
+                if (GameStates.isServerWhite() && GameStates.isServer() || !GameStates.isServerWhite() && !GameStates.isServer()) {
+                    StackPane kingSquare = getPaneFromCoordinate(new IntIntPair(7, 6));
+                    StackPane rookSquare = getPaneFromCoordinate(new IntIntPair(7, 5));
+                    Button kingButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 4)).getChildren().get(1);
+                    Button rookButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 7)).getChildren().get(1);
+                    kingSquare.getChildren().add(kingButton);
+                    rookSquare.getChildren().add(rookButton);
+                    getPaneFromCoordinate(new IntIntPair(7, 4)).getChildren().remove(1);
+                    getPaneFromCoordinate(new IntIntPair(7, 7)).getChildren().remove(1);
+                } else {
+                    StackPane kingSquare = getPaneFromCoordinate(new IntIntPair(7, 1));
+                    StackPane rookSquare = getPaneFromCoordinate(new IntIntPair(7, 2));
+                    Button kingButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 3)).getChildren().get(1);
+                    Button rookButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 0)).getChildren().get(1);
+                    kingSquare.getChildren().add(kingButton);
+                    rookSquare.getChildren().add(rookButton);
+                    getPaneFromCoordinate(new IntIntPair(7, 3)).getChildren().remove(1);
+                    getPaneFromCoordinate(new IntIntPair(7, 0)).getChildren().remove(1);
+                }
             }
             selectedPiece = null;
             event.setDropCompleted(true);
@@ -162,7 +180,7 @@ public class ChessboardController {
             list = QueenMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
         } else if (movedPiece.matches("[rR]")) {
             list = RookMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
-        } else if (movedPiece.matches("[kK]]")) {
+        } else if (movedPiece.matches("[kK]")) {
             list = KingMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
         }
         assert list != null;
@@ -205,5 +223,25 @@ public class ChessboardController {
         if (endCell.getChildren().size() == 3) {
             endCell.getChildren().remove(1);
         }
+    }
+
+    private void setOnDragDetection(Button currentButton) {
+        ApplicationData.getInstance().setIllegalMove(false);
+        Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
+        startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
+        ClipboardContent content = new ClipboardContent();
+        content.putImage(((ImageView) currentButton.getGraphic()).getImage());
+        String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
+        String movedP = imageUrl.substring(imageUrl.length() - 6);
+        System.out.println("moved piece  " + movedP);
+        boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
+        movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
+        System.out.println("startpunkt: " + startingSquare.getRow() + "," + startingSquare.getColumn());
+        if (!movedPiece.isEmpty()) {
+            highlightPossibleSquares(movedPiece, isWhitePiece);
+        }
+        db.setContent(content);
+        // Save reference to selected piece
+        selectedPiece = currentButton;
     }
 }

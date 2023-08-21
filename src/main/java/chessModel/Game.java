@@ -15,19 +15,23 @@ public class Game {
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
-        String currentPiece = Character.toString(move.charAt(0));
-        if (!currentPiece.matches("[NKBRQ]")) {
-            legal = PawnMoveTracker.movePawn(board, move, white);
-        } else if (currentPiece.matches("N")) {
-            legal = KnightMoveTracker.validateKnight(board, move, white);
-        } else if (currentPiece.matches("R")) {
-            legal = RookMoveTracker.validateRook(board, move, white);
-        } else if (currentPiece.matches("B")) {
-            legal = BishopMoveTracker.validateBishop(board, move, white);
-        } else if (currentPiece.matches("Q")) {
-            legal = QueenMoveTracker.validateQueen(board, move, white);
-        } else if (currentPiece.matches("K")) {
+        if (move.equals("O-O")) {
             legal = KingMoveTracker.validateKing(board, move, white);
+        } else {
+            String currentPiece = Character.toString(move.charAt(0));
+            if (!currentPiece.matches("[NKBRQ]")) {
+                legal = PawnMoveTracker.movePawn(board, move, white);
+            } else if (currentPiece.matches("N")) {
+                legal = KnightMoveTracker.validateKnight(board, move, white);
+            } else if (currentPiece.matches("R")) {
+                legal = RookMoveTracker.validateRook(board, move, white);
+            } else if (currentPiece.matches("B")) {
+                legal = BishopMoveTracker.validateBishop(board, move, white);
+            } else if (currentPiece.matches("Q")) {
+                legal = QueenMoveTracker.validateQueen(board, move, white);
+            } else if (currentPiece.matches("K")) {
+                legal = KingMoveTracker.validateKing(board, move, white);
+            }
         }
         if (!legal) {
             ApplicationData.getInstance().setIllegalMove(true);
