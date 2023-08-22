@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static util.GameHelper.copyBoard;
-import static util.GameHelper.print;
 
 public class KingMoveTracker { // TODO check if king is in other king's space
     private static final int[] dx = {-1, 1, -1, 1, 0, 0, 1, -1};
@@ -75,11 +74,12 @@ public class KingMoveTracker { // TODO check if king is in other king's space
         }
         List<String> moves = new ArrayList<>();
         String[][] copy = copyBoard(board);
-        print(copy);
         for (int d = 0; d < 8; d++) {
             if (isValidSquare(rank + dy[d], file + dx[d])) {
                 String squareContent = copy[rank + dy[d]][file + dx[d]];
                 String toAdd = (rank + dy[d]) + "" + (file + dx[d]);
+                if (white && squareContent.matches("[PQRBNK]")) continue;
+                if (!white && squareContent.matches("[pqrbnk]")) continue;
                 if ((white && squareContent.matches("[.bqrnp]")) || (!white && squareContent.matches("[.BQRNP]"))) {
                     copy[rank + dy[d]][file + dx[d]] = white ? "K" : "k";
                     copy[rank][file] = ".";

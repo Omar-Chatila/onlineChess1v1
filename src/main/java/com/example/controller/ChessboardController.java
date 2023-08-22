@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import chessModel.*;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -65,7 +64,7 @@ public class ChessboardController {
             }
         });
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
-        currentButton.setOnDragDone(Event::consume);
+        currentButton.setOnDragDone(event -> clearHighlighting());
     }
 
     private void setOnDragDropped(Button currentButton, DragEvent event) {
@@ -89,11 +88,11 @@ public class ChessboardController {
                 }
             }
             System.out.println(move);
-            if (Game.board[7][4].equals("K") && (move.equals("Kg1") || move.equals("Kh1"))
-                    || Game.board[0][4].equals("k") && (move.equals("Kg8") || move.equals("Kh8"))) {
+            if (Game.board[7][4].equals("K") && (move.equals("Kg1") || move.equals("Kxh1"))
+                    || Game.board[0][4].equals("k") && (move.equals("Kg8") || move.equals("Kxh8"))) {
                 move = "O-O";
-            } else if (Game.board[7][4].equals("K") && (move.equals("Kc1") || move.equals("Kb1") || move.equals("Ka1"))
-                    || Game.board[0][4].equals("k") && (move.equals("Kb8") || move.equals("Kc8") || move.equals("Ka8"))) {
+            } else if (Game.board[7][4].equals("K") && (move.equals("Kc1") || move.equals("Kb1") || move.equals("Kxa1"))
+                    || Game.board[0][4].equals("k") && (move.equals("Kb8") || move.equals("Kc8") || move.equals("Kxa8"))) {
                 move = "O-O-O";
             }
             if (GameStates.isServer()) {
@@ -139,10 +138,10 @@ public class ChessboardController {
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                 cell.getChildren().add(selectedPiece);
                 updateCheckStatus();
-            } else if (move.equals("O-O") || move.equals("O-O-O")) {
+            } else if ((move.equals("O-O") || move.equals("O-O-O")) && !ApplicationData.getInstance().isIllegalMove()) {
                 if (GameStates.isServerWhite() && GameStates.isServer() || !GameStates.isServerWhite() && !GameStates.isServer()) {
-                    StackPane kingSquare = null;
-                    StackPane rookSquare = null;
+                    StackPane kingSquare;
+                    StackPane rookSquare;
                     if (move.equals("O-O")) {
                         kingSquare = getPaneFromCoordinate(new IntIntPair(7, 6));
                         rookSquare = getPaneFromCoordinate(new IntIntPair(7, 5));
@@ -157,13 +156,13 @@ public class ChessboardController {
                     getPaneFromCoordinate(new IntIntPair(7, 4)).getChildren().remove(1);
                     getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 7 : 0)).getChildren().remove(1);
                 } else {
-                    StackPane kingSquare = null;
-                    StackPane rookSquare = null;
+                    StackPane kingSquare;
+                    StackPane rookSquare;
                     if (move.equals("O-O")) {
                         kingSquare = getPaneFromCoordinate(new IntIntPair(7, 1));
                         rookSquare = getPaneFromCoordinate(new IntIntPair(7, 2));
                     } else {
-                        kingSquare = getPaneFromCoordinate(new IntIntPair(7, 5)); // long castle anpassen
+                        kingSquare = getPaneFromCoordinate(new IntIntPair(7, 5));
                         rookSquare = getPaneFromCoordinate(new IntIntPair(7, 4));
                     }
                     Button kingButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 3)).getChildren().get(1);
@@ -275,12 +274,10 @@ public class ChessboardController {
             System.out.println("moved piece  " + movedP);
             boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
             movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
-            System.out.println("startpunkt: " + startingSquare.getRow() + "," + startingSquare.getColumn());
             if (!movedPiece.isEmpty()) {
                 highlightPossibleSquares(movedPiece, isWhitePiece);
             }
             db.setContent(content);
-            // Save reference to selected piece
             selectedPiece = currentButton;
         }
     }

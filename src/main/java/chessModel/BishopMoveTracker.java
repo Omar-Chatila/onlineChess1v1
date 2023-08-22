@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static util.GameHelper.copyBoard;
-import static util.GameHelper.print;
 
 public class BishopMoveTracker {
     private static final int[] dx = {-1, 1, -1, 1};
@@ -56,12 +55,13 @@ public class BishopMoveTracker {
         }
         List<String> moves = new ArrayList<>();
         String[][] copy = copyBoard(board);
-        print(copy);
         for (int d = 0; d < 4; d++) {
             int i = 1;
             while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
                 String squareContent = copy[rank + i * dy[d]][file + i * dx[d]];
                 String toAdd = (rank + i * dy[d]) + "" + (file + i * dx[d]);
+                if (white && squareContent.matches("[PQRBNK]")) break;
+                if (!white && squareContent.matches("[pqrbnk]")) break;
                 if (squareContent.equals(".")) {
                     copy[rank + i * dy[d]][file + i * dx[d]] = white ? "B" : "b";
                     copy[rank][file] = ".";
@@ -73,10 +73,12 @@ public class BishopMoveTracker {
                         }
                     }
                 } else if (white && squareContent.matches("[bqrnp]")) {
-                    moves.add(toAdd);
+                    if (!Game.kingChecked(white, copy))
+                        moves.add(toAdd);
                     break;
                 } else if (!white && squareContent.matches("[BQRNP]")) {
-                    moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
+                    if (!Game.kingChecked(white, copy))
+                        moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
                     break;
                 } else {
                     break;

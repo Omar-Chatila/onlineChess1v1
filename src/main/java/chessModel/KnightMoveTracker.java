@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static util.GameHelper.copyBoard;
-import static util.GameHelper.print;
 
 public class KnightMoveTracker {
     private static final int[] offsetY = {-2, -1, 1, 2, -2, -1, 1, 2};
@@ -78,11 +77,12 @@ public class KnightMoveTracker {
         }
         List<String> moves = new ArrayList<>();
         String[][] copy = copyBoard(board);
-        print(copy);
         for (int d = 0; d < 8; d++) {
             if (isValidSquare(rank + offsetY[d], file + offsetX[d])) {
                 String squareContent = copy[rank + offsetY[d]][file + offsetX[d]];
                 String toAdd = (rank + offsetY[d]) + "" + (file + offsetX[d]);
+                if (white && squareContent.matches("[PQRBNK]")) continue;
+                if (!white && squareContent.matches("[pqrbnk]")) continue;
                 if (squareContent.equals(".")) {
                     copy[rank + offsetY[d]][file + offsetX[d]] = white ? "N" : "n";
                     copy[rank][file] = ".";
@@ -94,9 +94,11 @@ public class KnightMoveTracker {
                         }
                     }
                 } else if (white && squareContent.matches("[bqrnp]")) {
-                    moves.add(toAdd);
+                    if (!Game.kingChecked(white, copy))
+                        moves.add(toAdd);
                 } else if (!white && squareContent.matches("[BQRNP]")) {
-                    moves.add((7 - (rank + offsetY[d])) + "" + (7 - (file + offsetX[d])));
+                    if (!Game.kingChecked(white, copy))
+                        moves.add((7 - (rank + offsetY[d])) + "" + (7 - (file + offsetX[d])));
                 }
                 copy = copyBoard(board);
             }
