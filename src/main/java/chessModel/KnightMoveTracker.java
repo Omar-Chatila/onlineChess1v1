@@ -94,9 +94,13 @@ public class KnightMoveTracker {
                         }
                     }
                 } else if (white && squareContent.matches("[bqrnp]")) {
-                    if (!Game.kingChecked(white, copy))
+                    copy[rank + offsetY[d]][file + offsetX[d]] = "N";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(true, copy))
                         moves.add(toAdd);
                 } else if (!white && squareContent.matches("[BQRNP]")) {
+                    copy[rank + offsetY[d]][file + offsetX[d]] = "n";
+                    copy[rank][file] = ".";
                     if (!Game.kingChecked(false, copy))
                         moves.add((7 - (rank + offsetY[d])) + "" + (7 - (file + offsetX[d])));
                 }

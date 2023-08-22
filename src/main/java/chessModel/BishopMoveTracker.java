@@ -116,10 +116,14 @@ public class BishopMoveTracker {
                         }
                     }
                 } else if (white && squareContent.matches("[bqrnp]")) {
-                    if (!Game.kingChecked(white, copy))
+                    copy[rank + i * dy[d]][file + i * dx[d]] = "B";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(true, copy))
                         moves.add(toAdd);
                     break;
                 } else if (!white && squareContent.matches("[BQRNP]")) {
+                    copy[rank + i * dy[d]][file + i * dx[d]] = "b";
+                    copy[rank][file] = ".";
                     if (!Game.kingChecked(false, copy))
                         moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
                     break;

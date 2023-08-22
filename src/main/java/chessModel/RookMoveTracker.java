@@ -91,10 +91,14 @@ public class RookMoveTracker {
                         }
                     }
                 } else if (white && squareContent.matches("[bqrnp]")) {
+                    copy[rank + i * dy[d]][file + i * dx[d]] = "R";
+                    copy[rank][file] = ".";
                     if (!Game.kingChecked(true, copy))
                         moves.add(toAdd);
                     break;
                 } else if (!white && squareContent.matches("[BQRNP]")) {
+                    copy[rank + i * dy[d]][file + i * dx[d]] = "r";
+                    copy[rank][file] = ".";
                     if (!Game.kingChecked(false, copy))
                         moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
                     break;
