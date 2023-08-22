@@ -73,35 +73,37 @@ public class Game {
     }
 
     public static boolean checkMated(boolean white) {
-        boolean notCheckMate = false;
+        boolean checkMate = false;
         if (kingChecked(white)) {
-            notCheckMate = hasMoves(notCheckMate);
+            checkMate = !hasMoves(white);
         }
-        System.out.println("CheckMate?" + !notCheckMate);
-        GameStates.setGameOver(!notCheckMate);
-        return !notCheckMate;
+        System.out.println("CheckMate?" + checkMate);
+        GameStates.setGameOver(checkMate);
+        return checkMate;
     }
 
     public static boolean stalemated(boolean white) {
-        boolean notStalemate = false;
+        boolean stalemate = false;
         if (!kingChecked(white)) {
-            notStalemate = hasMoves(white);
+            stalemate = !hasMoves(white);
         }
-        GameStates.setGameOver(!notStalemate);
-        return !notStalemate;
+        GameStates.setGameOver(stalemate);
+        return stalemate;
     }
 
     private static boolean hasMoves(boolean white) {
-        boolean noMoves = false;
+        boolean hasMoves = false;
         for (int rank = 0; rank < 8; rank++) {
             for (int file = 0; file < 8; file++) {
                 if (white) {
                     switch (board[rank][file]) {
-                        case "Q" -> noMoves |= !QueenMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
-                        case "B" -> noMoves |= !BishopMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
-                        case "N" -> noMoves |= !KnightMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
-                        case "R" -> noMoves |= !RookMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
-                        case "K" -> noMoves |= !KingMoveTracker.possibleMoves(board, rank, file, true).isEmpty();
+                        case "Q" -> hasMoves |= !QueenMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
+                        case "B" ->
+                                hasMoves |= !BishopMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
+                        case "N" ->
+                                hasMoves |= !KnightMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
+                        case "R" -> hasMoves |= !RookMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
+                        case "K" -> hasMoves |= !KingMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
                     }
                 }
             }
@@ -110,29 +112,30 @@ public class Game {
             for (int file = 0; file < 8; file++) {
                 if (!white) {
                     switch (board[rank][file]) {
-                        case "q" -> noMoves |= !QueenMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
-                        case "b" -> noMoves |= !BishopMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
-                        case "n" -> noMoves |= !KnightMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
-                        case "r" -> noMoves |= !RookMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
-                        case "k" -> noMoves |= !KingMoveTracker.possibleMoves(board, rank, file, false).isEmpty();
+                        case "q" ->
+                                hasMoves |= !QueenMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
+                        case "b" ->
+                                hasMoves |= !BishopMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
+                        case "n" ->
+                                hasMoves |= !KnightMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
+                        case "r" -> hasMoves |= !RookMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
+                        case "k" -> hasMoves |= !KingMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
                     }
                 }
             }
-            if (noMoves) {
-                break;
-            }
         }
-        return noMoves;
+        System.out.println("has moves?: " + hasMoves);
+        return hasMoves;
     }
 
     public static void executeMove(String move, boolean white) {
         try {
             print(movePieces(move, white));
-            if (stalemated(white)) {
+            if (stalemated(!white)) {
                 System.out.println("Game over! - Draw");
             }
-            if (kingChecked(white) && checkMated(white)) {
-                System.out.println("Game over! - " + (white ? "Black won!" : "White won!"));
+            if (kingChecked(!white) && checkMated(!white)) {
+                System.out.println("Game over! - " + (!white ? "Black won!" : "White won!"));
             }
             moveList.add(move);
         } catch (Exception e) {

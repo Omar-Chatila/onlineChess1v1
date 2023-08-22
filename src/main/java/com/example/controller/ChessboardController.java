@@ -64,7 +64,10 @@ public class ChessboardController {
             }
         });
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
-        currentButton.setOnDragDone(event -> clearHighlighting());
+        currentButton.setOnDragDone(event -> {
+            clearHighlighting();
+            updateCheckStatus();
+        });
     }
 
     private void setOnDragDropped(Button currentButton, DragEvent event) {
@@ -137,7 +140,6 @@ public class ChessboardController {
                 }
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                 cell.getChildren().add(selectedPiece);
-                updateCheckStatus();
             } else if ((move.equals("O-O") || move.equals("O-O-O")) && !ApplicationData.getInstance().isIllegalMove()) {
                 if (GameStates.isServerWhite() && GameStates.isServer() || !GameStates.isServerWhite() && !GameStates.isServer()) {
                     StackPane kingSquare;
@@ -182,17 +184,17 @@ public class ChessboardController {
         System.out.println("White King checked: " + Game.kingChecked(true) + "\n Black checked: " + Game.kingChecked(false));
         if (Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
-            if (Game.checkMated(false)) {
-                System.out.println("Game over - White won");
-            }
+            //if (Game.checkMated(false)) {
+            //     System.out.println("Game over - White won");
+            // }
         } else if (!Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: transparent;");
         }
         if (Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
-            if (Game.checkMated(true)) {
-                System.out.println("Game over - Black won");
-            }
+            // if (Game.checkMated(true)) {
+            //     System.out.println("Game over - Black won");
+            // }
         } else if (!Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: transparent;");
         }
@@ -228,6 +230,7 @@ public class ChessboardController {
             Button b = (Button) square.getChildren().get(0);
             Image highlight = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/transparent.png")));
             ImageView h = new ImageView(highlight);
+            h.setOpacity(0.5);
             b.setGraphic(h);
         }
     }

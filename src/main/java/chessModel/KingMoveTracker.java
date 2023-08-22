@@ -8,7 +8,8 @@ import static util.GameHelper.copyBoard;
 public class KingMoveTracker { // TODO check if king is in other king's space
     private static final int[] dx = {-1, 1, -1, 1, 0, 0, 1, -1};
     private static final int[] dy = {-1, 1, 1, -1, 1, -1, 0, 0};
-    private static boolean kingHasMoved;
+    private static boolean whiteKingHasMoved;
+    private static boolean blackKingHasMoved;
 
 
     public static boolean validateKing(String[][] board, String move, boolean white) {
@@ -42,12 +43,12 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                 if (squareContent.matches("K") && white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "K";
-                    kingHasMoved = true;
+                    whiteKingHasMoved = true;
                     return !Game.kingChecked(true);
                 } else if (squareContent.matches("k") && !white) {
                     board[rank + i * dy[d]][file + i * dx[d]] = ".";
                     board[rank][file] = "k";
-                    kingHasMoved = true;
+                    blackKingHasMoved = true;
                     return !Game.kingChecked(false);
                 }
             }
@@ -58,13 +59,19 @@ public class KingMoveTracker { // TODO check if king is in other king's space
     private static boolean hasShortCastlingRight(boolean white) {
         boolean freeSpace = white ? Game.board[7][4].equals("K") && Game.board[7][5].equals(".") && Game.board[7][6].equals(".") && Game.board[7][7].equals("R")
                 : Game.board[0][4].equals("k") && Game.board[0][5].equals(".") && Game.board[0][6].equals(".") && Game.board[0][7].equals("r");
-        return !kingHasMoved && !Game.kingChecked(white) && freeSpace;
+        if (white)
+            return !whiteKingHasMoved && !Game.kingChecked(true) && freeSpace;
+        else
+            return !blackKingHasMoved && !Game.kingChecked(false) && freeSpace;
     }
 
     private static boolean hasLongCastlingRight(boolean white) {
         boolean freeSpace = white ? Game.board[7][4].equals("K") && Game.board[7][3].equals(".") && Game.board[7][2].equals(".") && Game.board[7][1].equals(".") && Game.board[7][0].equals("R")
                 : Game.board[0][4].equals("k") && Game.board[0][3].equals(".") && Game.board[0][2].equals(".") && Game.board[0][1].equals(".") && Game.board[0][0].equals("r");
-        return !kingHasMoved && !Game.kingChecked(white) && freeSpace;
+        if (white)
+            return !whiteKingHasMoved && !Game.kingChecked(true) && freeSpace;
+        else
+            return !blackKingHasMoved && !Game.kingChecked(false) && freeSpace;
     }
 
     public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
@@ -83,7 +90,7 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                 if ((white && squareContent.matches("[.bqrnp]")) || (!white && squareContent.matches("[.BQRNP]"))) {
                     copy[rank + dy[d]][file + dx[d]] = white ? "K" : "k";
                     copy[rank][file] = ".";
-                    if (!Game.kingChecked(white, copy)) {
+                    if (white && !Game.kingChecked(true, copy) || !white && !Game.kingChecked(false, copy)) {
                         if (white) {
                             moves.add(toAdd);
                         } else {
@@ -112,7 +119,52 @@ public class KingMoveTracker { // TODO check if king is in other king's space
             moves.add("71");
             moves.add("70");
         }
+        System.out.println("king " + moves);
+        return moves;
+    }
 
+    public static List<String> possibleMovesLogic(String[][] board, int rank, int file, boolean white) {
+        List<String> moves = new ArrayList<>();
+        String[][] copy = copyBoard(board);
+        for (int d = 0; d < 8; d++) {
+            if (isValidSquare(rank + dy[d], file + dx[d])) {
+                String squareContent = copy[rank + dy[d]][file + dx[d]];
+                String toAdd = (rank + dy[d]) + "" + (file + dx[d]);
+                if (white && squareContent.matches("[PQRBNK]")) continue;
+                if (!white && squareContent.matches("[pqrbnk]")) continue;
+                if ((white && squareContent.matches("[.bqrnp]")) || (!white && squareContent.matches("[.BQRNP]"))) {
+                    copy[rank + dy[d]][file + dx[d]] = white ? "K" : "k";
+                    copy[rank][file] = ".";
+                    if (white && !Game.kingChecked(true, copy) || !white && !Game.kingChecked(false, copy)) {
+                        if (white) {
+                            moves.add(toAdd);
+                        } else {
+                            moves.add(((rank + dy[d])) + "" + ((file + dx[d])));
+                        }
+                    }
+                }
+                copy = copyBoard(board);
+            }
+        }
+        if (white && hasLongCastlingRight(true)) {
+            moves.add("72");
+            moves.add("71");
+            moves.add("70");
+        }
+        if (white && hasShortCastlingRight(true)) {
+            moves.add("76");
+            moves.add("77");
+        }
+        if (!white && hasLongCastlingRight(false)) {
+            moves.add("75");
+            moves.add("76");
+            moves.add("77");
+        }
+        if (!white && hasShortCastlingRight(false)) {
+            moves.add("71");
+            moves.add("70");
+        }
+        System.out.println("king " + moves);
         return moves;
     }
 

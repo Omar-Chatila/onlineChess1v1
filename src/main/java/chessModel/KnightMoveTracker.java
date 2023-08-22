@@ -97,12 +97,52 @@ public class KnightMoveTracker {
                     if (!Game.kingChecked(white, copy))
                         moves.add(toAdd);
                 } else if (!white && squareContent.matches("[BQRNP]")) {
-                    if (!Game.kingChecked(white, copy))
+                    if (!Game.kingChecked(false, copy))
                         moves.add((7 - (rank + offsetY[d])) + "" + (7 - (file + offsetX[d])));
                 }
                 copy = copyBoard(board);
             }
         }
+        System.out.println("Knight " + moves);
+        return moves;
+    }
+
+    public static List<String> possibleMovesLogic(String[][] board, int rank, int file, boolean white) {
+        List<String> moves = new ArrayList<>();
+        String[][] copy = copyBoard(board);
+        System.out.println(rank + "-" + file);
+        for (int d = 0; d < 8; d++) {
+            if (isValidSquare(rank + offsetY[d], file + offsetX[d])) {
+                String squareContent = copy[rank + offsetY[d]][file + offsetX[d]];
+                System.out.println("squares knight: " + squareContent);
+                String toAdd = (rank + offsetY[d]) + "" + (file + offsetX[d]);
+                if (white && squareContent.matches("[PQRBNK]")) continue;
+                if (!white && squareContent.matches("[pqrbnk]")) continue;
+                if (squareContent.equals(".")) {
+                    copy[rank + offsetY[d]][file + offsetX[d]] = white ? "N" : "n";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(white, copy)) {
+                        if (white) {
+                            moves.add(toAdd);
+                        } else {
+                            moves.add(((rank + offsetY[d])) + "" + ((file + offsetX[d])));
+                        }
+                    }
+                } else if (white && squareContent.matches("[bqrnp]")) {
+                    copy[rank + offsetY[d]][file + offsetX[d]] = "N";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(true, copy))
+                        moves.add(toAdd);
+                } else if (!white && squareContent.matches("[BQRNP]")) {
+                    copy[rank + offsetY[d]][file + offsetX[d]] = "n";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(false, copy))
+                        moves.add(((rank + offsetY[d])) + "" + ((file + offsetX[d])));
+                }
+            }
+            copy = copyBoard(board);
+        }
+        System.out.println("Knight2 " + moves);
         return moves;
     }
 

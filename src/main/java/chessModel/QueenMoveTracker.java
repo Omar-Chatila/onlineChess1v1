@@ -91,11 +91,11 @@ public class QueenMoveTracker {
                         }
                     }
                 } else if (white && squareContent.matches("[bqrnp]")) {
-                    if (!Game.kingChecked(white, copy))
+                    if (!Game.kingChecked(true, copy))
                         moves.add(toAdd);
                     break;
                 } else if (!white && squareContent.matches("[BQRNP]")) {
-                    if (!Game.kingChecked(white, copy))
+                    if (!Game.kingChecked(false, copy))
                         moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
                     break;
                 } else {
@@ -105,6 +105,50 @@ public class QueenMoveTracker {
                 copy = copyBoard(board);
             }
         }
+        System.out.println(white + "queen " + moves);
+        return moves;
+    }
+
+    public static List<String> possibleMovesLogic(String[][] board, int rank, int file, boolean white) {
+        List<String> moves = new ArrayList<>();
+        String[][] copy = copyBoard(board);
+        for (int d = 0; d < 8; d++) {
+            int i = 1;
+            while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
+                String squareContent = copy[rank + i * dy[d]][file + i * dx[d]];
+                String toAdd = (rank + i * dy[d]) + "" + (file + i * dx[d]);
+                if (white && squareContent.matches("[PQRBNK]")) break;
+                if (!white && squareContent.matches("[pqrbnk]")) break;
+                if (squareContent.equals(".")) {
+                    copy[rank + i * dy[d]][file + i * dx[d]] = white ? "Q" : "q";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(white, copy)) {
+                        if (white) {
+                            moves.add(toAdd);
+                        } else {
+                            moves.add(((rank + i * dy[d])) + "" + ((file + i * dx[d])));
+                        }
+                    }
+                } else if (white && squareContent.matches("[bqrnp]")) {
+                    copy[rank + i * dy[d]][file + i * dx[d]] = "Q";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(true, copy))
+                        moves.add(toAdd);
+                    break;
+                } else if (!white && squareContent.matches("[BQRNP]")) {
+                    copy[rank + i * dy[d]][file + i * dx[d]] = "q";
+                    copy[rank][file] = ".";
+                    if (!Game.kingChecked(false, copy))
+                        moves.add(((rank + i * dy[d])) + "" + ((file + i * dx[d])));
+                    break;
+                } else {
+                    break;
+                }
+                i++;
+                copy = copyBoard(board);
+            }
+        }
+        System.out.println(white + "queen " + moves);
         return moves;
     }
 
