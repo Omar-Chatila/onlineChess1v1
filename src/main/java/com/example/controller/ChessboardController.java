@@ -26,15 +26,14 @@ public class ChessboardController {
     @FXML
     private Button blackKingButton;
     private Button selectedPiece;
-    private int pawnFile = 0;
-    private int pawnRank = 0;
+    private int pawnFile;
+    private int pawnRank;
     public static String movedPiece;
     public static String move;
     private IntIntPair startingSquare;
 
     @FXML
     private void initialize() {
-        // Set up drag detection for each piece button
         for (Node node : chessboardGrid.getChildren()) {
             if (node instanceof StackPane current) {
                 setSquareAccessibleText(current);
@@ -108,7 +107,6 @@ public class ChessboardController {
         selectedPiece = null;
         event.setDropCompleted(true);
     }
-
 
     private void updateCheckStatus() {
         System.out.println("White King checked: " + Game.kingChecked(true) + "\n Black checked: " + Game.kingChecked(false));
@@ -191,8 +189,9 @@ public class ChessboardController {
 
     private String generateMove(IntIntPair destinationSquare, StackPane cell) {
         String file = "";
+        boolean isWhite = GameStates.isServerWhite() && GameStates.isServer() || !GameStates.isServerWhite() && !GameStates.isServer();
         if (movedPiece.isEmpty()) {
-            if (GameStates.isServerWhite() && GameStates.isServer()) {
+            if (isWhite) {
                 file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
             } else {
                 file = Character.toString('h' - Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
@@ -202,6 +201,14 @@ public class ChessboardController {
         if (cell.getChildren().size() == 2) {
             if (!move.contains("O")) {
                 move = movedPiece + file + "x" + cell.getAccessibleText();
+            }
+        }
+        if (Game.isAmbiguousMove(move, isWhite, destinationSquare)) {
+            System.out.println("AMBIGUOUS MOVE!!! -- " + move);
+            if (Game.pieceOnSameRank(move, isWhite, destinationSquare)) {
+                System.out.println("PIECE ON SAME RANK ");
+            } else if (Game.pieceOnSameFile(move, isWhite, destinationSquare)) {
+                System.out.println("PIECE ON SAME FILE");
             }
         }
         if (movedPiece.isEmpty() && !move.contains("x") && (destinationSquare.getColumn() != pawnFile || destinationSquare.getRow() >= pawnRank)) {
