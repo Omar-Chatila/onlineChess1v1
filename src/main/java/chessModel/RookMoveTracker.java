@@ -109,7 +109,6 @@ public class RookMoveTracker {
                 copy = copyBoard(board);
             }
         }
-        System.out.println("Rook " + moves);
         return moves;
     }
 
@@ -152,7 +151,6 @@ public class RookMoveTracker {
                 copy = copyBoard(board);
             }
         }
-        System.out.println("Rook " + moves);
         return moves;
     }
 

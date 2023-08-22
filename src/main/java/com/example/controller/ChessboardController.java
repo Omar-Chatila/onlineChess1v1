@@ -54,7 +54,6 @@ public class ChessboardController {
         current.setAccessibleText(square);
     }
 
-
     private void setButtonListeners(Button currentButton) {
         currentButton.setStyle(currentButton.getStyle() + "-fx-background-radius: 0;");
         currentButton.setOnDragDetected(event -> setOnDragDetection(currentButton));
@@ -90,6 +89,17 @@ public class ChessboardController {
                     move = movedPiece + file + "x" + cell.getAccessibleText();
                 }
             }
+            if (movedPiece.isEmpty() && !move.contains("x") && (destinationSquare.getColumn() != pawnfile || destinationSquare.getRow() >= pawnrank)) {
+                System.out.println("pawnrank " + pawnrank + "  . pawnfile " + pawnfile);
+                System.out.println("squarerank " + destinationSquare.getRow() + "  . squarefile " + destinationSquare.getColumn());
+                move = "wrong";
+            }
+            if (movedPiece.isEmpty() && move.contains("x") && (Math.abs(destinationSquare.getColumn() - pawnfile) != 1 || destinationSquare.getRow() + 1 != pawnrank)) {
+                System.out.println("CAPTURE pawnrank " + pawnrank + "  . pawnfile " + pawnfile);
+                System.out.println("CAPTURE squarerank " + destinationSquare.getRow() + "  . squarefile " + destinationSquare.getColumn());
+                move = "wrong";
+            }
+
             System.out.println(move);
             if (Game.board[7][4].equals("K") && (move.equals("Kg1") || move.equals("Kxh1"))
                     || Game.board[0][4].equals("k") && (move.equals("Kg8") || move.equals("Kxh8"))) {
@@ -265,6 +275,9 @@ public class ChessboardController {
         }
     }
 
+    private int pawnfile = 0;
+    private int pawnrank = 0;
+
     private void setOnDragDetection(Button currentButton) {
         if (!GameStates.isGameOver()) {
             ApplicationData.getInstance().setIllegalMove(false);
@@ -277,6 +290,10 @@ public class ChessboardController {
             System.out.println("moved piece  " + movedP);
             boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
             movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
+            if (movedPiece.isEmpty()) {
+                this.pawnfile = startingSquare.getColumn();
+                this.pawnrank = startingSquare.getRow();
+            }
             if (!movedPiece.isEmpty()) {
                 highlightPossibleSquares(movedPiece, isWhitePiece);
             }

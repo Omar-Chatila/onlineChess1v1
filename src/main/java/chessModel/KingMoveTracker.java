@@ -164,7 +164,6 @@ public class KingMoveTracker { // TODO check if king is in other king's space
             moves.add("71");
             moves.add("70");
         }
-        System.out.println("king " + moves);
         return moves;
     }
 

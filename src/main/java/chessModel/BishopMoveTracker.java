@@ -91,7 +91,6 @@ public class BishopMoveTracker {
                 copy = copyBoard(board);
             }
         }
-        System.out.println(moves);
         return moves;
     }
 
@@ -134,7 +133,6 @@ public class BishopMoveTracker {
                 copy = copyBoard(board);
             }
         }
-        System.out.println(moves);
         return moves;
     }
 

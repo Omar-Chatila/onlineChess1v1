@@ -109,7 +109,6 @@ public class QueenMoveTracker {
                 copy = copyBoard(board);
             }
         }
-        System.out.println(white + "queen " + moves);
         return moves;
     }
 
@@ -152,7 +151,6 @@ public class QueenMoveTracker {
                 copy = copyBoard(board);
             }
         }
-        System.out.println(white + "queen " + moves);
         return moves;
     }
 
