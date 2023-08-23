@@ -22,6 +22,10 @@ public class GameStates {
         serverIswhite = w;
     }
 
+    public static boolean iAmWhite() {
+        return isServer && isServerWhite() || !isServer && !isServerWhite();
+    }
+
     public static boolean isServer() {
         return isServer;
     }

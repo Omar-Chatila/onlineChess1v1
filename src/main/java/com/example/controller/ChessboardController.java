@@ -86,8 +86,9 @@ public class ChessboardController {
                 this.pawnFile = startingSquare.getColumn();
                 this.pawnRank = startingSquare.getRow();
             }
-            if (!movedPiece.isEmpty()) {
-                highlightPossibleSquares(movedPiece, isWhitePiece);
+            if (!movedPiece.isEmpty() && GameStates.isIsMyTurn()) {
+                if (GameStates.iAmWhite() && isWhitePiece || !GameStates.iAmWhite() && !isWhitePiece)
+                    highlightPossibleSquares(movedPiece, isWhitePiece);
             }
             db.setContent(content);
             selectedPiece = currentButton;
