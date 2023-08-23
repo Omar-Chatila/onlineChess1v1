@@ -179,43 +179,6 @@ public class Game {
         return count > 1;
     }
 
-    public static boolean pieceOnSameFile(String move, boolean white, IntIntPair destinationSquare) {
-        int file = destinationSquare.getColumn();
-        int row = destinationSquare.getRow();
-        if (!white) {
-            row = 7 - row;
-            file = 7 - file;
-        }
-        int found = 0;
-        char piece = move.charAt(0);
-        List<List<String>> allMoves = new ArrayList<>();
-        for (int r = 0; r < 8; r++) {
-            switch (piece) {
-                case 'R' -> {
-                    if (board[r][file].equals((white) ? "R" : "r")) {
-                        allMoves.add(RookMoveTracker.possibleMovesLogic(board, r, file, white));
-                    }
-                }
-                case 'N' -> {
-                    if (board[r][file].equals((white) ? "N" : "n")) {
-                        allMoves.add(KnightMoveTracker.possibleMovesLogic(board, r, file, white));
-                    }
-                }
-                case 'Q' -> {
-                    if (board[r][file].equals((white) ? "Q" : "q")) {
-                        allMoves.add(QueenMoveTracker.possibleMovesLogic(board, r, file, white));
-                    }
-                }
-            }
-        }
-        for (List<String> moveList : allMoves) {
-            if (moveList.contains(row + "" + file)) {
-                found++;
-            }
-        }
-        return found > 1;
-    }
-
     public static boolean pieceOnSameRank(String move, boolean white, IntIntPair destinationSquare) {
         int file = destinationSquare.getColumn();
         int row = destinationSquare.getRow();

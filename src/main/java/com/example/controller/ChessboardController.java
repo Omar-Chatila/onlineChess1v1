@@ -207,8 +207,31 @@ public class ChessboardController {
             System.out.println("AMBIGUOUS MOVE!!! -- " + move);
             if (Game.pieceOnSameRank(move, isWhite, destinationSquare)) {
                 System.out.println("PIECE ON SAME RANK ");
-            } else if (Game.pieceOnSameFile(move, isWhite, destinationSquare)) {
+                if (isWhite) {
+                    file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
+                } else {
+                    file = Character.toString('h' - Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
+                }
+                move = movedPiece + file + cell.getAccessibleText();
+                if (cell.getChildren().size() == 2) {
+                    if (!move.contains("O")) {
+                        move = movedPiece + file + "x" + cell.getAccessibleText();
+                    }
+                }
+            } else {
                 System.out.println("PIECE ON SAME FILE");
+                int rank;
+                if (isWhite) {
+                    rank = Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
+                } else {
+                    rank = 7 - Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
+                }
+                move = movedPiece + rank + cell.getAccessibleText();
+                if (cell.getChildren().size() == 2) {
+                    if (!move.contains("O")) {
+                        move = movedPiece + rank + "x" + cell.getAccessibleText();
+                    }
+                }
             }
         }
         if (movedPiece.isEmpty() && !move.contains("x") && (destinationSquare.getColumn() != pawnFile || destinationSquare.getRow() >= pawnRank)) {
