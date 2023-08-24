@@ -1,5 +1,8 @@
 package chessModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PawnMoveTracker {
     private static boolean validatePawn(String[][] board, String move, boolean white) {
         if (!move.contains("x")) {
@@ -52,7 +55,6 @@ public class PawnMoveTracker {
         return false;
     }
 
-
     public static boolean checksKing(String[][] board, int rank, int file, boolean white) {
         if (!white) {
             if (isValidSquare(rank - 1, file - 1) && board[rank - 1][file - 1].equals("k")) {
@@ -63,6 +65,43 @@ public class PawnMoveTracker {
                 return true;
             } else return isValidSquare(rank + 1, file + 1) && board[rank + 1][file + 1].equals("K");
         }
+    }
+
+    public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
+        List<String> moves = new ArrayList<>();
+        if (!white) {
+            rank = 7 - rank;
+            file = 7 - file;
+        }
+        int startRank = white ? 6 : 1;
+        int direction = white ? -1 : 1;
+        if (isValidSquare(rank + direction, file) && board[rank + direction][file].equals(".")) {
+            if (white)
+                moves.add((rank + direction) + "" + file);
+            else
+                moves.add(7 - (rank + direction) + "" + (7 - file));
+        }
+        if (rank == startRank) {
+            if (board[rank + direction * 2][file].equals(".")) {
+                if (white)
+                    moves.add((rank + direction * 2) + "" + file);
+                else
+                    moves.add(7 - (rank + direction * 2) + "" + (7 - file));
+            }
+        }
+        if (white) {
+            if (isValidSquare(rank - 1, file - 1) && board[rank - 1][file - 1].matches("[pqrnb]"))
+                moves.add((rank - 1) + "" + (file - 1));
+            if (isValidSquare(rank - 1, file + 1) && board[rank - 1][file + 1].matches("[pqrnb]"))
+                moves.add((rank - 1) + "" + (file + 1));
+        } else {
+            if (isValidSquare(rank + 1, file - 1) && board[rank + 1][file - 1].matches("[PQRNB]"))
+                moves.add((7 - (rank + 1)) + "" + (7 - (file - 1)));
+            if (isValidSquare(rank + 1, file + 1) && board[rank + 1][file + 1].matches("[PQRNB]"))
+                moves.add((7 - (rank + 1)) + "" + (7 - (file + 1)));
+        }
+        System.out.println(moves);
+        return moves;
     }
 
     private static boolean isValidSquare(int rank, int file) {

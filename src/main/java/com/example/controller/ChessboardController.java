@@ -86,7 +86,7 @@ public class ChessboardController {
                 this.pawnFile = startingSquare.getColumn();
                 this.pawnRank = startingSquare.getRow();
             }
-            if (!movedPiece.isEmpty() && GameStates.isIsMyTurn()) {
+            if (GameStates.isIsMyTurn()) {
                 if (GameStates.iAmWhite() && isWhitePiece || !GameStates.iAmWhite() && !isWhitePiece)
                     highlightPossibleSquares(movedPiece, isWhitePiece);
             }
@@ -134,6 +134,7 @@ public class ChessboardController {
     }
 
     private void highlightPossibleSquares(String movedPiece, boolean isWhitePiece) {
+        System.out.println("MOVED PIECE  : " + movedPiece + ".");
         List<String> list = null;
         if (movedPiece.matches("[bB]")) {
             list = BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
@@ -145,6 +146,8 @@ public class ChessboardController {
             list = RookMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
         } else if (movedPiece.matches("[kK]")) {
             list = KingMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+        } else if (movedPiece.isEmpty()) {
+            list = PawnMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
         }
         assert list != null;
         for (String coordinate : list) {
@@ -163,7 +166,7 @@ public class ChessboardController {
             for (int j = 0; j < 8; j++) {
                 StackPane square = getPaneFromCoordinate(new IntIntPair(i, j));
                 Button button = (Button) square.getChildren().get(0);
-                button.setGraphic(null); // Remove the graphic (highlight image)
+                button.setGraphic(null);
             }
         }
     }
