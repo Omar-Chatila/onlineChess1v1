@@ -105,6 +105,7 @@ public class Game {
                                 hasMoves |= !KnightMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
                         case "R" -> hasMoves |= !RookMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
                         case "K" -> hasMoves |= !KingMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
+                        case "P" -> hasMoves |= !PawnMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
                     }
                 }
             }
@@ -121,6 +122,7 @@ public class Game {
                                 hasMoves |= !KnightMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
                         case "r" -> hasMoves |= !RookMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
                         case "k" -> hasMoves |= !KingMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
+                        case "p" -> hasMoves |= !PawnMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
                     }
                 }
             }

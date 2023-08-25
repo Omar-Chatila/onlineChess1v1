@@ -228,7 +228,7 @@ public class ChessboardController {
                 if (isWhite) {
                     rank = Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
                 } else {
-                    rank = 7 - Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
+                    rank = 8 - Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
                 }
                 move = movedPiece + rank + cell.getAccessibleText();
                 if (cell.getChildren().size() == 2) {
@@ -276,14 +276,12 @@ public class ChessboardController {
             ApplicationData.getInstance().getClient().sendMessageToServer(move);
             ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare);
             if (move.equals("O-O")) {
-                // Rook move for castling short
                 if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
                     ApplicationData.getInstance().getClient().sendMessageToServer("77.75");
                 } else {
                     ApplicationData.getInstance().getClient().sendMessageToServer("70.72");
                 }
             } else if (move.equals("O-O-O")) {
-                // Rook move for castling long
                 if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
                     ApplicationData.getInstance().getClient().sendMessageToServer("70.73");
                 } else {

@@ -9,48 +9,21 @@ public class KnightMoveTracker {
     private static final int[] offsetY = {-2, -1, 1, 2, -2, -1, 1, 2};
     private static final int[] offsetX = {-1, -2, -2, -1, 1, 2, 2, 1};
 
-    public static boolean validateKnight(String[][] board, String move, boolean white) { // TODO: zuege wie NEd5 oder N5e4 //																					// ber�cksichtigen fehlt
-        if (!move.contains("x")) {
-            int file = move.charAt(1) - 'a';
-            int rank = 8 - Character.getNumericValue(move.charAt(2));
-            for (int i = 0; i < 8; i++) {
-                if (rank + offsetY[i] >= 0 && rank + offsetY[i] < 8 && file + offsetX[i] >= 0
-                        && file + offsetX[i] < 8) {
-                    int rankY = rank + offsetY[i];
-                    int fileX = file + offsetX[i];
-                    if (board[rankY][fileX].equals("N") && white) {
-                        board[rankY][fileX] = ".";
-                        board[rank][file] = "N";
-                        return !Game.kingChecked(true);
-                    } else if (board[rankY][fileX].equals("n") && !white) {
-                        board[rankY][fileX] = ".";
-                        board[rank][file] = "n";
-                        return !Game.kingChecked(false);
-                    }
-                }
-            }
-        } else {
-            int file = move.charAt(2) - 'a';
-            int rank = 8 - Character.getNumericValue(move.charAt(3));
-            for (int i = 0; i < 8; i++) {
-                if (rank + offsetY[i] >= 0 && rank + offsetY[i] < 8 && file + offsetX[i] >= 0
-                        && file + offsetX[i] < 8) {
-                    int rankY = rank + offsetY[i];
-                    int fileX = file + offsetX[i];
-                    if (board[rankY][fileX].equals("N") && white) {
-                        if (board[rank][file].matches("[npkqrb]")) {
-                            board[rankY][fileX] = ".";
-                            board[rank][file] = "N";
-                        }
-                        return !Game.kingChecked(true);
-                    } else if (board[rankY][fileX].equals("n") && !white) {
-                        if (board[rank][file].matches("[NPKBRQ]")) {
-                            board[rankY][fileX] = ".";
-                            board[rank][file] = "n";
-                        }
-                        return !Game.kingChecked(false);
-                    }
-                }
+    public static boolean validateKnight(String[][] board, String move, boolean white) {
+        int file = move.charAt(move.contains("x") ? 2 : 1) - 'a';
+        int rank = 8 - Character.getNumericValue(move.charAt(move.contains("x") ? 3 : 2));
+        for (int i = 0; i < 8; i++) {
+            int rankY = rank + offsetY[i];
+            int fileX = file + offsetX[i];
+            boolean isWhiteKnight = board[rankY][fileX].equals("N");
+            boolean isBlackKnight = board[rankY][fileX].equals("n");
+            if ((isWhiteKnight && white || isBlackKnight && !white)
+                    && ((move.contains("x") && white && board[rank][file].matches("[npkqrb]")
+                    || move.contains("x") && !white && board[rank][file].matches("[NPKBRQ]"))
+                    || !move.contains("x"))) {
+                board[rankY][fileX] = ".";
+                board[rank][file] = white ? "N" : "n";
+                return !Game.kingChecked(white);
             }
         }
         return false;

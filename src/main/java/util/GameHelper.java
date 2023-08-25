@@ -51,6 +51,4 @@ public class GameHelper {
         board[7][6] = "N";
         board[7][7] = "R";
     }
-
-
 }

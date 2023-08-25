@@ -3,7 +3,11 @@ package chessModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static util.GameHelper.copyBoard;
+
 public class PawnMoveTracker {
+    private static final List<String> possibleMovesLogicList = new ArrayList<>();
+
     private static boolean validatePawn(String[][] board, String move, boolean white) {
         if (!move.contains("x")) {
             int file = move.charAt(0) - 'a', rank = Character.getNumericValue(move.charAt(1));
@@ -35,7 +39,6 @@ public class PawnMoveTracker {
     public static boolean movePawn(String[][] board, String move, boolean white) {
         if (validatePawn(board, move, white) && !move.contains("x")) {
             int file = move.charAt(0) - 'a', rank = 8 - Character.getNumericValue(move.charAt(1));
-            int pawnRank = white ? rank + 1 : rank - 1;
             if (rank == (white ? 4 : 3)) {
                 board[rank + (white ? 1 : -1)][file] = ".";
                 board[rank + (white ? 2 : -2)][file] = ".";
@@ -67,40 +70,92 @@ public class PawnMoveTracker {
         }
     }
 
+    public static List<String> possibleMovesLogic(String[][] board, int rank, int file, boolean white) {
+        possibleMoves(board, rank, file, white);
+        return possibleMovesLogicList;
+    }
+
     public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
-        List<String> moves = new ArrayList<>();
+        possibleMovesLogicList.clear();
         if (!white) {
             rank = 7 - rank;
             file = 7 - file;
         }
+        List<String> moves = new ArrayList<>();
+        String[][] copy = copyBoard(board);
         int startRank = white ? 6 : 1;
         int direction = white ? -1 : 1;
         if (isValidSquare(rank + direction, file) && board[rank + direction][file].equals(".")) {
-            if (white)
-                moves.add((rank + direction) + "" + file);
-            else
-                moves.add(7 - (rank + direction) + "" + (7 - file));
-        }
-        if (rank == startRank) {
-            if (board[rank + direction * 2][file].equals(".")) {
-                if (white)
-                    moves.add((rank + direction * 2) + "" + file);
-                else
-                    moves.add(7 - (rank + direction * 2) + "" + (7 - file));
+            copy[rank + direction][file] = white ? "P" : "p";
+            copy[rank][file] = ".";
+            if (white) {
+                if (!Game.kingChecked(true, copy)) {
+                    possibleMovesLogicList.add((rank + direction) + "" + file);
+                    moves.add((rank + direction) + "" + file);
+                }
+            } else {
+                if (!Game.kingChecked(false, copy)) {
+                    possibleMovesLogicList.add((rank + direction) + "" + file);
+                    moves.add(7 - (rank + direction) + "" + (7 - file));
+                }
             }
         }
-        if (white) {
-            if (isValidSquare(rank - 1, file - 1) && board[rank - 1][file - 1].matches("[pqrnb]"))
-                moves.add((rank - 1) + "" + (file - 1));
-            if (isValidSquare(rank - 1, file + 1) && board[rank - 1][file + 1].matches("[pqrnb]"))
-                moves.add((rank - 1) + "" + (file + 1));
-        } else {
-            if (isValidSquare(rank + 1, file - 1) && board[rank + 1][file - 1].matches("[PQRNB]"))
-                moves.add((7 - (rank + 1)) + "" + (7 - (file - 1)));
-            if (isValidSquare(rank + 1, file + 1) && board[rank + 1][file + 1].matches("[PQRNB]"))
-                moves.add((7 - (rank + 1)) + "" + (7 - (file + 1)));
+        copy = copyBoard(board);
+        if (rank == startRank) {
+            if (board[rank + direction * 2][file].equals(".")) {
+                copy[rank + direction * 2][file] = white ? "P" : "p";
+                copy[rank][file] = ".";
+                if (white) {
+                    if (!Game.kingChecked(true, copy)) {
+                        possibleMovesLogicList.add((rank + direction * 2) + "" + file);
+                        moves.add((rank + direction * 2) + "" + file);
+                    }
+                } else {
+                    if (!Game.kingChecked(false, copy)) {
+                        possibleMovesLogicList.add((rank + direction * 2) + "" + file);
+                        moves.add(7 - (rank + direction * 2) + "" + (7 - file));
+                    }
+                }
+            }
         }
-        System.out.println(moves);
+        copy = copyBoard(board);
+        if (white) {
+            if (isValidSquare(rank - 1, file - 1) && board[rank - 1][file - 1].matches("[pqrnb]")) {
+                copy[rank - 1][file - 1] = "P";
+                copy[rank][file] = ".";
+                if (!Game.kingChecked(true, copy)) {
+                    possibleMovesLogicList.add((rank - 1) + "" + (file - 1));
+                    moves.add((rank - 1) + "" + (file - 1));
+                    copy = copyBoard(board);
+                }
+            }
+            if (isValidSquare(rank - 1, file + 1) && board[rank - 1][file + 1].matches("[pqrnb]")) {
+                copy[rank - 1][file + 1] = "P";
+                copy[rank][file] = ".";
+                if (!Game.kingChecked(true, copy)) {
+                    possibleMovesLogicList.add((rank - 1) + "" + (file + 1));
+                    moves.add((rank - 1) + "" + (file + 1));
+                }
+            }
+        } else {
+            if (isValidSquare(rank + 1, file - 1) && board[rank + 1][file - 1].matches("[PQRNB]")) {
+                copy[rank + 1][file - 1] = "p";
+                copy[rank][file] = ".";
+                if (!Game.kingChecked(false, copy)) {
+                    possibleMovesLogicList.add((rank + 1) + "" + (file - 1));
+                    moves.add((7 - (rank + 1)) + "" + (7 - (file - 1)));
+                    copy = copyBoard(board);
+                }
+            }
+            if (isValidSquare(rank + 1, file + 1) && board[rank + 1][file + 1].matches("[PQRNB]")) {
+                copy[rank + 1][file + 1] = "p";
+                copy[rank][file] = ".";
+                if (!Game.kingChecked(false, copy)) {
+                    possibleMovesLogicList.add((rank + 1) + "" + (file + 1));
+                    moves.add((7 - (rank + 1)) + "" + (7 - (file + 1)));
+                }
+            }
+        }
         return moves;
     }
 
