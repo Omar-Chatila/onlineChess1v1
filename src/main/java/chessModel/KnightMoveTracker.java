@@ -15,15 +15,17 @@ public class KnightMoveTracker {
         for (int i = 0; i < 8; i++) {
             int rankY = rank + offsetY[i];
             int fileX = file + offsetX[i];
-            boolean isWhiteKnight = board[rankY][fileX].equals("N");
-            boolean isBlackKnight = board[rankY][fileX].equals("n");
-            if ((isWhiteKnight && white || isBlackKnight && !white)
-                    && ((move.contains("x") && white && board[rank][file].matches("[npkqrb]")
-                    || move.contains("x") && !white && board[rank][file].matches("[NPKBRQ]"))
-                    || !move.contains("x"))) {
-                board[rankY][fileX] = ".";
-                board[rank][file] = white ? "N" : "n";
-                return !Game.kingChecked(white);
+            if (isValidSquare(rankY, fileX)) {
+                boolean isWhiteKnight = board[rankY][fileX].equals("N");
+                boolean isBlackKnight = board[rankY][fileX].equals("n");
+                if ((isWhiteKnight && white || isBlackKnight && !white)
+                        && ((move.contains("x") && white && board[rank][file].matches("[npkqrb]")
+                        || move.contains("x") && !white && board[rank][file].matches("[NPKBRQ]"))
+                        || !move.contains("x"))) {
+                    board[rankY][fileX] = ".";
+                    board[rank][file] = white ? "N" : "n";
+                    return !Game.kingChecked(white);
+                }
             }
         }
         return false;

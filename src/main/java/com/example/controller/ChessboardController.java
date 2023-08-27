@@ -2,7 +2,9 @@ package com.example.controller;
 
 import chessModel.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,9 +14,12 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import util.ApplicationData;
 import util.IntIntPair;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,6 +78,7 @@ public class ChessboardController {
     private void setOnDragDetection(Button currentButton) {
         if (!GameStates.isGameOver()) {
             ApplicationData.getInstance().setIllegalMove(false);
+            currentButton.getGraphic().setOpacity(0.5);
             Dragboard db = currentButton.startDragAndDrop(TransferMode.MOVE);
             startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
             ClipboardContent content = new ClipboardContent();
@@ -134,7 +140,6 @@ public class ChessboardController {
     }
 
     private void highlightPossibleSquares(String movedPiece, boolean isWhitePiece) {
-        System.out.println("MOVED PIECE  : " + movedPiece + ".");
         List<String> list = null;
         if (movedPiece.matches("[bB]")) {
             list = BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
@@ -166,6 +171,10 @@ public class ChessboardController {
             for (int j = 0; j < 8; j++) {
                 StackPane square = getPaneFromCoordinate(new IntIntPair(i, j));
                 Button button = (Button) square.getChildren().get(0);
+                if (square.getChildren().size() > 1) {
+                    Button movedPiece = (Button) square.getChildren().get(1);
+                    movedPiece.getGraphic().setOpacity(1);
+                }
                 button.setGraphic(null);
             }
         }
@@ -252,6 +261,22 @@ public class ChessboardController {
             move = "O-O-O";
         }
         System.out.println(move);
+        if (move.matches("([a-h]x)?[a-h]8")) {
+            Button movingButton = (Button) getPaneFromCoordinate(startingSquare).getChildren().get(1);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PawnPromotion.fxml"));
+            try {
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setWidth(70.0);
+                stage.resizableProperty().setValue(Boolean.FALSE);
+                stage.initStyle(StageStyle.UNDECORATED);
+                movingButton.getGraphic().setOpacity(0.5);
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return move;
     }
 

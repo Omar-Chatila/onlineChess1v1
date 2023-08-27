@@ -11,7 +11,8 @@ public class PawnMoveTracker {
     private static boolean validatePawn(String[][] board, String move, boolean white) {
         if (!move.contains("x")) {
             int file = move.charAt(0) - 'a', rank = Character.getNumericValue(move.charAt(1));
-            if (file < 0 || file > 7 || rank < 0 || rank > 7 || !board[8 - rank][file].equals(".")) return false;
+            System.out.println("FILE: " + file + "RANK: " + rank);
+            if (file < 0 || file > 7 || rank < 0 || rank > 8 || !board[8 - rank][file].equals(".")) return false;
             if (white) {
                 if (rank < 3) return false;
                 return rank != 4 && board[8 - (rank - 1)][file].equals("P")
@@ -22,7 +23,6 @@ public class PawnMoveTracker {
                         || rank == 5 && (board[8 - rank - 1][file].equals("p") || board[8 - rank - 2][file].equals("p"));
             }
         }
-
         if (move.contains("x") && move.length() == 4) {
             int pawnFile = move.charAt(0) - 'a', capFile = move.charAt(2) - 'a';
             int capRank = 8 - Character.getNumericValue(move.charAt(3));
