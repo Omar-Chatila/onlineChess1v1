@@ -68,12 +68,9 @@ public class Client {
                                 ClientController.addLabel(messageFromServer, vBox);
                             }
                         } else {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!ApplicationData.getInstance().isIllegalMove()) {
-                                        ApplicationData.getInstance().getChessboardController().updateBoard(messageFromServer);
-                                    }
+                            Platform.runLater(() -> {
+                                if (!ApplicationData.getInstance().isIllegalMove()) {
+                                    ApplicationData.getInstance().getChessboardController().updateBoard(messageFromServer);
                                 }
                             });
                         }

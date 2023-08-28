@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -18,6 +15,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import tableView.ButtonTableCell;
+import tableView.IntegerTableCell;
+import tableView.Item;
 import util.ApplicationData;
 
 import java.io.IOException;
@@ -31,21 +31,25 @@ public class ClientController implements Initializable {
     @FXML
     private Button button_send;
     @FXML
+    private AnchorPane chessBoardPane;
+    @FXML
+    private TableView<Item> movesTable;
+    @FXML
+    private Label roleLabel;
+    @FXML
     private ScrollPane sp_main;
     @FXML
     private TextField tf_message;
     @FXML
     private VBox vbox_messages;
-    @FXML
-    private AnchorPane chessBoardPane;
-    @FXML
-    private Label roleLabel;
     private static String ip_Address;
     private static int portNr;
     private Client client;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        createMovesTable();
+        addMove();
         try {
             client = new Client(new Socket(ip_Address, portNr));
             ApplicationData.getInstance().setClient(client);
@@ -54,10 +58,7 @@ public class ClientController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        vbox_messages.heightProperty().addListener((observableValue, number, t1) -> {
-            sp_main.setVvalue((Double) t1);
-            System.out.println("new message");
-        });
+        vbox_messages.heightProperty().addListener((observableValue, number, t1) -> sp_main.setVvalue((Double) t1));
         try {
             loadChessBoard();
         } catch (Exception e) {
@@ -92,14 +93,42 @@ public class ClientController implements Initializable {
         roleLabel.setText("Chess - " + (!GameStates.isServerWhite() ? "White" : "Black"));
     }
 
+    private void addMove() {
+        movesTable.getItems().addAll(
+                new Item(1, "e4", "e5"),
+                new Item(2, "Nf3", "Nc6")
+        );
+    }
+
+    private void createMovesTable() {
+        TableColumn<Item, Integer> moveNumberColumn = new TableColumn<>("#");
+        moveNumberColumn.setCellValueFactory(cellData -> cellData.getValue().numberProperty().asObject());
+        moveNumberColumn.setCellFactory(param -> new IntegerTableCell());
+
+        TableColumn<Item, String> whiteMovesColumn = new TableColumn<>("W");
+        whiteMovesColumn.setCellValueFactory(cellData -> cellData.getValue().whiteMoveProperty());
+        whiteMovesColumn.setCellFactory(param -> new ButtonTableCell());
+
+        TableColumn<Item, String> blackMovesColumn = new TableColumn<>("B");
+        blackMovesColumn.setCellValueFactory(cellData -> cellData.getValue().blackMoveProperty());
+        blackMovesColumn.setCellFactory(param -> new ButtonTableCell());
+
+        moveNumberColumn.setPrefWidth(25);
+        blackMovesColumn.setPrefWidth(50);
+        whiteMovesColumn.setPrefWidth(50);
+        moveNumberColumn.setMaxWidth(25);
+        blackMovesColumn.setMaxWidth(50);
+        whiteMovesColumn.setMaxWidth(50);
+
+        movesTable.getColumns().addAll(moveNumberColumn, whiteMovesColumn, blackMovesColumn);
+    }
+
     public static void addLabel(String msgFromServer, VBox vBox) {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.setPadding(new Insets(5, 5, 5, 10));
-
         Text text = new Text(msgFromServer);
         TextFlow textFlow = new TextFlow(text);
-
         textFlow.setStyle("-fx-background-color: rgb(233,233,235);" +
                 "-fx-background-radius: 20px;");
         textFlow.setPadding(new Insets(5, 10, 5, 10));

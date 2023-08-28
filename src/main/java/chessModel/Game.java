@@ -228,8 +228,8 @@ public class Game {
                 System.out.println("Game over! - " + (!white ? "Black won!" : "White won!"));
             }
             moveList.add(move);
+            System.out.println(moveList);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
