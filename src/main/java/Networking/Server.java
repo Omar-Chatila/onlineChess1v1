@@ -57,38 +57,31 @@ public class Server {
     }
 
     public void receiveMessageFromClient(VBox vBox) {
-        new Thread(new Runnable() {
-            @SuppressWarnings("CallToPrintStackTrace")
-            @Override
-            public void run() {
-                while (socket.isConnected()) {
-                    try {
-                        String messageFromClient = bufferedReader.readLine();
-                        if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}")) {
-                            ApplicationData.getInstance().setIllegalMove(false);
-                            Game.executeMove(messageFromClient, !GameStates.isServerWhite());
-                            if (!ApplicationData.getInstance().isIllegalMove()) {
-                                ServerController.addLabel(messageFromClient, vBox);
-                            }
-                            if (!ApplicationData.getInstance().isIllegalMove()) {
-                                GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
-                            }
-                        } else {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!ApplicationData.getInstance().isIllegalMove()) {
-                                        ApplicationData.getInstance().getChessboardController().updateBoard(messageFromClient);
-                                    }
-                                }
-                            });
+        new Thread(() -> {
+            while (socket.isConnected()) {
+                try {
+                    String messageFromClient = bufferedReader.readLine();
+                    if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}")) {
+                        ApplicationData.getInstance().setIllegalMove(false);
+                        Game.executeMove(messageFromClient, !GameStates.isServerWhite());
+                        if (!ApplicationData.getInstance().isIllegalMove()) {
+                            ServerController.addLabel(messageFromClient, vBox);
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        System.out.println("Error receiving message from the client");
-                        closeEverything(socket, bufferedReader, bufferedWriter);
-                        break;
+                        if (!ApplicationData.getInstance().isIllegalMove()) {
+                            GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                        }
+                    } else {
+                        Platform.runLater(() -> {
+                            if (!ApplicationData.getInstance().isIllegalMove()) {
+                                ApplicationData.getInstance().getChessboardController().updateBoard(messageFromClient);
+                            }
+                        });
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Error receiving message from the client");
+                    closeEverything(socket, bufferedReader, bufferedWriter);
+                    break;
                 }
             }
         }).start();
