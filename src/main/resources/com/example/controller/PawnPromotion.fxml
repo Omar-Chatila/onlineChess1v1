@@ -4,25 +4,55 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="selectionBox" maxHeight="-Infinity" maxWidth="70.0" minHeight="-Infinity" minWidth="70.0" prefHeight="334.0" prefWidth="70.0" spacing="10.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.PawnPromotionController">
+<VBox fx:id="selectionBox" maxHeight="-Infinity" maxWidth="70.0" minHeight="-Infinity" minWidth="70.0" prefHeight="321.0" prefWidth="70.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.PawnPromotionController">
     <children>
-        <ImageView fx:id="queenButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox fx:id="queenBox" prefHeight="68.0" prefWidth="71.0">
+         <children>
+              <ImageView fx:id="queenButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
         <Separator prefWidth="200.0" />
-        <ImageView fx:id="knightButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox fx:id="knightBox">
+         <children>
+              <ImageView fx:id="knightButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
         <Separator prefWidth="200.0" />
-        <ImageView fx:id="rookButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox fx:id="rookBox">
+         <children>
+              <ImageView fx:id="rookButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
         <Separator prefWidth="200.0" />
-        <ImageView fx:id="bishopButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox fx:id="bishopBox">
+         <children>
+              <ImageView fx:id="bishopButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
         <Separator prefWidth="200.0" />
-        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="25.0" text="X" textAlignment="CENTER">
+        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#close" prefHeight="38.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="X" textAlignment="CENTER">
             <VBox.margin>
-                <Insets left="12.5" />
+                <Insets />
             </VBox.margin>
         </Button>
     </children>
-    <padding>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-    </padding>
 </VBox>

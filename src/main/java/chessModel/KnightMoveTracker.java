@@ -11,7 +11,20 @@ public class KnightMoveTracker {
 
     public static boolean validateKnight(String[][] board, String move, boolean white) {
         int file = move.charAt(move.contains("x") ? 2 : 1) - 'a';
-        int rank = 8 - Character.getNumericValue(move.charAt(move.contains("x") ? 3 : 2));
+        char x = move.charAt(move.contains("x") ? 3 : 2);
+        int rank = 8 - Character.getNumericValue(x);
+        int startFile = -1;
+        int startRank = -1;
+        if (move.matches("N[a-h][a-h][1-8]")) {
+            startFile = move.charAt(1) - 'a';
+            rank = 8 - Character.getNumericValue(move.charAt(move.contains("x") ? 4 : 3));
+            file = x - 'a';
+            System.out.println("START FILE  " + startFile);
+        } else if (move.matches("N[1-8][a-h][1-8]")) {
+            startRank = 8 - Character.getNumericValue(move.charAt(1));
+            rank = 8 - Character.getNumericValue(move.charAt(move.contains("x") ? 4 : 3));
+            file = x - 'a';
+        }
         for (int i = 0; i < 8; i++) {
             int rankY = rank + offsetY[i];
             int fileX = file + offsetX[i];
@@ -22,9 +35,14 @@ public class KnightMoveTracker {
                         && ((move.contains("x") && white && board[rank][file].matches("[npkqrb]")
                         || move.contains("x") && !white && board[rank][file].matches("[NPKBRQ]"))
                         || !move.contains("x"))) {
-                    board[rankY][fileX] = ".";
-                    board[rank][file] = white ? "N" : "n";
-                    return !Game.kingChecked(white);
+                    System.out.println("FIRST");
+                    if ((move.matches("N[a-h][a-h][1-8]") && fileX == startFile) ||
+                            (move.matches("N[1-8][a-h][1-8]") && rankY == startRank) ||
+                            (!move.matches("N[a-h][a-h][1-8]") && !move.matches("N[1-8][a-h][1-8]"))) {
+                        board[rankY][fileX] = ".";
+                        board[rank][file] = white ? "N" : "n";
+                        return !Game.kingChecked(white);
+                    }
                 }
             }
         }

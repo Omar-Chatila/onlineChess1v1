@@ -14,6 +14,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.ApplicationData;
@@ -218,8 +219,19 @@ public class ChessboardController {
         }
         if (Game.isAmbiguousMove(move, isWhite, destinationSquare)) {
             System.out.println("AMBIGUOUS MOVE!!! -- " + move);
-            if (Game.pieceOnSameRank(move, isWhite, destinationSquare)) {
-                System.out.println("PIECE ON SAME RANK ");
+            if (Game.pieceOnSameFile(move, isWhite, destinationSquare, startingSquare)) {
+                int rank;
+                if (isWhite)
+                    rank = 8 - Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
+                else
+                    rank = Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0) + 1;
+                move = movedPiece + rank + cell.getAccessibleText();
+                if (cell.getChildren().size() == 2) {
+                    if (!move.contains("O")) {
+                        move = movedPiece + rank + "x" + cell.getAccessibleText();
+                    }
+                }
+            } else {
                 if (isWhite) {
                     file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
                 } else {
@@ -229,20 +241,6 @@ public class ChessboardController {
                 if (cell.getChildren().size() == 2) {
                     if (!move.contains("O")) {
                         move = movedPiece + file + "x" + cell.getAccessibleText();
-                    }
-                }
-            } else {
-                System.out.println("PIECE ON SAME FILE");
-                int rank;
-                if (isWhite) {
-                    rank = Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
-                } else {
-                    rank = 8 - Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
-                }
-                move = movedPiece + rank + cell.getAccessibleText();
-                if (cell.getChildren().size() == 2) {
-                    if (!move.contains("O")) {
-                        move = movedPiece + rank + "x" + cell.getAccessibleText();
                     }
                 }
             }
@@ -261,14 +259,17 @@ public class ChessboardController {
             move = "O-O-O";
         }
         System.out.println(move);
-        if (move.matches("([a-h]x)?[a-h]8")) {
+        if (move.matches("([a-h]x)?[a-h]8") || move.matches("([a-h]x)?[a-h]1")) {
             Button movingButton = (Button) getPaneFromCoordinate(startingSquare).getChildren().get(1);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PawnPromotion.fxml"));
             try {
+                Stage mainStage = (Stage) this.chessboardGrid.getScene().getWindow();
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setWidth(70.0);
+                stage.initOwner(mainStage);
+                stage.initModality(Modality.WINDOW_MODAL);
                 stage.resizableProperty().setValue(Boolean.FALSE);
                 stage.initStyle(StageStyle.UNDECORATED);
                 movingButton.getGraphic().setOpacity(0.5);

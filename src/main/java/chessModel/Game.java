@@ -181,36 +181,41 @@ public class Game {
         return count > 1;
     }
 
-    public static boolean pieceOnSameRank(String move, boolean white, IntIntPair destinationSquare) {
+    public static boolean pieceOnSameFile(String move, boolean white, IntIntPair destinationSquare, IntIntPair startingSquare) {
         int file = destinationSquare.getColumn();
         int row = destinationSquare.getRow();
+        int startFile = startingSquare.getColumn();
         if (!white) {
             row = 7 - row;
             file = 7 - file;
+            startFile = 7 - startFile;
         }
+        System.out.println("FILEEEE: " + file);
+        System.out.println("ROW  " + row);
         int found = 0;
         char piece = move.charAt(0);
         List<List<String>> allMoves = new ArrayList<>();
-        for (int c = 0; c < 8; c++) {
+        for (int r = 0; r < 8; r++) {
             switch (piece) {
                 case 'R' -> {
-                    if (board[row][c].equals((white) ? "R" : "r")) {
-                        allMoves.add(RookMoveTracker.possibleMovesLogic(board, row, c, white));
+                    if (board[r][startFile].equals((white) ? "R" : "r")) {
+                        allMoves.add(RookMoveTracker.possibleMovesLogic(board, r, startFile, white));
                     }
                 }
                 case 'N' -> {
-                    if (board[row][c].equals((white) ? "N" : "n")) {
-                        allMoves.add(KnightMoveTracker.possibleMovesLogic(board, row, c, white));
+                    if (board[r][startFile].equals((white) ? "N" : "n")) {
+                        allMoves.add(KnightMoveTracker.possibleMovesLogic(board, r, startFile, white));
                     }
                 }
                 case 'Q' -> {
-                    if (board[row][c].equals((white) ? "Q" : "q")) {
-                        allMoves.add(QueenMoveTracker.possibleMovesLogic(board, row, c, white));
+                    if (board[r][startFile].equals((white) ? "Q" : "q")) {
+                        allMoves.add(QueenMoveTracker.possibleMovesLogic(board, r, startFile, white));
                     }
                 }
             }
         }
         for (List<String> moveList : allMoves) {
+            System.out.println(moveList);
             if (moveList.contains(row + "" + file)) {
                 found++;
             }
