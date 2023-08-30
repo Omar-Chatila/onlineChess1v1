@@ -87,10 +87,16 @@ public class ChessboardController {
             ClipboardContent content = new ClipboardContent();
             content.putImage(((ImageView) currentButton.getGraphic()).getImage());
             String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
-            String movedP = imageUrl.substring(imageUrl.length() - 6);
-            System.out.println("moved piece  " + movedP);
-            boolean isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
-            movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
+            boolean isWhitePiece;
+            if (imageUrl != null) {
+                String movedP = imageUrl.substring(imageUrl.length() - 6);
+                System.out.println("moved piece  " + movedP);
+                isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
+                movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
+            } else {
+                movedPiece = currentButton.getAccessibleText().charAt(1) + "";
+                isWhitePiece = currentButton.getAccessibleText().charAt(0) == 'w';
+            }
             if (movedPiece.isEmpty()) {
                 this.pawnFile = startingSquare.getColumn();
                 this.pawnRank = startingSquare.getRow();
@@ -196,6 +202,15 @@ public class ChessboardController {
         StackPane endCell = getPaneFromCoordinate(endCoordinates);
         assert startCell != null;
         Button movingPiece = (Button) startCell.getChildren().remove(1);
+        if (opponentMove.matches("[0-9]{2}\\.[0-9]{2}[A-Q]")) {
+            String piece = GameStates.iAmWhite() ? "b" : "w" + opponentMove.charAt(opponentMove.length() - 1);
+            Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + piece + ".png")));
+            ImageView h = new ImageView(promotion);
+            h.setFitHeight(50);
+            h.setFitWidth(50);
+            movingPiece.setGraphic(h);
+            movingPiece.setAccessibleText(piece);
+        }
         assert endCell != null;
         endCell.getChildren().add(movingPiece);
         if (endCell.getChildren().size() == 3) {
@@ -287,7 +302,11 @@ public class ChessboardController {
     private void handleMoveTransmission(IntIntPair destinationSquare) {
         if (GameStates.isServer()) {
             ApplicationData.getInstance().getServer().sendMessageToClient(move);
-            ApplicationData.getInstance().getServer().sendMessageToClient(startingSquare.toString() + "." + destinationSquare);
+            String message = startingSquare.toString() + "." + destinationSquare;
+            if (move.contains("=")) {
+                message = message + move.charAt(move.length() - 1);
+            }
+            ApplicationData.getInstance().getServer().sendMessageToClient(message);
             if (move.equals("O-O")) {
                 if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
                     ApplicationData.getInstance().getServer().sendMessageToClient("77.75");
@@ -303,7 +322,11 @@ public class ChessboardController {
             }
         } else {
             ApplicationData.getInstance().getClient().sendMessageToServer(move);
-            ApplicationData.getInstance().getClient().sendMessageToServer(startingSquare.toString() + "." + destinationSquare);
+            String message = startingSquare.toString() + "." + destinationSquare;
+            if (move.contains("=")) {
+                message = message + move.charAt(move.length() - 1);
+            }
+            ApplicationData.getInstance().getClient().sendMessageToServer(message);
             if (move.equals("O-O")) {
                 if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
                     ApplicationData.getInstance().getClient().sendMessageToServer("77.75");
@@ -334,12 +357,11 @@ public class ChessboardController {
                     case "B" -> piece = (GameStates.iAmWhite()) ? "wB" : "bB";
                 }
                 Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + piece + ".png")));
-                System.out.println(promotion.getUrl());
                 ImageView h = new ImageView(promotion);
-
                 h.setFitHeight(50);
                 h.setFitWidth(50);
                 selectedPiece.setGraphic(h);
+                selectedPiece.setAccessibleText(piece);
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                 cell.getChildren().add(selectedPiece);
                 setButtonListeners(selectedPiece);

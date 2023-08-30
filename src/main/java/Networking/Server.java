@@ -36,7 +36,7 @@ public class Server {
     public void sendMessageToClient(String messageToClient) {
         try {
             if (GameStates.isIsMyTurn()) {
-                if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}")) {
+                if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
@@ -60,7 +60,7 @@ public class Server {
             while (socket.isConnected()) {
                 try {
                     String messageFromClient = bufferedReader.readLine();
-                    if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}")) {
+                    if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
                         ApplicationData.getInstance().setIllegalMove(false);
                         Game.executeMove(messageFromClient, !GameStates.isServerWhite());
                         if (!ApplicationData.getInstance().isIllegalMove()) {
