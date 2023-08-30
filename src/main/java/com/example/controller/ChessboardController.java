@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -111,7 +113,7 @@ public class ChessboardController {
         if (move.equals("wrong")) return;
         System.out.println(move);
         handleMoveTransmission(destinationSquare);
-        applyMoveToBoardAndUI(cell);
+        applyMoveToBoardAndUI(cell, destinationSquare);
         selectedPiece = null;
         event.setDropCompleted(true);
     }
@@ -265,15 +267,16 @@ public class ChessboardController {
             try {
                 Stage mainStage = (Stage) this.chessboardGrid.getScene().getWindow();
                 Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setWidth(70.0);
-                stage.initOwner(mainStage);
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.resizableProperty().setValue(Boolean.FALSE);
-                stage.initStyle(StageStyle.UNDECORATED);
+                Dialog<ButtonType> dialog = new Dialog<>();
+                dialog.getDialogPane().setContent(scene.getRoot());
+                dialog.initOwner(mainStage);
+                dialog.initModality(Modality.WINDOW_MODAL);
+                dialog.initStyle(StageStyle.UNDECORATED);
+                //dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
                 movingButton.getGraphic().setOpacity(0.5);
-                stage.show();
+                dialog.showAndWait();
+                System.out.println("Canceled");
+                move += "=" + ApplicationData.getInstance().getPromotedPiece();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -317,14 +320,33 @@ public class ChessboardController {
         }
     }
 
-    private void applyMoveToBoardAndUI(StackPane cell) {
+    private void applyMoveToBoardAndUI(StackPane cell, IntIntPair destinationSquare) {
         if (!ApplicationData.getInstance().isIllegalMove() && !move.equals("O-O") && !move.equals("O-O-O")) {
-            System.out.println("Legal");
             if (cell.getChildren().size() == 2) {
                 cell.getChildren().remove(1);
             }
-            ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
-            cell.getChildren().add(selectedPiece);
+            if (move.contains("=")) {
+                String piece = "";
+                switch (ApplicationData.getInstance().getPromotedPiece()) {
+                    case "Q" -> piece = (GameStates.iAmWhite()) ? "wQ" : "bQ";
+                    case "N" -> piece = (GameStates.iAmWhite()) ? "wN" : "bN";
+                    case "R" -> piece = (GameStates.iAmWhite()) ? "wR" : "bR";
+                    case "B" -> piece = (GameStates.iAmWhite()) ? "wB" : "bB";
+                }
+                Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + piece + ".png")));
+                System.out.println(promotion.getUrl());
+                ImageView h = new ImageView(promotion);
+
+                h.setFitHeight(50);
+                h.setFitWidth(50);
+                selectedPiece.setGraphic(h);
+                ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                cell.getChildren().add(selectedPiece);
+                setButtonListeners(selectedPiece);
+            } else {
+                ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                cell.getChildren().add(selectedPiece);
+            }
         } else if ((move.equals("O-O") || move.equals("O-O-O")) && !ApplicationData.getInstance().isIllegalMove()) {
             if (GameStates.isServerWhite() && GameStates.isServer() || !GameStates.isServerWhite() && !GameStates.isServer()) {
                 StackPane kingSquare;

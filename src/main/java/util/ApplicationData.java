@@ -11,7 +11,7 @@ public class ApplicationData {
     private Server server;
     private ChessboardController chessboardController;
     private boolean illegalMove;
-    private boolean whitePlaying;
+    private String promotedPiece;
 
     private ApplicationData() {
 
@@ -55,5 +55,13 @@ public class ApplicationData {
 
     public boolean isWhitePlaying() {
         return GameStates.iAmWhite();
+    }
+
+    public String getPromotedPiece() {
+        return promotedPiece;
+    }
+
+    public void setPromotedPiece(String promotedPiece) {
+        this.promotedPiece = promotedPiece;
     }
 }

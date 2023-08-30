@@ -19,7 +19,6 @@ public class KnightMoveTracker {
             startFile = move.charAt(1) - 'a';
             rank = 8 - Character.getNumericValue(move.charAt(move.contains("x") ? 4 : 3));
             file = x - 'a';
-            System.out.println("START FILE  " + startFile);
         } else if (move.matches("N[1-8][a-h][1-8]")) {
             startRank = 8 - Character.getNumericValue(move.charAt(1));
             rank = 8 - Character.getNumericValue(move.charAt(move.contains("x") ? 4 : 3));

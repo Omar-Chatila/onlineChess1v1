@@ -37,7 +37,6 @@ public class Server {
         try {
             if (GameStates.isIsMyTurn()) {
                 if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}")) {
-                    System.out.println("Wie oft?");
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
