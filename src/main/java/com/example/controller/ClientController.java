@@ -45,6 +45,7 @@ public class ClientController implements Initializable {
     private static String ip_Address;
     private static int portNr;
     private Client client;
+    private static MovesTableController mtc;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,8 +59,8 @@ public class ClientController implements Initializable {
         }
         vbox_messages.heightProperty().addListener((observableValue, number, t1) -> sp_main.setVvalue((Double) t1));
         try {
-            loadChessBoard();
             loadMovesTable();
+            loadChessBoard();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,6 +137,11 @@ public class ClientController implements Initializable {
         FXMLLoader loader;
         loader = new FXMLLoader(getClass().getResource("movesTable.fxml"));
         VBox vBox = loader.load();
+        mtc = loader.getController();
         tableBox.getChildren().add(vBox);
+    }
+
+    public static MovesTableController getMtc() {
+        return mtc;
     }
 }

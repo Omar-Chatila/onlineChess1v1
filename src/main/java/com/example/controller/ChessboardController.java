@@ -39,9 +39,12 @@ public class ChessboardController {
     public static String movedPiece;
     public static String move;
     private IntIntPair startingSquare;
+    private static MovesTableController mtc;
+
 
     @FXML
     private void initialize() {
+        setMovesTableController();
         for (Node node : chessboardGrid.getChildren()) {
             if (node instanceof StackPane current) {
                 setSquareAccessibleText(current);
@@ -119,7 +122,12 @@ public class ChessboardController {
         if (move.equals("wrong")) return;
         System.out.println(move);
         handleMoveTransmission(destinationSquare);
-        applyMoveToBoardAndUI(cell, destinationSquare);
+        applyMoveToBoardAndUI(cell);
+        if (GameStates.iAmWhite()) {
+            mtc.addMove(mtc.getCurrentMove(), move, null);
+        } else {
+            mtc.addMove(mtc.getCurrentMove(), null, move);
+        }
         selectedPiece = null;
         event.setDropCompleted(true);
     }
@@ -215,6 +223,11 @@ public class ChessboardController {
         endCell.getChildren().add(movingPiece);
         if (endCell.getChildren().size() == 3) {
             endCell.getChildren().remove(1);
+        }
+        if (GameStates.iAmWhite()) {
+            mtc.addMove(mtc.getCurrentMove(), null, Game.moveList.get(Game.moveList.size() - 1));
+        } else {
+            mtc.addMove(mtc.getCurrentMove(), Game.moveList.get(Game.moveList.size() - 1), null);
         }
     }
 
@@ -343,7 +356,7 @@ public class ChessboardController {
         }
     }
 
-    private void applyMoveToBoardAndUI(StackPane cell, IntIntPair destinationSquare) {
+    private void applyMoveToBoardAndUI(StackPane cell) {
         if (!ApplicationData.getInstance().isIllegalMove() && !move.equals("O-O") && !move.equals("O-O-O")) {
             if (cell.getChildren().size() == 2) {
                 cell.getChildren().remove(1);
@@ -403,6 +416,15 @@ public class ChessboardController {
                 getPaneFromCoordinate(new IntIntPair(7, 3)).getChildren().remove(1);
                 getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 0 : 7)).getChildren().remove(1);
             }
+        }
+    }
+
+    private void setMovesTableController() {
+        if (GameStates.isServer()) {
+            System.out.println("HIEEEER");
+            mtc = ServerController.getMtc();
+        } else {
+            mtc = ClientController.getMtc();
         }
     }
 }

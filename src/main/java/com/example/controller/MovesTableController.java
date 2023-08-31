@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -10,11 +12,13 @@ import tableView.Item;
 public class MovesTableController {
     @FXML
     private TableView<Item> movesTable;
+    private final ObservableList<Item> movesList = FXCollections.observableArrayList();
+    private Integer currentMove = 1;
 
     @FXML
     private void initialize() {
         createMovesTable();
-        addMove();
+        movesTable.setItems(movesList);
     }
 
     private void createMovesTable() {
@@ -40,10 +44,23 @@ public class MovesTableController {
         movesTable.getColumns().addAll(moveNumberColumn, whiteMovesColumn, blackMovesColumn);
     }
 
-    private void addMove() {
-        movesTable.getItems().addAll(
-                new Item(1, "e4", "e5"),
-                new Item(2, "Nf3", "Nc6")
-        );
+    public Integer getCurrentMove() {
+        return currentMove;
+    }
+
+    public void addMove(Integer moveNumber, String whiteMove, String blackMove) {
+        System.out.println(moveNumber);
+        if (whiteMove != null) {
+            System.out.println("add move " + whiteMove);
+            movesList.add(new Item(moveNumber, whiteMove, null)); // Add the white move
+            this.currentMove++;
+        }
+        if (blackMove != null) {
+            if (!movesList.isEmpty()) {
+                Item lastItem = movesList.get(movesList.size() - 1);
+                lastItem.setBlackMove(blackMove); // Set the black move for the last white move
+            }
+        }
+        movesTable.refresh();
     }
 }

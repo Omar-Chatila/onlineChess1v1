@@ -44,6 +44,7 @@ public class ServerController implements Initializable {
     private Server server;
     @FXML
     private Label roleLabel;
+    private static MovesTableController mtc;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,8 +56,8 @@ public class ServerController implements Initializable {
             throw new RuntimeException(e);
         }
         try {
-            loadChessBoard();
             loadMovesTable();
+            loadChessBoard();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,6 +134,11 @@ public class ServerController implements Initializable {
         FXMLLoader loader;
         loader = new FXMLLoader(getClass().getResource("movesTable.fxml"));
         VBox vBox = loader.load();
+        mtc = loader.getController();
         tableBox.getChildren().add(vBox);
+    }
+
+    public static MovesTableController getMtc() {
+        return mtc;
     }
 }
