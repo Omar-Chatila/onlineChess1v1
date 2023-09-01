@@ -17,6 +17,7 @@ public class Game {
     public static List<String> moveList = new ArrayList<>();
     public static List<String[][]> playedPositions = new ArrayList<>();
     public static String[][] board = new String[8][8];
+    private static int fiftyMoveRule;
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
@@ -233,8 +234,11 @@ public class Game {
                 tally++;
             }
         }
-        System.out.println("TALLY: " + tally);
         return tally >= 3;
+    }
+
+    private static boolean reset50moveRule(String move) {
+        return Character.toString(move.charAt(0)).matches("[a-h]") || move.contains("x");
     }
 
     public static void executeMove(String move, boolean white) {
@@ -249,9 +253,16 @@ public class Game {
             if (kingChecked(!white) && checkMated(!white)) {
                 System.out.println("Game over! - " + (!white ? "Black won!" : "White won!"));
             }
+            if (reset50moveRule(move)) {
+                fiftyMoveRule = 0;
+            } else {
+                fiftyMoveRule++;
+            }
+            if (fiftyMoveRule >= 100) {
+                System.out.println("50 move rule applied: One player can claim draw!");
+            }
             moveList.add(move);
             playedPositions.add(copyBoard(board));
-            System.out.println(moveList);
         } catch (Exception e) {
             e.printStackTrace();
         }
