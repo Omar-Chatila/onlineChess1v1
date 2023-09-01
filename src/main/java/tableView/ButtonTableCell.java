@@ -1,5 +1,6 @@
 package tableView;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 
@@ -7,6 +8,10 @@ public class ButtonTableCell extends TableCell<Item, String> {
     private final Button button;
     private final String defaultStyle = "-fx-background-color: transparent;" + "-fx-background-radius: 0;" + "-fx-text-fill: black;";
     private final String hoverStyle = "-fx-background-color: #3489eb;" + "-fx-background-radius: 0;" + "-fx-text-fill: black;";
+<<<<<<< HEAD
+=======
+    // private static boolean isWhite = true;   schwarze züge grau markiert werden sollen
+>>>>>>> 72fc51c78d5d44dd0c292551a6cd101c95050b90
 
     public ButtonTableCell() {
         button = new Button();
@@ -14,6 +19,12 @@ public class ButtonTableCell extends TableCell<Item, String> {
         button.setOnMouseEntered(e -> button.setStyle(hoverStyle));
         button.setOnMouseExited(e -> button.setStyle(defaultStyle));
         button.setPrefWidth(50);
+<<<<<<< HEAD
+=======
+        button.setAlignment(Pos.BASELINE_LEFT);
+        // if (!isWhite) button.setStyle(button.getStyle() + "-fx-background-color: #736b6b;");
+        /*isWhite = !isWhite;*/
+>>>>>>> 72fc51c78d5d44dd0c292551a6cd101c95050b90
         button.setOnAction(event -> {
             String move = getItem();
             if (move != null) {
