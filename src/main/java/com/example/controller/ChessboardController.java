@@ -134,13 +134,17 @@ public class ChessboardController {
 
     private void updateCheckStatus() {
         System.out.println("White King checked: " + Game.kingChecked(true) + "\n Black checked: " + Game.kingChecked(false));
-        if (Game.kingChecked(false)) {
+        if (Game.kingChecked(false) && !Game.checkMated(false)) {
             blackKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+        } else if (Game.checkMated(false)) {
+            blackKingButton.setStyle("-fx-background-color: #990c02;");
         } else if (!Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: transparent;");
         }
-        if (Game.kingChecked(true)) {
+        if (Game.kingChecked(true) && !Game.checkMated(true)) {
             whiteKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+        } else if (Game.checkMated(true)) {
+            whiteKingButton.setStyle("-fx-background-color: #990c02;");
         } else if (!Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: transparent;");
         }
