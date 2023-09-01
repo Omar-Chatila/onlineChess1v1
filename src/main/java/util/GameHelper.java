@@ -1,5 +1,7 @@
 package util;
 
+import chessModel.Game;
+
 public class GameHelper {
     public static String[][] copyBoard(String[][] board) {
         String[][] copy = new String[8][8];
@@ -50,5 +52,17 @@ public class GameHelper {
         board[7][5] = "B";
         board[7][6] = "N";
         board[7][7] = "R";
+        Game.playedPositions.add(copyBoard(board));
+    }
+
+    public static boolean boardEquals(String[][] first, String[][] second) {
+        for (int i = 0; i < first.length; i++) {
+            for (int j = 0; j < first[i].length; j++) {
+                if (!first[i][j].equals(second[i][j])) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

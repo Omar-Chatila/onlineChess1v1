@@ -3,16 +3,19 @@ package chessModel;
 import Exceptions.IllegalMoveException;
 import com.example.controller.GameStates;
 import util.ApplicationData;
+import util.GameHelper;
 import util.IntIntPair;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static util.GameHelper.copyBoard;
 import static util.GameHelper.print;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class Game {
     public static List<String> moveList = new ArrayList<>();
+    public static List<String[][]> playedPositions = new ArrayList<>();
     public static String[][] board = new String[8][8];
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
@@ -223,16 +226,31 @@ public class Game {
         return found > 1;
     }
 
+    private static boolean isThreefoldRepetition() {
+        int tally = 1;
+        for (String[][] b : playedPositions) {
+            if (GameHelper.boardEquals(board, b)) {
+                tally++;
+            }
+        }
+        System.out.println("TALLY: " + tally);
+        return tally >= 3;
+    }
+
     public static void executeMove(String move, boolean white) {
         try {
             print(movePieces(move, white));
             if (stalemated(!white)) {
-                System.out.println("Game over! - Draw");
+                System.out.println("Game over! - Draw by stalemate");
+            }
+            if (isThreefoldRepetition()) {
+                System.out.println("3-Fold repetition: One player can claim draw");
             }
             if (kingChecked(!white) && checkMated(!white)) {
                 System.out.println("Game over! - " + (!white ? "Black won!" : "White won!"));
             }
             moveList.add(move);
+            playedPositions.add(copyBoard(board));
             System.out.println(moveList);
         } catch (Exception e) {
             e.printStackTrace();

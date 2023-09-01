@@ -211,7 +211,8 @@ public class ChessboardController {
         assert startCell != null;
         Button movingPiece = (Button) startCell.getChildren().remove(1);
         if (opponentMove.matches("[0-9]{2}\\.[0-9]{2}[A-Q]")) {
-            String piece = GameStates.iAmWhite() ? "b" : "w" + opponentMove.charAt(opponentMove.length() - 1);
+            String piece = (GameStates.iAmWhite() ? "b" : "w") + opponentMove.charAt(opponentMove.length() - 1);
+            System.out.println(piece);
             Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + piece + ".png")));
             ImageView h = new ImageView(promotion);
             h.setFitHeight(50);

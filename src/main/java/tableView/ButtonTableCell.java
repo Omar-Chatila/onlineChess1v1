@@ -7,7 +7,6 @@ public class ButtonTableCell extends TableCell<Item, String> {
     private final Button button;
     private final String defaultStyle = "-fx-background-color: transparent;" + "-fx-background-radius: 0;" + "-fx-text-fill: black;";
     private final String hoverStyle = "-fx-background-color: #3489eb;" + "-fx-background-radius: 0;" + "-fx-text-fill: black;";
-    private boolean isWhite = true;
 
     public ButtonTableCell() {
         button = new Button();
@@ -15,8 +14,6 @@ public class ButtonTableCell extends TableCell<Item, String> {
         button.setOnMouseEntered(e -> button.setStyle(hoverStyle));
         button.setOnMouseExited(e -> button.setStyle(defaultStyle));
         button.setPrefWidth(50);
-        if (!isWhite) button.setStyle(button.getStyle() + "-fx-background-color: grey;");
-        isWhite = !isWhite;
         button.setOnAction(event -> {
             String move = getItem();
             if (move != null) {
