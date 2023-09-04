@@ -16,7 +16,7 @@ public class ButtonTableCell extends TableCell<Item, String> {
         button.setStyle(defaultStyle);
         button.setOnMouseEntered(e -> button.setStyle(hoverStyle));
         button.setOnMouseExited(e -> button.setStyle(defaultStyle));
-        button.setPrefWidth(50);
+        button.setPrefWidth(80);
         button.setAlignment(Pos.BASELINE_LEFT);
         // if (!isWhite) button.setStyle(button.getStyle() + "-fx-background-color: #736b6b;");
         /*isWhite = !isWhite;*/

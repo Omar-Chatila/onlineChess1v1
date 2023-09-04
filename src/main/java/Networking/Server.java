@@ -2,9 +2,7 @@ package Networking;
 
 import chessModel.Game;
 import com.example.controller.GameStates;
-import com.example.controller.ServerController;
 import javafx.application.Platform;
-import javafx.scene.layout.VBox;
 import util.ApplicationData;
 
 import java.io.*;
@@ -55,7 +53,7 @@ public class Server {
 
     }
 
-    public void receiveMessageFromClient(VBox vBox) {
+    public void receiveMessageFromClient() {
         new Thread(() -> {
             while (socket.isConnected()) {
                 try {
@@ -63,9 +61,6 @@ public class Server {
                     if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
                         ApplicationData.getInstance().setIllegalMove(false);
                         Game.executeMove(messageFromClient, !GameStates.isServerWhite());
-                        if (!ApplicationData.getInstance().isIllegalMove()) {
-                            ServerController.addLabel(messageFromClient, vBox);
-                        }
                         if (!ApplicationData.getInstance().isIllegalMove()) {
                             GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                         }

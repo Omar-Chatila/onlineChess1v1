@@ -1,10 +1,8 @@
 package Networking;
 
 import chessModel.Game;
-import com.example.controller.ClientController;
 import com.example.controller.GameStates;
 import javafx.application.Platform;
-import javafx.scene.layout.VBox;
 import util.ApplicationData;
 
 import java.io.*;
@@ -50,7 +48,7 @@ public class Client {
         }
     }
 
-    public void receiveMessageFromServer(VBox vBox) {
+    public void receiveMessageFromServer() {
         new Thread(() -> {
             while (socket.isConnected()) {
                 try {
@@ -63,9 +61,6 @@ public class Client {
                             Game.executeMove(messageFromServer, GameStates.isServerWhite());
                             if (!ApplicationData.getInstance().isIllegalMove()) {
                                 GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
-                            }
-                            if (!ApplicationData.getInstance().isIllegalMove()) {
-                                ClientController.addLabel(messageFromServer, vBox);
                             }
                         } else {
                             Platform.runLater(() -> {

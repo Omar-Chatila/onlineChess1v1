@@ -1,28 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="490.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ClientController">
     <children>
-        <Button fx:id="button_send" layoutX="524.0" layoutY="453.0" text="send" />
-        <TextField fx:id="tf_message" layoutX="480.0" layoutY="453.0" prefHeight="26" prefWidth="42.0" />
-        <ScrollPane fx:id="sp_main" fitToWidth="true" layoutX="479.0" layoutY="60.0" prefHeight="377.0" prefWidth="87.0">
-            <content>
-                <VBox fx:id="vbox_messages" prefHeight="375.0" prefWidth="88.0" />
-            </content>
-        </ScrollPane>
         <Label fx:id="roleLabel" layoutX="71.0" layoutY="17.0" text="Chess - Black">
             <font>
                 <Font name="Arial Rounded MT Bold" size="23" />
             </font>
         </Label>
         <AnchorPane fx:id="chessBoardPane" layoutX="71.0" layoutY="60.0" prefHeight="401.0" prefWidth="401.0" style="-fx-border-color: BLACK;" />
-      <VBox fx:id="tableBox" layoutX="591.0" layoutY="70.0" />
+      <VBox fx:id="tableBox" layoutX="486.0" layoutY="60.0" prefHeight="400.0" prefWidth="200.0" />
     </children>
 </AnchorPane>
