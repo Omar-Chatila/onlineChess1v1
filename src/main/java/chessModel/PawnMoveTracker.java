@@ -8,6 +8,15 @@ import static util.GameHelper.copyBoard;
 public class PawnMoveTracker {
     private static final List<String> possibleMovesLogicList = new ArrayList<>();
     private static String whiteEnpassant;
+
+    public static String getWhiteEnpassant() {
+        return whiteEnpassant;
+    }
+
+    public static String getBlackEnpassant() {
+        return blackEnpassant;
+    }
+
     private static String blackEnpassant;
 
 
@@ -86,14 +95,14 @@ public class PawnMoveTracker {
         return false;
     }
 
-    public static void resetEnpassant(boolean white) {
-        if (white && blackEnpassant != null) {
+    public static void resetEnpassant() {
+        if (blackEnpassant != null) {
             String move = blackEnpassant.charAt(0) + "" + 5;
             if (Game.moveList.indexOf(move) != Game.moveList.size() - 1) {
                 blackEnpassant = null;
             }
         }
-        if (!white && whiteEnpassant != null) {
+        if (whiteEnpassant != null) {
             String move = whiteEnpassant.charAt(0) + "" + 4;
             if (Game.moveList.indexOf(move) != Game.moveList.size() - 1) {
                 whiteEnpassant = null;
@@ -193,9 +202,13 @@ public class PawnMoveTracker {
                     moves.add((rank - 1) + "" + (file + 1));
                 }
             }
-            // TODO: anpassen
             if (blackEnpassant != null) {
-                moves.add((blackEnpassant.charAt(0) - 'a') + "" + Integer.parseInt(Character.getNumericValue(blackEnpassant.charAt(1)) + ""));
+                int r = 8 - Integer.parseInt(Character.getNumericValue(blackEnpassant.charAt(1)) + "");
+                int f = blackEnpassant.charAt(0) - 'a';
+                if (rank == r + 1 && Math.abs(file - f) == 1) {
+                    System.out.println("HIIIIIEEER");
+                    moves.add(r + "" + f);
+                }
             }
         } else {
             if (isValidSquare(rank + 1, file - 1) && board[rank + 1][file - 1].matches("[PQRNB]")) {
@@ -215,14 +228,15 @@ public class PawnMoveTracker {
                     moves.add((7 - (rank + 1)) + "" + (7 - (file + 1)));
                 }
             }
-            // TODO: anpassen
             if (whiteEnpassant != null) {
-                int f = 7 - (whiteEnpassant.charAt(0) - 'a');
-                int r = 7 - Integer.parseInt(Character.getNumericValue(whiteEnpassant.charAt(1)) + "");
-                moves.add(f + "" + r);
+                int f = whiteEnpassant.charAt(0) - 'a';
+                int r = Integer.parseInt(Character.getNumericValue(whiteEnpassant.charAt(1)) + "");
+                possibleMovesLogicList.add(f + "" + r);
+                if (rank == r + 1 && Math.abs(file - f) == 1) {
+                    moves.add((r - 1) + "" + (7 - f));
+                }
             }
         }
-
         return moves;
     }
 

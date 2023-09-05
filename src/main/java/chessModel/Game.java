@@ -22,13 +22,16 @@ public class Game {
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
-        resetEnpassant(white);
+        resetEnpassant();
+
         if (move.equals("O-O") || move.equals("O-O-O")) {
             legal = KingMoveTracker.validateKing(board, move, white);
         } else {
             String currentPiece = Character.toString(move.charAt(0));
             if (!currentPiece.matches("[NKBRQ]")) {
                 legal = movePawn(board, move, white);
+                System.out.println("Black En Passant square: " + getBlackEnpassant());
+                System.out.println("White En Passant square: " + getWhiteEnpassant());
             } else if (currentPiece.matches("N")) {
                 legal = KnightMoveTracker.validateKnight(board, move, white);
             } else if (currentPiece.matches("R")) {
@@ -41,6 +44,7 @@ public class Game {
                 legal = KingMoveTracker.validateKing(board, move, white);
             }
         }
+
         if (!legal) {
             ApplicationData.getInstance().setIllegalMove(true);
             throw new IllegalMoveException(move);
