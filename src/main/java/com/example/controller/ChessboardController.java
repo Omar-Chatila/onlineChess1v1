@@ -120,7 +120,6 @@ public class ChessboardController {
         IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
         String move = generateMove(destinationSquare, cell);
         if (move.equals("wrong")) return;
-        System.out.println(move);
         handleMoveTransmission(destinationSquare);
         applyMoveToBoardAndUI(cell);
         if (GameStates.iAmWhite()) {
@@ -212,6 +211,7 @@ public class ChessboardController {
         IntIntPair endCoordinates = new IntIntPair(destRow, destCol);
         StackPane startCell = getPaneFromCoordinate(startCoordinates);
         StackPane endCell = getPaneFromCoordinate(endCoordinates);
+        boolean enpassant = Game.moveList.get(Game.moveList.size() - 1).contains("x") && endCell.getChildren().size() == 1;
         assert startCell != null;
         Button movingPiece = (Button) startCell.getChildren().remove(1);
         if (opponentMove.matches("[0-9]{2}\\.[0-9]{2}[A-Q]")) {
@@ -228,6 +228,10 @@ public class ChessboardController {
         endCell.getChildren().add(movingPiece);
         if (endCell.getChildren().size() == 3) {
             endCell.getChildren().remove(1);
+        }
+        if (enpassant) {
+            StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(endCell) - 1, GridPane.getColumnIndex(endCell)));
+            removablePawn.getChildren().remove(1);
         }
         if (GameStates.iAmWhite()) {
             mtc.addMove(mtc.getCurrentMove(), null, Game.moveList.get(Game.moveList.size() - 1));
@@ -381,6 +385,7 @@ public class ChessboardController {
 
     private void applyMoveToBoardAndUI(StackPane cell) {
         if (!ApplicationData.getInstance().isIllegalMove() && !move.equals("O-O") && !move.equals("O-O-O")) {
+            boolean enpassant = move.contains("x") && cell.getChildren().size() == 1;
             if (cell.getChildren().size() == 2) {
                 cell.getChildren().remove(1);
             }
@@ -403,6 +408,11 @@ public class ChessboardController {
                 setButtonListeners(selectedPiece);
             } else {
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                if (enpassant) {
+                    System.out.println("HIEEEEER");
+                    StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(cell) + 1, GridPane.getColumnIndex(cell)));
+                    removablePawn.getChildren().remove(1);
+                }
                 cell.getChildren().add(selectedPiece);
             }
         } else if ((move.equals("O-O") || move.equals("O-O-O")) && !ApplicationData.getInstance().isIllegalMove()) {
