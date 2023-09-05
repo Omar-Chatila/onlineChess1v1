@@ -9,6 +9,7 @@ import util.IntIntPair;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chessModel.PawnMoveTracker.*;
 import static util.GameHelper.copyBoard;
 import static util.GameHelper.print;
 
@@ -21,12 +22,13 @@ public class Game {
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
+        resetEnpassant(white);
         if (move.equals("O-O") || move.equals("O-O-O")) {
             legal = KingMoveTracker.validateKing(board, move, white);
         } else {
             String currentPiece = Character.toString(move.charAt(0));
             if (!currentPiece.matches("[NKBRQ]")) {
-                legal = PawnMoveTracker.movePawn(board, move, white);
+                legal = movePawn(board, move, white);
             } else if (currentPiece.matches("N")) {
                 legal = KnightMoveTracker.validateKnight(board, move, white);
             } else if (currentPiece.matches("R")) {
@@ -56,7 +58,7 @@ public class Game {
                         case "b" -> checked |= BishopMoveTracker.checksKing(board, rank, file, true);
                         case "n" -> checked |= KnightMoveTracker.checksKing(board, rank, file, true);
                         case "r" -> checked |= RookMoveTracker.checksKing(board, rank, file, true);
-                        case "p" -> checked |= PawnMoveTracker.checksKing(board, rank, file, true);
+                        case "p" -> checked |= checksKing(board, rank, file, true);
                     }
                 } else {
                     switch (board[rank][file]) {
@@ -64,7 +66,7 @@ public class Game {
                         case "B" -> checked |= BishopMoveTracker.checksKing(board, rank, file, false);
                         case "N" -> checked |= KnightMoveTracker.checksKing(board, rank, file, false);
                         case "R" -> checked |= RookMoveTracker.checksKing(board, rank, file, false);
-                        case "P" -> checked |= PawnMoveTracker.checksKing(board, rank, file, false);
+                        case "P" -> checked |= checksKing(board, rank, file, false);
                     }
                 }
             }
@@ -109,7 +111,7 @@ public class Game {
                                 hasMoves |= !KnightMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
                         case "R" -> hasMoves |= !RookMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
                         case "K" -> hasMoves |= !KingMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
-                        case "P" -> hasMoves |= !PawnMoveTracker.possibleMovesLogic(board, rank, file, true).isEmpty();
+                        case "P" -> hasMoves |= !possibleMovesLogic(board, rank, file, true).isEmpty();
                     }
                 }
             }
@@ -126,7 +128,7 @@ public class Game {
                                 hasMoves |= !KnightMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
                         case "r" -> hasMoves |= !RookMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
                         case "k" -> hasMoves |= !KingMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
-                        case "p" -> hasMoves |= !PawnMoveTracker.possibleMovesLogic(board, rank, file, false).isEmpty();
+                        case "p" -> hasMoves |= !possibleMovesLogic(board, rank, file, false).isEmpty();
                     }
                 }
             }

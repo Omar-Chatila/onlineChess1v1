@@ -286,6 +286,24 @@ public class ChessboardController {
         if (movedPiece.isEmpty() && move.contains("x") && (Math.abs(destinationSquare.getColumn() - pawnFile) != 1 || destinationSquare.getRow() + 1 != pawnRank)) {
             move = "wrong";
         }
+        if (movedPiece.isEmpty() && !move.contains("x")) {
+            if (startingSquare.getRow() == 3 && destinationSquare.getRow() == 2 && Math.abs(destinationSquare.getColumn() - startingSquare.getColumn()) == 1) {
+                try {
+                    if (isWhite && (Game.board[startingSquare.getRow()][startingSquare.getColumn() - 1].equals("p"))) {
+                        move = file + "x" + cell.getAccessibleText();
+                    } else if (!isWhite && (Game.board[7 - startingSquare.getRow()][7 - startingSquare.getColumn() - 1].equals("P"))) {
+                        move = file + "x" + cell.getAccessibleText();
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {}
+                try {
+                    if (isWhite && Game.board[startingSquare.getRow()][startingSquare.getColumn() + 1].equals("p")) {
+                        move = movedPiece + file + "x" + cell.getAccessibleText();
+                    } else if (!isWhite && (Game.board[7 - startingSquare.getRow()][7 - startingSquare.getColumn() + 1].equals("P"))) {
+                        move = file + "x" + cell.getAccessibleText();
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {}
+            }
+        }
         if (Game.board[7][4].equals("K") && (move.equals("Kg1") || move.equals("Kxh1"))
                 || Game.board[0][4].equals("k") && (move.equals("Kg8") || move.equals("Kxh8"))) {
             move = "O-O";
