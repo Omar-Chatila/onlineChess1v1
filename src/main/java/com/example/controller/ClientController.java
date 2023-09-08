@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import util.ApplicationData;
 
@@ -24,6 +26,11 @@ public class ClientController implements Initializable {
     private Label roleLabel;
     @FXML
     private VBox tableBox;
+    @FXML
+    private ToggleButton toggleButton;
+    @FXML
+    private StackPane stackpane;
+
     private static String ip_Address;
     private static int portNr;
     private static MovesTableController mtc;
@@ -41,11 +48,7 @@ public class ClientController implements Initializable {
         try {
             loadMovesTable();
             loadChessBoard();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            loadChessBoard();
+            loadChatBox();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,12 +82,29 @@ public class ClientController implements Initializable {
         ApplicationData.getInstance().setChessboardController(loader.getController());
     }
 
+    private void loadChatBox() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("chatView.fxml"));
+        AnchorPane chatPane = loader.load();
+        stackpane.getChildren().add(chatPane);
+        stackpane.getChildren().get(1).toBack();
+    }
+
     private void loadMovesTable() throws Exception {
         FXMLLoader loader;
         loader = new FXMLLoader(getClass().getResource("movesTable.fxml"));
         VBox vBox = loader.load();
         mtc = loader.getController();
         tableBox.getChildren().add(vBox);
+    }
+
+    @FXML
+    void toggle() {
+        stackpane.getChildren().get(0).toFront();
+        if (toggleButton.getText().equals("Chat")) {
+            toggleButton.setText("Moves");
+        } else {
+            toggleButton.setText("Chat");
+        }
     }
 
     public static MovesTableController getMtc() {
