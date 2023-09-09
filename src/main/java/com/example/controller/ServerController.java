@@ -33,6 +33,7 @@ public class ServerController implements Initializable {
     private StackPane stackpane;
 
     private static MovesTableController mtc;
+    private static ChatController chatController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,6 +80,7 @@ public class ServerController implements Initializable {
         FXMLLoader loader;
         loader = new FXMLLoader(getClass().getResource("chatView.fxml"));
         AnchorPane chatPane = loader.load();
+        chatController = loader.getController();
         stackpane.getChildren().add(chatPane);
         stackpane.getChildren().get(1).toBack();
     }
@@ -103,5 +105,9 @@ public class ServerController implements Initializable {
 
     public static MovesTableController getMtc() {
         return mtc;
+    }
+
+    public static ChatController getChatController() {
+        return chatController;
     }
 }

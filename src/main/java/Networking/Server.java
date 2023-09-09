@@ -2,6 +2,7 @@ package Networking;
 
 import chessModel.Game;
 import com.example.controller.GameStates;
+import com.example.controller.ServerController;
 import javafx.application.Platform;
 import util.ApplicationData;
 
@@ -34,7 +35,7 @@ public class Server {
     public void sendMessageToClient(String messageToClient) {
         try {
             if (GameStates.isIsMyTurn()) {
-                if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
+                if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?") && !messageToClient.startsWith("/t")) {
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
@@ -58,18 +59,22 @@ public class Server {
             while (socket.isConnected()) {
                 try {
                     String messageFromClient = bufferedReader.readLine();
-                    if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
-                        ApplicationData.getInstance().setIllegalMove(false);
-                        Game.executeMove(messageFromClient, !GameStates.isServerWhite());
-                        if (!ApplicationData.getInstance().isIllegalMove()) {
-                            GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
-                        }
+                    if (messageFromClient.startsWith("/t")) {
+                        ServerController.getChatController().addLabel(messageFromClient.substring(2));
                     } else {
-                        Platform.runLater(() -> {
+                        if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
+                            ApplicationData.getInstance().setIllegalMove(false);
+                            Game.executeMove(messageFromClient, !GameStates.isServerWhite());
                             if (!ApplicationData.getInstance().isIllegalMove()) {
-                                ApplicationData.getInstance().getChessboardController().updateBoard(messageFromClient);
+                                GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                             }
-                        });
+                        } else {
+                            Platform.runLater(() -> {
+                                if (!ApplicationData.getInstance().isIllegalMove()) {
+                                    ApplicationData.getInstance().getChessboardController().updateBoard(messageFromClient);
+                                }
+                            });
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

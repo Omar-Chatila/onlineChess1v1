@@ -34,6 +34,7 @@ public class ClientController implements Initializable {
     private static String ip_Address;
     private static int portNr;
     private static MovesTableController mtc;
+    private static ChatController chatController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,9 +73,7 @@ public class ClientController implements Initializable {
             loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
         }
         GridPane gridPane = loader.load();
-        // Set the loaded GridPane as a child of the AnchorPane
         chessBoardPane.getChildren().add(gridPane);
-        // Adjust the size of the GridPane to fill the AnchorPane
         AnchorPane.setTopAnchor(gridPane, 0.0);
         AnchorPane.setBottomAnchor(gridPane, 0.0);
         AnchorPane.setLeftAnchor(gridPane, 0.0);
@@ -85,6 +84,7 @@ public class ClientController implements Initializable {
     private void loadChatBox() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("chatView.fxml"));
         AnchorPane chatPane = loader.load();
+        chatController = loader.getController();
         stackpane.getChildren().add(chatPane);
         stackpane.getChildren().get(1).toBack();
     }
@@ -105,6 +105,10 @@ public class ClientController implements Initializable {
         } else {
             toggleButton.setText("Chat");
         }
+    }
+
+    public static ChatController getChatController() {
+        return chatController;
     }
 
     public static MovesTableController getMtc() {
