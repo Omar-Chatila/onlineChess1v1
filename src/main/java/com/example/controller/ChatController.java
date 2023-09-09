@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -18,8 +17,6 @@ import javafx.scene.text.TextFlow;
 import util.ApplicationData;
 
 public class ChatController {
-    @FXML
-    private AnchorPane ap_main;
     @FXML
     private Button button_send;
     @FXML

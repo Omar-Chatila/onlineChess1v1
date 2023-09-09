@@ -3,6 +3,7 @@ package Networking;
 import chessModel.Game;
 import com.example.controller.ClientController;
 import com.example.controller.GameStates;
+import com.example.controller.LoginViewController;
 import javafx.application.Platform;
 import util.ApplicationData;
 
@@ -56,6 +57,7 @@ public class Client {
                     String messageFromServer = bufferedReader.readLine();
                     if (messageFromServer.startsWith("/t")) {
                         ClientController.getChatController().addLabel(messageFromServer.substring(2));
+                        LoginViewController.getClientController().setMessageIndicatorVisibility(true);
                     } else {
                         if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                             GameStates.setServerIswhite(messageFromServer.equals("true"));

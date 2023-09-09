@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -31,6 +32,8 @@ public class ServerController implements Initializable {
     private ToggleButton toggleButton;
     @FXML
     private StackPane stackpane;
+    @FXML
+    private ImageView newMessage;
 
     private static MovesTableController mtc;
     private static ChatController chatController;
@@ -83,6 +86,7 @@ public class ServerController implements Initializable {
         chatController = loader.getController();
         stackpane.getChildren().add(chatPane);
         stackpane.getChildren().get(1).toBack();
+        newMessage.setVisible(false);
     }
 
     private void loadMovesTable() throws Exception {
@@ -95,11 +99,20 @@ public class ServerController implements Initializable {
 
     @FXML
     void toggle() {
+        setMessageIndicatorVisibility(false);
         stackpane.getChildren().get(0).toFront();
         if (toggleButton.getText().equals("Chat")) {
             toggleButton.setText("Moves");
         } else {
             toggleButton.setText("Chat");
+        }
+    }
+
+    public void setMessageIndicatorVisibility(boolean visible) {
+        if (stackpane.getChildren().get(1) instanceof AnchorPane) {
+            newMessage.setVisible(false);
+        } else {
+            newMessage.setVisible(visible);
         }
     }
 

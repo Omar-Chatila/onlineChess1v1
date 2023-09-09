@@ -2,6 +2,7 @@ package Networking;
 
 import chessModel.Game;
 import com.example.controller.GameStates;
+import com.example.controller.LoginViewController;
 import com.example.controller.ServerController;
 import javafx.application.Platform;
 import util.ApplicationData;
@@ -61,6 +62,7 @@ public class Server {
                     String messageFromClient = bufferedReader.readLine();
                     if (messageFromClient.startsWith("/t")) {
                         ServerController.getChatController().addLabel(messageFromClient.substring(2));
+                        LoginViewController.getServerController().setMessageIndicatorVisibility(true);
                     } else {
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
                             ApplicationData.getInstance().setIllegalMove(false);

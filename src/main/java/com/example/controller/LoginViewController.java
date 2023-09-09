@@ -12,7 +12,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class LoginViewController {
 
@@ -30,6 +29,10 @@ public class LoginViewController {
     private Button whitePieceColor;
     @FXML
     private Button connectButton;
+
+    private static ServerController serverController;
+    private static ClientController clientController;
+
 
     @FXML
     void randomPieces() {
@@ -86,7 +89,9 @@ public class LoginViewController {
                 if (GameStates.isServer()) {
                     try {
                         System.out.println("Server");
-                        Parent mainWindowParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("serverView.fxml")));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("serverView.fxml"));
+                        Parent mainWindowParent = loader.load();
+                        serverController = loader.getController();
                         Scene mainWindowScene = new Scene(mainWindowParent);
                         Stage window = (Stage) whitePieceColor.getScene().getWindow();
                         window.setScene(mainWindowScene);
@@ -97,7 +102,9 @@ public class LoginViewController {
                 } else {
                     System.out.println("Client");
                     try {
-                        Parent mainWindowParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("clientView.fxml")));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("clientView.fxml"));
+                        Parent mainWindowParent = loader.load();
+                        clientController = loader.getController();
                         Scene mainWindowScene = new Scene(mainWindowParent);
                         Stage window = (Stage) whitePieceColor.getScene().getWindow();
                         window.setScene(mainWindowScene);
@@ -125,5 +132,13 @@ public class LoginViewController {
             GameStates.setServer(true);
             ServerController.setServerPort(port);
         }
+    }
+
+    public static ServerController getServerController() {
+        return serverController;
+    }
+
+    public static ClientController getClientController() {
+        return clientController;
     }
 }
