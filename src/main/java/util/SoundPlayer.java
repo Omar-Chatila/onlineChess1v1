@@ -42,5 +42,38 @@ public class SoundPlayer {
         mediaPlayer.play();
     }
 
+    public void playPromotionSound() {
+        String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/promote.mp3")).toString();
+        Media sound = new Media(soundFile);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
 
+    public void playOpponentMoveSound() {
+        String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/move-opponent.mp3")).toString();
+        Media sound = new Media(soundFile);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
+
+    public void playIllegalMoveSound() {
+        String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/illegal.mp3")).toString();
+        Media sound = new Media(soundFile);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
+
+    public void playGameEndSound() {
+        String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/game-end.mp3")).toString();
+        Media sound = new Media(soundFile);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
+
+    public void playGameStartSound() {
+        String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/game-start.mp3")).toString();
+        Media sound = new Media(soundFile);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
 }

@@ -5,6 +5,7 @@ import com.example.controller.GameStates;
 import util.ApplicationData;
 import util.GameHelper;
 import util.IntIntPair;
+import util.SoundPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class Game {
 
         if (!legal) {
             ApplicationData.getInstance().setIllegalMove(true);
+            new SoundPlayer().playIllegalMoveSound();
             throw new IllegalMoveException(move);
         }
         return board;

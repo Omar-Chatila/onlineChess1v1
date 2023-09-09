@@ -117,7 +117,7 @@ public class ServerController implements Initializable {
         } else {
             newMessage.setVisible(visible);
             if (visible) {
-                String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/noti.wav")).toString();
+                String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/notify.mp3")).toString();
                 Media sound = new Media(soundFile);
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.play();

@@ -46,6 +46,7 @@ public class ChessboardController {
 
     @FXML
     private void initialize() {
+        new SoundPlayer().playGameStartSound();
         setMovesTableController();
         for (Node node : chessboardGrid.getChildren()) {
             if (node instanceof StackPane current) {
@@ -69,6 +70,7 @@ public class ChessboardController {
     }
 
     private void setButtonListeners(Button currentButton) {
+        int movePlayed = Game.moveList.size();
         currentButton.setStyle(currentButton.getStyle() + "-fx-background-radius: 0;");
         currentButton.setOnDragDetected(event -> setOnDragDetection(currentButton));
         currentButton.setOnDragOver(event -> {
@@ -81,7 +83,9 @@ public class ChessboardController {
             playSound(false);
             clearHighlighting();
             updateCheckStatus();
-            highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
+            if ((movePlayed - Game.moveList.size()) != 0) {
+                highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
+            }
         });
     }
 
@@ -95,8 +99,17 @@ public class ChessboardController {
             new SoundPlayer().playCastleSound();
         } else if (lastMove.contains("x")) {
             new SoundPlayer().playCaptureSound();
+        } else if (lastMove.contains("=")) {
+            new SoundPlayer().playPromotionSound();
         } else {
-            new SoundPlayer().playMoveSelfSound();
+            if (!receive) {
+                new SoundPlayer().playMoveSelfSound();
+            } else {
+                new SoundPlayer().playOpponentMoveSound();
+            }
+        }
+        if (GameStates.isGameOver()) {
+            new SoundPlayer().playGameEndSound();
         }
     }
 
