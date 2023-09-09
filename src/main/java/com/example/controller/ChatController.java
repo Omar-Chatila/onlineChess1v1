@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -30,6 +31,13 @@ public class ChatController {
 
     @FXML
     private void initialize() {
+        sp_main.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp_main.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        tf_messages.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                button_send.fire();
+            }
+        });
         if (GameStates.isServer()) {
             server = ApplicationData.getInstance().getServer();
         } else {
@@ -47,7 +55,7 @@ public class ChatController {
                 TextFlow textFlow = new TextFlow(text);
                 textFlow.setStyle("-fx-color: rgb(239, 242, 255);"
                         + "-fx-background-color: rgb(15, 125, 242);"
-                        + "-fx-background-radius: 20px;");
+                        + "-fx-background-radius: 15px;");
                 textFlow.setPadding(new Insets(5, 10, 5, 10));
                 text.setFill(Color.color(0.934, 0.945, 0.996));
                 hBox.getChildren().add(textFlow);
@@ -70,7 +78,7 @@ public class ChatController {
         Text text = new Text(message);
         TextFlow textFlow = new TextFlow(text);
         textFlow.setStyle("-fx-background-color: rgb(233, 233, 235);"
-                + "-fx-background-radius: 20px;");
+                + "-fx-background-radius: 15px;");
         textFlow.setPadding(new Insets(5, 10, 5, 10));
         hBox.getChildren().add(textFlow);
 

@@ -16,7 +16,7 @@
             <children>
                 <ScrollPane fx:id="sp_main" prefHeight="372.0">
                <content>
-                  <VBox fx:id="vbox_messages" prefHeight="369.0" prefWidth="201.0" />
+                  <VBox fx:id="vbox_messages" maxWidth="200.0" prefWidth="200.0" />
                </content>
                 </ScrollPane>
                 <Separator prefWidth="200.0">
