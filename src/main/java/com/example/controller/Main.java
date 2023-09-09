@@ -1,26 +1,7 @@
 package com.example.controller;
 
-import chessModel.Game;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import util.GameHelper;
-
-import java.io.IOException;
-
-public class Main extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        GameHelper.initialize(Game.board);
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Chess-Game");
-        stage.setScene(scene);
-        stage.show();
-    }
-
+public class Main {
     public static void main(String[] args) {
-        launch();
+        Application.main(args);
     }
 }

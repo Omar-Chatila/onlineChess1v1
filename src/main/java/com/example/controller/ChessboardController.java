@@ -39,6 +39,7 @@ public class ChessboardController {
     public static String movedPiece;
     public static String move;
     private IntIntPair startingSquare;
+    private IntIntPair destinationsSquare;
     private static MovesTableController mtc;
 
 
@@ -78,6 +79,7 @@ public class ChessboardController {
         currentButton.setOnDragDone(event -> {
             clearHighlighting();
             updateCheckStatus();
+            highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
         });
     }
 
@@ -118,6 +120,7 @@ public class ChessboardController {
         if (!GameStates.isIsMyTurn() || selectedPiece == null) return;
         StackPane cell = (StackPane) currentButton.getParent();
         IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
+        this.destinationsSquare = destinationSquare;
         String move = generateMove(destinationSquare, cell);
         if (move.equals("wrong")) return;
         handleMoveTransmission(destinationSquare);
@@ -191,6 +194,11 @@ public class ChessboardController {
             for (int j = 0; j < 8; j++) {
                 StackPane square = getPaneFromCoordinate(new IntIntPair(i, j));
                 Button button = (Button) square.getChildren().get(0);
+                if ((i + j) % 2 == 0) {
+                    button.setStyle(button.getStyle() + "-fx-background-color: White;");
+                } else {
+                    button.setStyle(button.getStyle() + "-fx-background-color: darkgrey;");
+                }
                 if (square.getChildren().size() > 1) {
                     Button movedPiece = (Button) square.getChildren().get(1);
                     movedPiece.getGraphic().setOpacity(1);
@@ -200,8 +208,28 @@ public class ChessboardController {
         }
     }
 
+    private void highlightLastMove(StackPane startCell, StackPane endCell) {
+        int scRi = Objects.requireNonNullElse(GridPane.getRowIndex(startCell), 0);
+        int scCi = Objects.requireNonNullElse(GridPane.getColumnIndex(startCell), 0);
+        int ecRi = Objects.requireNonNullElse(GridPane.getRowIndex(endCell), 0);
+        int ecCi = Objects.requireNonNullElse(GridPane.getColumnIndex(endCell), 0);
+        String light = "-fx-background-color: #d1f0d5;"; /* Green color */
+        String dark = "-fx-background-color: derive(#d1f0d5, -20%);";
+        if ((scCi + scRi) % 2 == 0) { // white square
+            startCell.getChildren().get(0).setStyle(startCell.getChildren().get(0).getStyle() + light);
+        } else {
+            startCell.getChildren().get(0).setStyle(startCell.getChildren().get(0).getStyle() + dark);
+        }
+        if ((ecRi + ecCi) % 2 == 0) { // white square
+            endCell.getChildren().get(0).setStyle(endCell.getChildren().get(0).getStyle() + light);
+        } else {
+            endCell.getChildren().get(0).setStyle(endCell.getChildren().get(0).getStyle() + dark);
+        }
+    }
+
     public void updateBoard(String opponentMove) {
         updateCheckStatus();
+        clearHighlighting();
         System.out.println("transform " + opponentMove);
         int startRow = 7 - Character.getNumericValue(opponentMove.charAt(0));
         int startCol = 7 - Character.getNumericValue(opponentMove.charAt(1));
@@ -211,8 +239,8 @@ public class ChessboardController {
         IntIntPair endCoordinates = new IntIntPair(destRow, destCol);
         StackPane startCell = getPaneFromCoordinate(startCoordinates);
         StackPane endCell = getPaneFromCoordinate(endCoordinates);
+        highlightLastMove(startCell, endCell);
         boolean enpassant = Game.moveList.get(Game.moveList.size() - 1).contains("x") && endCell.getChildren().size() == 1;
-        assert startCell != null;
         Button movingPiece = (Button) startCell.getChildren().remove(1);
         if (opponentMove.matches("[0-9]{2}\\.[0-9]{2}[A-Q]")) {
             String piece = (GameStates.iAmWhite() ? "b" : "w") + opponentMove.charAt(opponentMove.length() - 1);
@@ -224,7 +252,6 @@ public class ChessboardController {
             movingPiece.setGraphic(h);
             movingPiece.setAccessibleText(piece);
         }
-        assert endCell != null;
         endCell.getChildren().add(movingPiece);
         if (endCell.getChildren().size() == 3) {
             endCell.getChildren().remove(1);
@@ -318,7 +345,7 @@ public class ChessboardController {
         System.out.println(move);
         if (move.matches("([a-h]x)?[a-h]8") || move.matches("([a-h]x)?[a-h]1")) {
             Button movingButton = (Button) getPaneFromCoordinate(startingSquare).getChildren().get(1);
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PawnPromotion.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("PawnPromotion.fxml"));
             try {
                 Stage mainStage = (Stage) this.chessboardGrid.getScene().getWindow();
                 Scene scene = new Scene(fxmlLoader.load());
@@ -409,7 +436,6 @@ public class ChessboardController {
             } else {
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                 if (enpassant) {
-                    System.out.println("HIEEEEER");
                     StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(cell) + 1, GridPane.getColumnIndex(cell)));
                     removablePawn.getChildren().remove(1);
                 }
