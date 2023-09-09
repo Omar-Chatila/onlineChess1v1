@@ -156,8 +156,10 @@ public class ChessboardController {
         handleMoveTransmission(destinationSquare);
         applyMoveToBoardAndUI(cell);
         if (GameStates.iAmWhite()) {
+            System.out.println("toAdd " + move);
             mtc.addMove(mtc.getCurrentMove(), move, null);
         } else {
+            System.out.println("toAdd " + move);
             mtc.addMove(mtc.getCurrentMove(), null, move);
         }
         selectedPiece = null;
@@ -257,7 +259,10 @@ public class ChessboardController {
         }
     }
 
+    static String wLastAdded = "";
+    static String bLastAdded = "";
     public void updateBoard(String opponentMove) {
+        System.out.println("MOVE: "+ move);
         updateCheckStatus();
         clearHighlighting();
         playSound(true);
@@ -291,11 +296,17 @@ public class ChessboardController {
             StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(endCell) - 1, GridPane.getColumnIndex(endCell)));
             removablePawn.getChildren().remove(1);
         }
+        String lastPlayed = Game.moveList.get(Game.moveList.size() - 1);
         if (GameStates.iAmWhite()) {
-            mtc.addMove(mtc.getCurrentMove(), null, Game.moveList.get(Game.moveList.size() - 1));
+                if (!wLastAdded.equals(lastPlayed))
+                    mtc.addMove(mtc.getCurrentMove(), null, Game.moveList.get(Game.moveList.size() - 1));
+            wLastAdded = lastPlayed;
         } else {
-            mtc.addMove(mtc.getCurrentMove(), Game.moveList.get(Game.moveList.size() - 1), null);
+            if (!bLastAdded.equals(lastPlayed))
+                mtc.addMove(mtc.getCurrentMove(), Game.moveList.get(Game.moveList.size() - 1), null);
+            bLastAdded = lastPlayed;
         }
+
     }
 
     private String generateMove(IntIntPair destinationSquare, StackPane cell) {
@@ -374,6 +385,13 @@ public class ChessboardController {
             move = "O-O-O";
         }
         System.out.println(move);
+        if (move.startsWith("O-")) {
+            if (GameStates.iAmWhite()) {
+                mtc.addMove(mtc.getCurrentMove(), move, null);
+            } else {
+                mtc.addMove(mtc.getCurrentMove(), null, move);
+            }
+        }
         if (move.matches("([a-h]x)?[a-h]8") || move.matches("([a-h]x)?[a-h]1")) {
             Button movingButton = (Button) getPaneFromCoordinate(startingSquare).getChildren().get(1);
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("PawnPromotion.fxml"));
@@ -511,7 +529,7 @@ public class ChessboardController {
 
     private void setMovesTableController() {
         if (GameStates.isServer()) {
-            System.out.println("HIEEEER");
+                        System.out.println("HIEEEER");
             mtc = ServerController.getMtc();
         } else {
             mtc = ClientController.getMtc();
