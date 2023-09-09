@@ -64,7 +64,7 @@ public class Server {
                         ServerController.getChatController().addLabel(messageFromClient.substring(2));
                         LoginViewController.getServerController().setMessageIndicatorVisibility(true);
                     } else {
-                        if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
+                        if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-R]?")) {
                             ApplicationData.getInstance().setIllegalMove(false);
                             Game.executeMove(messageFromClient, !GameStates.isServerWhite());
                             if (!ApplicationData.getInstance().isIllegalMove()) {

@@ -62,7 +62,7 @@ public class Client {
                         if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                             GameStates.setServerIswhite(messageFromServer.equals("true"));
                         } else {
-                            if (!messageFromServer.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
+                            if (!messageFromServer.matches("[0-9]{2}\\.[0-9]{2}[A-R]?")) {
                                 ApplicationData.getInstance().setIllegalMove(false);
                                 Game.executeMove(messageFromServer, GameStates.isServerWhite());
                                 if (!ApplicationData.getInstance().isIllegalMove()) {
