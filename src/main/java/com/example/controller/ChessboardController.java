@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.ApplicationData;
 import util.IntIntPair;
+import util.SoundPlayer;
 
 import java.io.IOException;
 import java.util.List;
@@ -77,10 +78,26 @@ public class ChessboardController {
         });
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
         currentButton.setOnDragDone(event -> {
+            playSound(false);
             clearHighlighting();
             updateCheckStatus();
             highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
         });
+    }
+
+    private void playSound(boolean receive) {
+        String lastMove = Game.moveList.get(Game.moveList.size() - 1);
+        if (!receive && (GameStates.iAmWhite() && Game.kingChecked(false) || !GameStates.iAmWhite() && Game.kingChecked(true))) {
+            new SoundPlayer().playCheckSound();
+        } else if (receive && (GameStates.iAmWhite() && Game.kingChecked(true) || !GameStates.iAmWhite() && Game.kingChecked(false))) {
+            new SoundPlayer().playCheckSound();
+        } else if (lastMove.startsWith("O")) {
+            new SoundPlayer().playCastleSound();
+        } else if (lastMove.contains("x")) {
+            new SoundPlayer().playCaptureSound();
+        } else {
+            new SoundPlayer().playMoveSelfSound();
+        }
     }
 
     private void setOnDragDetection(Button currentButton) {
@@ -230,6 +247,7 @@ public class ChessboardController {
     public void updateBoard(String opponentMove) {
         updateCheckStatus();
         clearHighlighting();
+        playSound(true);
         System.out.println("transform " + opponentMove);
         int startRow = 7 - Character.getNumericValue(opponentMove.charAt(0));
         int startCol = 7 - Character.getNumericValue(opponentMove.charAt(1));
