@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import Networking.Client;
-import Networking.Server;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -26,8 +24,6 @@ public class ChatController {
     private TextField tf_messages;
     @FXML
     private VBox vbox_messages;
-    private Server server;
-    private Client client;
 
     @FXML
     private void initialize() {
@@ -38,11 +34,6 @@ public class ChatController {
                 button_send.fire();
             }
         });
-        if (GameStates.isServer()) {
-            server = ApplicationData.getInstance().getServer();
-        } else {
-            client = ApplicationData.getInstance().getClient();
-        }
         vbox_messages.heightProperty().addListener((observableValue, number, t1) -> sp_main.setVvalue((Double) t1));
         button_send.setOnAction(e -> {
             String message = tf_messages.getText();
@@ -61,9 +52,9 @@ public class ChatController {
                 hBox.getChildren().add(textFlow);
                 vbox_messages.getChildren().add(hBox);
                 if (GameStates.isServer()) {
-                    server.sendMessageToClient("/t" + message);
+                    ApplicationData.getInstance().getServer().sendMessageToClient("/t" + message);
                 } else {
-                    client.sendMessageToServer("/t" + message);
+                    ApplicationData.getInstance().getClient().sendMessageToServer("/t" + message);
                 }
                 tf_messages.clear();
             }

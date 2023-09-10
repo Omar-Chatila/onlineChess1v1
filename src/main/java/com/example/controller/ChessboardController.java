@@ -487,7 +487,7 @@ public class ChessboardController {
             } else {
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                 if (enpassant) {
-                    StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(cell) + 1, GridPane.getColumnIndex(cell)));
+                    StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(cell) + 1, Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0)));
                     removablePawn.getChildren().remove(1);
                 }
                 cell.getChildren().add(selectedPiece);

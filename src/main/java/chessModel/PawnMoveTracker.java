@@ -1,7 +1,5 @@
 package chessModel;
 
-import util.GameHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,28 +145,34 @@ public class PawnMoveTracker {
         possibleMovesLogicList.clear();
         List<String> moves = new ArrayList<>();
         String[][] copy = copyBoard(board);
-        int startRank = white ? 6 : 1;
+        int logicRank = rank;
+        int logicFile = file;
+        if (!white) {
+            logicRank = 7 - logicRank;
+            logicFile = 7 - logicFile;
+        }
+        int startRank = 6;
         int direction = white ? -1 : 1;
-        if (isValidSquare(rank + direction, file) && board[rank + direction][file].equals(".")) {
-            copy[rank + direction][file] = white ? "P" : "p";
-            copy[rank][file] = ".";
+        if (isValidSquare(logicRank + direction, logicFile) && board[logicRank + direction][logicFile].equals(".")) {
+            copy[logicRank + direction][logicFile] = white ? "P" : "p";
+            copy[logicRank][logicFile] = ".";
             if (white) {
                 if (!Game.kingChecked(true, copy)) {
-                    possibleMovesLogicList.add((rank + direction) + "" + file);
+                    possibleMovesLogicList.add((logicRank + direction) + "" + logicFile);
                     moves.add((rank + direction) + "" + file);
                 }
             } else {
                 if (!Game.kingChecked(false, copy)) {
-                    possibleMovesLogicList.add((rank + direction) + "" + file);
-                    moves.add((rank + direction) + "" + (file));
+                    possibleMovesLogicList.add((logicRank + direction) + "" + logicFile);
+                    moves.add((rank - direction) + "" + file);
                 }
             }
         }
         copy = copyBoard(board);
         if (rank == startRank) {
-            if (board[rank + direction * 2][file].equals(".")) {
-                copy[rank + direction * 2][file] = white ? "P" : "p";
-                copy[rank][file] = ".";
+            if (board[logicRank + direction * 2][logicFile].equals(".")) {
+                copy[logicRank + direction * 2][logicFile] = white ? "P" : "p";
+                copy[logicRank][logicFile] = ".";
                 if (white) {
                     if (!Game.kingChecked(true, copy)) {
                         possibleMovesLogicList.add((rank + direction * 2) + "" + file);
@@ -177,7 +181,7 @@ public class PawnMoveTracker {
                 } else {
                     if (!Game.kingChecked(false, copy)) {
                         possibleMovesLogicList.add((rank + direction * 2) + "" + file);
-                        moves.add((rank + direction * 2) + "" + (file));
+                        moves.add((rank - (direction * 2)) + "" + file);
                     }
                 }
             }
@@ -190,9 +194,9 @@ public class PawnMoveTracker {
                 if (!Game.kingChecked(true, copy)) {
                     possibleMovesLogicList.add((rank - 1) + "" + (file - 1));
                     moves.add((rank - 1) + "" + (file - 1));
-                    copy = copyBoard(board);
                 }
             }
+            copy = copyBoard(board);
             if (isValidSquare(rank - 1, file + 1) && board[rank - 1][file + 1].matches("[pqrnb]")) {
                 copy[rank - 1][file + 1] = "P";
                 copy[rank][file] = ".";
@@ -215,36 +219,38 @@ public class PawnMoveTracker {
                 }
             }
         } else {
-            if (isValidSquare(rank + 1, file - 1) && board[rank + 1][file - 1].matches("[PQRNB]")) {
-                copy[rank + 1][file - 1] = "p";
-                copy[rank][file] = ".";
-                GameHelper.print(copy);
+            if (isValidSquare(logicRank + 1, logicFile - 1) && board[logicRank + 1][logicFile - 1].matches("[PQRNB]")) {
+                copy[logicRank + 1][logicFile - 1] = "p";
+                copy[logicRank][logicFile] = ".";
                 if (!Game.kingChecked(false, copy)) {
-                    possibleMovesLogicList.add((rank + 1) + "" + (file - 1));
-                    moves.add(((rank + 1)) + "" + ((file - 1)));
-                    copy = copyBoard(board);
+                    possibleMovesLogicList.add((logicRank + 1) + "" + (logicFile - 1));
+                    moves.add(((rank - 1)) + "" + ((file + 1)));
                 }
             }
-            if (isValidSquare(rank + 1, file + 1) && board[rank + 1][file + 1].matches("[PQRNB]")) {
-                copy[rank + 1][file + 1] = "p";
-                copy[rank][file] = ".";
-                GameHelper.print(copy);
+            copy = copyBoard(board);
+            if (isValidSquare(logicRank + 1, logicFile + 1) && board[logicRank + 1][logicFile + 1].matches("[PQRNB]")) {
+                copy[logicRank + 1][logicFile + 1] = "p";
+                copy[logicRank][logicFile] = ".";
                 if (!Game.kingChecked(false, copy)) {
-                    possibleMovesLogicList.add((rank + 1) + "" + (file + 1));
-                    moves.add(((rank + 1)) + "" + ((file + 1)));
+                    possibleMovesLogicList.add((logicRank + 1) + "" + (logicFile + 1));
+                    moves.add(((rank - 1)) + "" + ((file - 1)));
                 }
             }
             copy = copyBoard(board);
             if (whiteEnpassant != null) {
-                int f = whiteEnpassant.charAt(0) - 'a';
-                int r = Integer.parseInt(Character.getNumericValue(whiteEnpassant.charAt(1)) + "");
-                possibleMovesLogicList.add(f + "" + r);
-                if (rank == r + 1 && Math.abs(file - f) == 1) {
-                    moves.add((r - 1) + "" + (7 - f));
+                int r = 2;
+                int f = 7 - (whiteEnpassant.charAt(0) - 'a');
+                copy[7 - r][7 - f] = "p";
+                copy[logicRank][logicFile] = ".";
+                if (!Game.kingChecked(false, copy)) {
+                    if (rank == r + 1 && Math.abs(file - f) == 1) {
+                        moves.add(r + "" + f);
+                        possibleMovesLogicList.add((7 - r) + "" + (7 - f));
+                    }
                 }
             }
+
         }
-        System.out.println("PAWN MOVES " + possibleMovesLogicList);
         return moves;
     }
 
