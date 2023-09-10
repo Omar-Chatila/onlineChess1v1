@@ -83,38 +83,36 @@ public class LoginViewController {
 
     private void connect() {
         setParameters();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (GameStates.isServer()) {
-                    try {
-                        System.out.println("Server");
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("serverView.fxml"));
-                        Parent mainWindowParent = loader.load();
-                        serverController = loader.getController();
-                        Scene mainWindowScene = new Scene(mainWindowParent);
-                        Stage window = (Stage) whitePieceColor.getScene().getWindow();
-                        window.setScene(mainWindowScene);
-                        window.show();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    System.out.println("Client");
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("clientView.fxml"));
-                        Parent mainWindowParent = loader.load();
-                        clientController = loader.getController();
-                        Scene mainWindowScene = new Scene(mainWindowParent);
-                        Stage window = (Stage) whitePieceColor.getScene().getWindow();
-                        window.setScene(mainWindowScene);
-                        window.show();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+        Platform.runLater(() -> {
+                    if (GameStates.isServer()) {
+                        try {
+                            System.out.println("Server");
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("serverView.fxml"));
+                            Parent mainWindowParent = loader.load();
+                            serverController = loader.getController();
+                            Scene mainWindowScene = new Scene(mainWindowParent);
+                            Stage window = (Stage) whitePieceColor.getScene().getWindow();
+                            window.setScene(mainWindowScene);
+                            window.show();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        System.out.println("Client");
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("clientView.fxml"));
+                            Parent mainWindowParent = loader.load();
+                            clientController = loader.getController();
+                            Scene mainWindowScene = new Scene(mainWindowParent);
+                            Stage window = (Stage) whitePieceColor.getScene().getWindow();
+                            window.setScene(mainWindowScene);
+                            window.show();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
-            }
-        });
+        );
     }
 
     private void setParameters() {

@@ -43,23 +43,8 @@ public class ServerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Server server;
-        try {
-            server = new Server(new ServerSocket(serverPort));
-            ApplicationData.getInstance().setServer(server);
-        } catch (IOException e) {
-            System.out.println("Error creating Server");
-            throw new RuntimeException(e);
-        }
-        try {
-            loadMovesTable();
-            loadChessBoard();
-            loadChatBox();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        roleLabel.setText("Chess - " + (GameStates.isServerWhite() ? "White" : "Black"));
-        server.receiveMessageFromClient();
+        new Thread(this::startServer).start();
+        loadUIElements();
     }
 
     public static void setServerPort(int serverPort) {
@@ -123,6 +108,29 @@ public class ServerController implements Initializable {
                 mediaPlayer.play();
 
             }
+        }
+    }
+
+    private void loadUIElements() {
+        try {
+            loadMovesTable();
+            loadChessBoard();
+            loadChatBox();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        roleLabel.setText("Chess - " + (GameStates.isServerWhite() ? "White" : "Black"));
+    }
+
+    private void startServer() {
+        try {
+            ServerSocket serverSocket = new ServerSocket(serverPort);
+            Server server = new Server(serverSocket);
+            ApplicationData.getInstance().setServer(server);
+            server.receiveMessageFromClient();
+        } catch (IOException e) {
+            System.out.println("Error creating Server");
+            throw new RuntimeException(e);
         }
     }
 

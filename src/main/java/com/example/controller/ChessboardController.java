@@ -81,25 +81,31 @@ public class ChessboardController {
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
         currentButton.setOnDragDone(event -> {
             playSound(false);
-            clearHighlighting();
-            updateCheckStatus();
-            if ((movePlayed - Game.moveList.size()) != 0) {
-                highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
+            if (isLegalDragDrop()) {
+                clearHighlighting();
+                updateCheckStatus();
+                if ((movePlayed - Game.moveList.size()) != 0) {
+                    highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
+                }
+                addMoveToTable();
             }
         });
     }
 
     private void playSound(boolean receive) {
-        String lastMove = Game.moveList.get(Game.moveList.size() - 1);
+        String lastMove = null;
+        if (!Game.moveList.isEmpty()) {
+            lastMove = Game.moveList.get(Game.moveList.size() - 1);
+        }
         if (!receive && (GameStates.iAmWhite() && Game.kingChecked(false) || !GameStates.iAmWhite() && Game.kingChecked(true))) {
             new SoundPlayer().playCheckSound();
         } else if (receive && (GameStates.iAmWhite() && Game.kingChecked(true) || !GameStates.iAmWhite() && Game.kingChecked(false))) {
             new SoundPlayer().playCheckSound();
-        } else if (lastMove.startsWith("O")) {
+        } else if (lastMove != null && lastMove.startsWith("O")) {
             new SoundPlayer().playCastleSound();
-        } else if (lastMove.contains("x")) {
+        } else if (lastMove != null && lastMove.contains("x")) {
             new SoundPlayer().playCaptureSound();
-        } else if (lastMove.contains("=")) {
+        } else if (lastMove != null && lastMove.contains("=")) {
             new SoundPlayer().playPromotionSound();
         } else {
             if (!receive) {
@@ -152,16 +158,11 @@ public class ChessboardController {
         IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
         this.destinationsSquare = destinationSquare;
         String move = generateMove(destinationSquare, cell);
+        if (ApplicationData.getInstance().isIllegalMove()) return;
+        if (this.destinationsSquare.equals(this.startingSquare)) return;
         if (move.equals("wrong")) return;
         handleMoveTransmission(destinationSquare);
         applyMoveToBoardAndUI(cell);
-        if (GameStates.iAmWhite()) {
-            System.out.println("toAdd " + move);
-            mtc.addMove(mtc.getCurrentMove(), move, null);
-        } else {
-            System.out.println("toAdd " + move);
-            mtc.addMove(mtc.getCurrentMove(), null, move);
-        }
         selectedPiece = null;
         event.setDropCompleted(true);
     }
@@ -261,8 +262,9 @@ public class ChessboardController {
 
     static String wLastAdded = "";
     static String bLastAdded = "";
+
     public void updateBoard(String opponentMove) {
-        System.out.println("MOVE: "+ move);
+        System.out.println("MOVE: " + move);
         updateCheckStatus();
         clearHighlighting();
         playSound(true);
@@ -298,8 +300,8 @@ public class ChessboardController {
         }
         String lastPlayed = Game.moveList.get(Game.moveList.size() - 1);
         if (GameStates.iAmWhite()) {
-                if (!wLastAdded.equals(lastPlayed))
-                    mtc.addMove(mtc.getCurrentMove(), null, Game.moveList.get(Game.moveList.size() - 1));
+            if (!wLastAdded.equals(lastPlayed))
+                mtc.addMove(mtc.getCurrentMove(), null, Game.moveList.get(Game.moveList.size() - 1));
             wLastAdded = lastPlayed;
         } else {
             if (!bLastAdded.equals(lastPlayed))
@@ -403,7 +405,6 @@ public class ChessboardController {
                 dialog.initOwner(mainStage);
                 dialog.initModality(Modality.WINDOW_MODAL);
                 dialog.initStyle(StageStyle.UNDECORATED);
-                //dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
                 movingButton.getGraphic().setOpacity(0.5);
                 dialog.showAndWait();
                 System.out.println("Canceled");
@@ -529,10 +530,24 @@ public class ChessboardController {
 
     private void setMovesTableController() {
         if (GameStates.isServer()) {
-                        System.out.println("HIEEEER");
+            System.out.println("HIEEEER");
             mtc = ServerController.getMtc();
         } else {
             mtc = ClientController.getMtc();
         }
+    }
+
+    private void addMoveToTable() {
+        if (GameStates.iAmWhite()) {
+            System.out.println("toAdd " + move);
+            mtc.addMove(mtc.getCurrentMove(), move, null);
+        } else {
+            System.out.println("toAdd " + move);
+            mtc.addMove(mtc.getCurrentMove(), null, move);
+        }
+    }
+
+    private boolean isLegalDragDrop() {
+        return !ApplicationData.getInstance().isIllegalMove() && !this.destinationsSquare.equals(this.startingSquare) && !move.equals("wrong");
     }
 }
