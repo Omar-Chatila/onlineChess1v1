@@ -6,6 +6,7 @@ import com.example.controller.LoginViewController;
 import com.example.controller.ServerController;
 import javafx.application.Platform;
 import util.ApplicationData;
+import util.SoundPlayer;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -55,9 +56,15 @@ public class Server {
 
     }
 
+    static boolean soundPlayed;
+
     public void receiveMessageFromClient() {
         new Thread(() -> {
             while (socket.isConnected()) {
+                if (!soundPlayed) {
+                    soundPlayed = true;
+                    new SoundPlayer().playGameStartSound();
+                }
                 try {
                     String messageFromClient = bufferedReader.readLine();
                     if (messageFromClient.startsWith("/t")) {

@@ -1,0 +1,5 @@
+.progress-bar .bar {
+    /*-fx-background-color: transparent;*/
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+}

@@ -46,7 +46,8 @@ public class ChessboardController {
 
     @FXML
     private void initialize() {
-        new SoundPlayer().playGameStartSound();
+        if (!GameStates.isServer())
+            new SoundPlayer().playGameStartSound();
         setMovesTableController();
         for (Node node : chessboardGrid.getChildren()) {
             if (node instanceof StackPane current) {

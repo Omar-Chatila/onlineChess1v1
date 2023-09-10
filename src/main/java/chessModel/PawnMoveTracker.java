@@ -1,5 +1,7 @@
 package chessModel;
 
+import util.GameHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,12 +142,9 @@ public class PawnMoveTracker {
         }
     }
 
+    // TODO black highlighting squares
     public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
         possibleMovesLogicList.clear();
-        if (!white) {
-            rank = 7 - rank;
-            file = 7 - file;
-        }
         List<String> moves = new ArrayList<>();
         String[][] copy = copyBoard(board);
         int startRank = white ? 6 : 1;
@@ -161,7 +160,7 @@ public class PawnMoveTracker {
             } else {
                 if (!Game.kingChecked(false, copy)) {
                     possibleMovesLogicList.add((rank + direction) + "" + file);
-                    moves.add(7 - (rank + direction) + "" + (7 - file));
+                    moves.add((rank + direction) + "" + (file));
                 }
             }
         }
@@ -178,7 +177,7 @@ public class PawnMoveTracker {
                 } else {
                     if (!Game.kingChecked(false, copy)) {
                         possibleMovesLogicList.add((rank + direction * 2) + "" + file);
-                        moves.add(7 - (rank + direction * 2) + "" + (7 - file));
+                        moves.add((rank + direction * 2) + "" + (file));
                     }
                 }
             }
@@ -219,18 +218,20 @@ public class PawnMoveTracker {
             if (isValidSquare(rank + 1, file - 1) && board[rank + 1][file - 1].matches("[PQRNB]")) {
                 copy[rank + 1][file - 1] = "p";
                 copy[rank][file] = ".";
+                GameHelper.print(copy);
                 if (!Game.kingChecked(false, copy)) {
                     possibleMovesLogicList.add((rank + 1) + "" + (file - 1));
-                    moves.add((7 - (rank + 1)) + "" + (7 - (file - 1)));
+                    moves.add(((rank + 1)) + "" + ((file - 1)));
                     copy = copyBoard(board);
                 }
             }
             if (isValidSquare(rank + 1, file + 1) && board[rank + 1][file + 1].matches("[PQRNB]")) {
                 copy[rank + 1][file + 1] = "p";
                 copy[rank][file] = ".";
+                GameHelper.print(copy);
                 if (!Game.kingChecked(false, copy)) {
                     possibleMovesLogicList.add((rank + 1) + "" + (file + 1));
-                    moves.add((7 - (rank + 1)) + "" + (7 - (file + 1)));
+                    moves.add(((rank + 1)) + "" + ((file + 1)));
                 }
             }
             copy = copyBoard(board);
@@ -243,6 +244,7 @@ public class PawnMoveTracker {
                 }
             }
         }
+        System.out.println("PAWN MOVES " + possibleMovesLogicList);
         return moves;
     }
 
