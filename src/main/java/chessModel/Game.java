@@ -255,11 +255,14 @@ public class Game {
             print(movePieces(move, white));
             if (stalemated(!white)) {
                 System.out.println("Game over! - Draw by stalemate");
+                ApplicationData.getInstance().getIvc().updateInfoText("Game over! - Draw by stalemate");
             }
             if (isThreefoldRepetition()) {
                 System.out.println("3-Fold repetition: One player can claim draw");
+                ApplicationData.getInstance().getIvc().updateInfoText("3-Fold repetition: One player can claim draw");
             }
             if (kingChecked(!white) && checkMated(!white)) {
+                ApplicationData.getInstance().getIvc().updateInfoText("Game over! - " + (!white ? "Black won!" : "White won!"));
                 System.out.println("Game over! - " + (!white ? "Black won!" : "White won!"));
             }
             if (reset50moveRule(move)) {
@@ -268,10 +271,13 @@ public class Game {
                 fiftyMoveRule++;
             }
             if (fiftyMoveRule >= 100) {
+                ApplicationData.getInstance().getIvc().updateInfoText("50 move rule applied: One player can claim draw!");
                 System.out.println("50 move rule applied: One player can claim draw!");
             }
             moveList.add(move);
             playedPositions.add(copyBoard(board));
+            if (!GameStates.isGameOver())
+                ApplicationData.getInstance().getIvc().updateInfoText((white ? "White " : "Black ") + "played: " + moveList.get(moveList.size() - 1));
         } catch (Exception e) {
             e.printStackTrace();
         }

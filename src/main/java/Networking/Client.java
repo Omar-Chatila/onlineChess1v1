@@ -35,6 +35,7 @@ public class Client {
                     Game.executeMove(messageToServer, !GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                        ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                     }
                 }
             }
@@ -61,12 +62,16 @@ public class Client {
                     } else {
                         if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                             GameStates.setServerIswhite(messageFromServer.equals("true"));
+                            if (!GameStates.isServerWhite()) {
+                                GameStates.setIsMyTurn(true);
+                            }
                         } else {
                             if (!messageFromServer.matches("[0-9]{2}\\.[0-9]{2}[A-R]?")) {
                                 ApplicationData.getInstance().setIllegalMove(false);
                                 Game.executeMove(messageFromServer, GameStates.isServerWhite());
                                 if (!ApplicationData.getInstance().isIllegalMove()) {
                                     GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                                    ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                                 }
                             } else {
                                 Platform.runLater(() -> {

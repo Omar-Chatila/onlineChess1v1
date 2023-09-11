@@ -64,7 +64,7 @@ public class ChessboardController {
     private void setSquareAccessibleText(StackPane current) {
         Integer rowIndexConstraint = GridPane.getRowIndex(current);
         Integer columnIndexConstraint = GridPane.getColumnIndex(current);
-        String square = (GameStates.isServerWhite() && GameStates.isServer()) ? Character.toString('a' + Objects.requireNonNullElse(columnIndexConstraint, 0))
+        String square = (GameStates.iAmWhite()) ? Character.toString('a' + Objects.requireNonNullElse(columnIndexConstraint, 0))
                 + (8 - Objects.requireNonNullElse(rowIndexConstraint, 0)) : Character.toString('h' - Objects.requireNonNullElse(columnIndexConstraint, 0))
                 + (Objects.requireNonNullElse(rowIndexConstraint, 0) + 1);
         current.setAccessibleText(square);
@@ -144,6 +144,7 @@ public class ChessboardController {
                 this.pawnRank = startingSquare.getRow();
             }
             if (GameStates.isIsMyTurn()) {
+                System.out.println("MYYYY TTTTTUUUUURN??????");
                 if (GameStates.iAmWhite() && isWhitePiece || !GameStates.iAmWhite() && !isWhitePiece)
                     highlightPossibleSquares(movedPiece, isWhitePiece);
             }
@@ -314,7 +315,7 @@ public class ChessboardController {
 
     private String generateMove(IntIntPair destinationSquare, StackPane cell) {
         String file = "";
-        boolean isWhite = GameStates.isServerWhite() && GameStates.isServer() || !GameStates.isServerWhite() && !GameStates.isServer();
+        boolean isWhite = GameStates.iAmWhite();
         if (movedPiece.isEmpty()) {
             if (isWhite) {
                 file = Character.toString('a' + Objects.requireNonNullElse(GridPane.getColumnIndex(selectedPiece.getParent()), 0));
@@ -362,7 +363,7 @@ public class ChessboardController {
         if (movedPiece.isEmpty() && move.contains("x") && (Math.abs(destinationSquare.getColumn() - pawnFile) != 1 || destinationSquare.getRow() + 1 != pawnRank)) {
             move = "wrong";
         }
-        if (movedPiece.isEmpty() && !move.contains("x")) {
+        if (movedPiece.isEmpty() && !move.contains("x")) { // en passant
             if (startingSquare.getRow() == 3 && destinationSquare.getRow() == 2 && Math.abs(destinationSquare.getColumn() - startingSquare.getColumn()) == 1) {
                 try {
                     if (isWhite && (Game.board[startingSquare.getRow()][startingSquare.getColumn() - 1].equals("p"))) {

@@ -34,6 +34,8 @@ public class ClientController implements Initializable {
     private StackPane stackpane;
     @FXML
     private ImageView newMessage;
+    @FXML
+    private AnchorPane infopane;
 
     private static String ip_Address;
     private static int portNr;
@@ -51,9 +53,7 @@ public class ClientController implements Initializable {
             e.printStackTrace();
         }
         try {
-            loadMovesTable();
-            loadChessBoard();
-            loadChatBox();
+            loadUIElements();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,6 +102,14 @@ public class ClientController implements Initializable {
         tableBox.getChildren().add(vBox);
     }
 
+    private void loadInfoPane() throws Exception {
+        FXMLLoader loader;
+        loader = new FXMLLoader(getClass().getResource("infoView.fxml"));
+        AnchorPane infoPane = loader.load();
+        ApplicationData.getInstance().setIvc(loader.getController());
+        this.infopane.getChildren().add(infoPane);
+    }
+
     @FXML
     void toggle() {
         stackpane.getChildren().get(0).toFront();
@@ -122,6 +130,13 @@ public class ClientController implements Initializable {
                 new SoundPlayer().playNotificationSound();
             }
         }
+    }
+
+    private void loadUIElements() throws Exception {
+        loadMovesTable();
+        loadChessBoard();
+        loadChatBox();
+        loadInfoPane();
     }
 
     public static ChatController getChatController() {

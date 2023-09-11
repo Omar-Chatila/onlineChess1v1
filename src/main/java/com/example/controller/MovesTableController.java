@@ -65,8 +65,8 @@ public class MovesTableController {
         if (blackMove != null) {
             if (!movesList.isEmpty()) {
                 Item lastItem = movesList.get(movesList.size() - 1);
-                if (Game.kingChecked(false, Game.board)) {
-                    if (Game.checkMated(false)) {
+                if (Game.kingChecked(true, Game.board)) {
+                    if (Game.checkMated(true)) {
                         blackMove = blackMove + "#";
                     } else {
                         blackMove = blackMove + "+";

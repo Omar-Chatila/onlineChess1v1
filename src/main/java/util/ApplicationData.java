@@ -4,6 +4,7 @@ import Networking.Client;
 import Networking.Server;
 import com.example.controller.ChessboardController;
 import com.example.controller.GameStates;
+import com.example.controller.InfoViewController;
 
 public class ApplicationData {
     private static final ApplicationData instance = new ApplicationData();
@@ -12,6 +13,8 @@ public class ApplicationData {
     private ChessboardController chessboardController;
     private boolean illegalMove;
     private String promotedPiece;
+
+    private InfoViewController ivc;
 
     private ApplicationData() {
 
@@ -64,4 +67,13 @@ public class ApplicationData {
     public void setPromotedPiece(String promotedPiece) {
         this.promotedPiece = promotedPiece;
     }
+
+    public InfoViewController getIvc() {
+        return ivc;
+    }
+
+    public void setIvc(InfoViewController ivc) {
+        this.ivc = ivc;
+    }
+
 }

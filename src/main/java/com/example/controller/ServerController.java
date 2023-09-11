@@ -37,14 +37,16 @@ public class ServerController implements Initializable {
     private StackPane stackpane;
     @FXML
     private ImageView newMessage;
+    @FXML
+    private AnchorPane infopane;
 
     private static MovesTableController mtc;
     private static ChatController chatController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        new Thread(this::startServer).start();
         loadUIElements();
+        new Thread(this::startServer).start();
     }
 
     public static void setServerPort(int serverPort) {
@@ -85,6 +87,14 @@ public class ServerController implements Initializable {
         tableBox.getChildren().add(vBox);
     }
 
+    private void loadInfoPane() throws Exception {
+        FXMLLoader loader;
+        loader = new FXMLLoader(getClass().getResource("infoView.fxml"));
+        AnchorPane infoPane = loader.load();
+        ApplicationData.getInstance().setIvc(loader.getController());
+        this.infopane.getChildren().add(infoPane);
+    }
+
     @FXML
     void toggle() {
         setMessageIndicatorVisibility(false);
@@ -116,6 +126,7 @@ public class ServerController implements Initializable {
             loadMovesTable();
             loadChessBoard();
             loadChatBox();
+            loadInfoPane();
         } catch (Exception e) {
             e.printStackTrace();
         }

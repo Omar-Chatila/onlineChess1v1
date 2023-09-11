@@ -41,6 +41,7 @@ public class Server {
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                        ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                     }
                 }
             }
@@ -76,6 +77,7 @@ public class Server {
                             Game.executeMove(messageFromClient, !GameStates.isServerWhite());
                             if (!ApplicationData.getInstance().isIllegalMove()) {
                                 GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                                ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                             }
                         } else {
                             Platform.runLater(() -> {
@@ -110,6 +112,10 @@ public class Server {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
+    }
+
+    public boolean hasConnection() {
+        return this.socket.isConnected();
     }
 
 }

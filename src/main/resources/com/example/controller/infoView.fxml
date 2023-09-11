@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="307.0" prefWidth="159.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.InfoViewController">
+    <children>
+        <VBox prefHeight="308.0" prefWidth="159.0">
+            <children>
+                <HBox prefHeight="100.0" style="-fx-background-color: darkgrey;">
+                    <children>
+                        <Label fx:id="oppTimeLabel" prefHeight="27.0" prefWidth="63.0" style="-fx-border-color: black; -fx-background-color: lightgrey; -fx-border-radius: 5;" text=" 05:00">
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" top="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font size="23.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <VBox prefHeight="258.0">
+                    <children>
+                        <HBox prefHeight="25.0" spacing="10.0" style="-fx-background-color: gre;">
+                            <children>
+                                <RadioButton fx:id="oppTurnIndicator" mnemonicParsing="false" />
+                                <Label fx:id="opponentName" prefHeight="30.0" text="White Player" />
+                            </children>
+                            <padding>
+                                <Insets left="10.0" />
+                            </padding>
+                        </HBox>
+                        <VBox prefHeight="200.0" style="-fx-background-color: darkgrey;">
+                            <children>
+                                <Label fx:id="infoText" prefHeight="106.0" prefWidth="145.0" text="You play the white pieces                                 it's your turn!" wrapText="true">
+                                    <VBox.margin>
+                                        <Insets left="10.0" top="20.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <HBox prefHeight="44.0" />
+                            </children>
+                        </VBox>
+                        <HBox prefHeight="25.0" spacing="10.0" style="-fx-background-color: gre;">
+                            <children>
+                                <RadioButton fx:id="myTurnIndicator" mnemonicParsing="false" />
+                                <Label fx:id="myName" prefHeight="30.0" text="Black Player" />
+                            </children>
+                            <padding>
+                                <Insets left="10.0" />
+                            </padding>
+                        </HBox>
+                    </children>
+                </VBox>
+                <HBox prefHeight="100.0" style="-fx-background-color: darkgrey;">
+                    <children>
+                        <Label fx:id="myTimeLabel" prefHeight="32.0" prefWidth="63.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: lightgrey;" text=" 05:00">
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" top="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font size="23.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
