@@ -12,22 +12,19 @@ public class RookMoveTracker {
     public static boolean validateRook(String[][] board, String move, boolean white) {
         if (!move.contains("x") && move.length() == 4) {
             if (Character.isDigit(move.charAt(1))) {
-                int movingRank = Character.getNumericValue(move.charAt(1));
+                int movingRank = 8 - Character.getNumericValue(move.charAt(1));
                 int file = move.charAt(2) - 'a';
                 int rank = 8 - Character.getNumericValue(move.charAt(3));
                 return validateRookHelper(board, rank, file, white, 100, movingRank);
             } else {
                 int movingFile = move.charAt(1) - 'a';
-                System.out.println("MOVING FILE  " + movingFile);
                 int file = move.charAt(2) - 'a';
-                System.out.println(" FILE  " + file);
                 int rank = 8 - Character.getNumericValue(move.charAt(3));
-                System.out.println(" Rank  " + rank);
                 return validateRookHelper(board, rank, file, white, movingFile, 100);
             }
         } else if (move.contains("x") && move.length() == 5) {
             if (Character.isDigit(move.charAt(1))) {
-                int movingRank = Character.getNumericValue(move.charAt(1));
+                int movingRank = 8 - Character.getNumericValue(move.charAt(1));
                 int file = move.charAt(3) - 'a';
                 int rank = 8 - Character.getNumericValue(move.charAt(4));
                 if (!white && board[rank][file].matches("[NPKBRQ]"))

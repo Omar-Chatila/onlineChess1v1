@@ -167,29 +167,31 @@ public class ChessboardController {
     }
 
     private void highlightPossibleSquares(String movedPiece, boolean isWhitePiece) {
-        List<String> list = null;
-        if (movedPiece.matches("[bB]")) {
-            list = BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
-        } else if (movedPiece.matches("[nN]")) {
-            list = KnightMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
-        } else if (movedPiece.matches("[qQ]")) {
-            list = QueenMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
-        } else if (movedPiece.matches("[rR]")) {
-            list = RookMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
-        } else if (movedPiece.matches("[kK]")) {
-            list = KingMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
-        } else if (movedPiece.isEmpty()) {
-            list = PawnMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
-        }
-        assert list != null;
-        for (String coordinate : list) {
-            IntIntPair c = new IntIntPair(Character.getNumericValue(coordinate.charAt(0)), Character.getNumericValue(coordinate.charAt(1)));
-            StackPane square = getPaneFromCoordinate(c);
-            Button b = (Button) square.getChildren().get(0);
-            Image highlight = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/transparent.png")));
-            ImageView h = new ImageView(highlight);
-            h.setOpacity(0.5);
-            b.setGraphic(h);
+        if (isWhitePiece && GameStates.iAmWhite() || !isWhitePiece && !GameStates.iAmWhite()) {
+            List<String> list = null;
+            if (movedPiece.matches("[bB]")) {
+                list = BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+            } else if (movedPiece.matches("[nN]")) {
+                list = KnightMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+            } else if (movedPiece.matches("[qQ]")) {
+                list = QueenMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+            } else if (movedPiece.matches("[rR]")) {
+                list = RookMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+            } else if (movedPiece.matches("[kK]")) {
+                list = KingMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+            } else if (movedPiece.isEmpty()) {
+                list = PawnMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+            }
+            assert list != null;
+            for (String coordinate : list) {
+                IntIntPair c = new IntIntPair(Character.getNumericValue(coordinate.charAt(0)), Character.getNumericValue(coordinate.charAt(1)));
+                StackPane square = getPaneFromCoordinate(c);
+                Button b = (Button) square.getChildren().get(0);
+                Image highlight = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/transparent.png")));
+                ImageView h = new ImageView(highlight);
+                h.setOpacity(0.5);
+                b.setGraphic(h);
+            }
         }
     }
 
@@ -233,6 +235,7 @@ public class ChessboardController {
 
     public void updateBoard(String opponentMove) {
         System.out.println("MOVE: " + move);
+        this.destinationsSquare = null;
         updateCheckStatus();
         clearHighlighting();
         System.out.println("transform " + opponentMove);
@@ -287,10 +290,11 @@ public class ChessboardController {
             System.out.println("AMBIGUOUS MOVE!!! -- " + move);
             if (Game.pieceOnSameFile(move, isWhite, destinationSquare, startingSquare)) {
                 int rank;
-                if (isWhite)
+                if (isWhite) {
                     rank = 8 - Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0);
-                else
+                } else {
                     rank = Objects.requireNonNullElse(GridPane.getRowIndex(selectedPiece.getParent()), 0) + 1;
+                }
                 move = movedPiece + rank + cell.getAccessibleText();
                 if (cell.getChildren().size() == 2) {
                     if (!move.contains("O")) {
