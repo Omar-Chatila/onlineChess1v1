@@ -81,43 +81,15 @@ public class ChessboardController {
         });
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
         currentButton.setOnDragDone(event -> {
-            playSound(false);
             if (isLegalDragDrop()) {
-                clearHighlighting();
                 updateCheckStatus();
                 if ((movePlayed - Game.moveList.size()) != 0) {
                     highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
                 }
                 addMoveToTable();
             }
+            clearHighlighting();
         });
-    }
-
-    private void playSound(boolean receive) {
-        String lastMove = null;
-        if (!Game.moveList.isEmpty()) {
-            lastMove = Game.moveList.get(Game.moveList.size() - 1);
-        }
-        if (!receive && (GameStates.iAmWhite() && Game.kingChecked(false) || !GameStates.iAmWhite() && Game.kingChecked(true))) {
-            new SoundPlayer().playCheckSound();
-        } else if (receive && (GameStates.iAmWhite() && Game.kingChecked(true) || !GameStates.iAmWhite() && Game.kingChecked(false))) {
-            new SoundPlayer().playCheckSound();
-        } else if (lastMove != null && lastMove.startsWith("O")) {
-            new SoundPlayer().playCastleSound();
-        } else if (lastMove != null && lastMove.contains("x")) {
-            new SoundPlayer().playCaptureSound();
-        } else if (lastMove != null && lastMove.contains("=")) {
-            new SoundPlayer().playPromotionSound();
-        } else {
-            if (!receive) {
-                new SoundPlayer().playMoveSelfSound();
-            } else {
-                new SoundPlayer().playOpponentMoveSound();
-            }
-        }
-        if (GameStates.isGameOver()) {
-            new SoundPlayer().playGameEndSound();
-        }
     }
 
     private void setOnDragDetection(Button currentButton) {
@@ -269,7 +241,6 @@ public class ChessboardController {
         System.out.println("MOVE: " + move);
         updateCheckStatus();
         clearHighlighting();
-        playSound(true);
         System.out.println("transform " + opponentMove);
         int startRow = 7 - Character.getNumericValue(opponentMove.charAt(0));
         int startCol = 7 - Character.getNumericValue(opponentMove.charAt(1));
@@ -540,16 +511,16 @@ public class ChessboardController {
     }
 
     private void addMoveToTable() {
-        if (GameStates.iAmWhite()) {
+        if (GameStates.iAmWhite() && !move.startsWith("O-")) {
             System.out.println("toAdd " + move);
             mtc.addMove(mtc.getCurrentMove(), move, null);
-        } else {
+        } else if (!move.startsWith("O-")) {
             System.out.println("toAdd " + move);
             mtc.addMove(mtc.getCurrentMove(), null, move);
         }
     }
 
     private boolean isLegalDragDrop() {
-        return !ApplicationData.getInstance().isIllegalMove() && !this.destinationsSquare.equals(this.startingSquare) && !move.equals("wrong");
+        return !ApplicationData.getInstance().isIllegalMove() && this.destinationsSquare != null && !this.destinationsSquare.equals(this.startingSquare) && !move.equals("wrong");
     }
 }

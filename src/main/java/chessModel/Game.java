@@ -45,11 +45,12 @@ public class Game {
                 legal = KingMoveTracker.validateKing(board, move, white);
             }
         }
-
         if (!legal) {
             ApplicationData.getInstance().setIllegalMove(true);
             new SoundPlayer().playIllegalMoveSound();
             throw new IllegalMoveException(move);
+        } else {
+            playMoveSound(move, white);
         }
         return board;
     }
@@ -250,6 +251,24 @@ public class Game {
         return Character.toString(move.charAt(0)).matches("[a-h]") || move.contains("x");
     }
 
+    private static void playMoveSound(String lastMove, boolean white) {
+        if (!white && Game.kingChecked(true) || white && Game.kingChecked(false)) {
+            new SoundPlayer().playCheckSound();
+        } else if (lastMove.startsWith("O")) {
+            new SoundPlayer().playCastleSound();
+        } else if (lastMove.contains("x")) {
+            new SoundPlayer().playCaptureSound();
+        } else if (lastMove.contains("=")) {
+            new SoundPlayer().playPromotionSound();
+        } else {
+            if (GameStates.isIsMyTurn()) {
+                new SoundPlayer().playMoveSelfSound();
+            } else {
+                new SoundPlayer().playOpponentMoveSound();
+            }
+        }
+    }
+
     public static void executeMove(String move, boolean white) {
         try {
             print(movePieces(move, white));
@@ -276,8 +295,11 @@ public class Game {
             }
             moveList.add(move);
             playedPositions.add(copyBoard(board));
-            if (!GameStates.isGameOver())
+            if (!GameStates.isGameOver()) {
                 ApplicationData.getInstance().getIvc().updateInfoText((white ? "White " : "Black ") + "played: " + moveList.get(moveList.size() - 1));
+            } else {
+                new SoundPlayer().playGameEndSound();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
