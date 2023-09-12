@@ -308,7 +308,7 @@ public class Game {
             moveList.add(move);
             playedPositions.add(copyBoard(board));
             if (!GameStates.isGameOver()) {
-                ApplicationData.getInstance().getIvc().updateInfoText((white ? "White " : "Black ") + "played: " + moveList.get(moveList.size() - 1));
+                ApplicationData.getInstance().getIvc().updateInfoText((white ? "White " : "Black ") + "played: " + move);
             } else {
                 new SoundPlayer().playGameEndSound();
             }

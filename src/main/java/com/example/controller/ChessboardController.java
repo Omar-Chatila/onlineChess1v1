@@ -41,7 +41,7 @@ public class ChessboardController {
     public static String move;
     private IntIntPair startingSquare;
     private IntIntPair destinationsSquare;
-    
+
     @FXML
     private void initialize() {
         if (!GameStates.isServer())
@@ -83,8 +83,9 @@ public class ChessboardController {
                 if ((movePlayed - Game.moveList.size()) != 0) {
                     highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
                 }
+            } else {
+                clearHighlighting();
             }
-            clearHighlighting();
         });
     }
 
