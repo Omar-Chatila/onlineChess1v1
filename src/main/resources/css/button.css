@@ -1,0 +1,6 @@
+.button-with-text::before {
+    content: "AB"; /* Replace with your desired text */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}

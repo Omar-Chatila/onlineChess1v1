@@ -190,7 +190,14 @@ public class ChessboardController {
                 Image highlight = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/transparent.png")));
                 ImageView h = new ImageView(highlight);
                 h.setOpacity(0.5);
-                b.setGraphic(h);
+                boolean found = false;
+                for (Node n : b.getChildrenUnmodifiable()) {
+                    if (n instanceof StackPane k) {
+                        found = true;
+                        k.getChildren().add(h);
+                    }
+                }
+                if (!found) b.setGraphic(h);
             }
         }
     }
@@ -209,7 +216,15 @@ public class ChessboardController {
                     Button movedPiece = (Button) square.getChildren().get(1);
                     movedPiece.getGraphic().setOpacity(1);
                 }
-                button.setGraphic(null);
+
+                boolean found = false;
+                for (Node n : button.getChildrenUnmodifiable()) {
+                    if (n instanceof StackPane sp) {
+                        sp.getChildren().removeIf(im -> im instanceof ImageView);
+                        found = true;
+                    }
+                }
+                if (!found) button.setGraphic(null);
             }
         }
     }
@@ -369,47 +384,29 @@ public class ChessboardController {
         return move;
     }
 
-    private void handleMoveTransmission(IntIntPair destinationSquare) {
+    private void sendMessageToClientOrServer(String message) {
         if (GameStates.isServer()) {
-            ApplicationData.getInstance().getServer().sendMessageToClient(move);
-            String message = startingSquare.toString() + "." + destinationSquare;
-            if (move.contains("=")) {
-                message = message + move.charAt(move.length() - 1);
-            }
             ApplicationData.getInstance().getServer().sendMessageToClient(message);
-            if (move.equals("O-O")) {
-                if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
-                    ApplicationData.getInstance().getServer().sendMessageToClient("77.75");
-                } else {
-                    ApplicationData.getInstance().getServer().sendMessageToClient("70.72");
-                }
-            } else if (move.equals("O-O-O")) {
-                if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
-                    ApplicationData.getInstance().getServer().sendMessageToClient("70.73");
-                } else {
-                    ApplicationData.getInstance().getServer().sendMessageToClient("77.74");
-                }
-            }
         } else {
-            ApplicationData.getInstance().getClient().sendMessageToServer(move);
-            String message = startingSquare.toString() + "." + destinationSquare;
-            if (move.contains("=")) {
-                message = message + move.charAt(move.length() - 1);
-            }
             ApplicationData.getInstance().getClient().sendMessageToServer(message);
-            if (move.equals("O-O")) {
-                if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
-                    ApplicationData.getInstance().getClient().sendMessageToServer("77.75");
-                } else {
-                    ApplicationData.getInstance().getClient().sendMessageToServer("70.72");
-                }
-            } else if (move.equals("O-O-O")) {
-                if (GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()) {
-                    ApplicationData.getInstance().getClient().sendMessageToServer("70.73");
-                } else {
-                    ApplicationData.getInstance().getClient().sendMessageToServer("77.74");
-                }
-            }
+        }
+    }
+
+    private void handleMoveTransmission(IntIntPair destinationSquare) {
+        sendMessageToClientOrServer(move);
+        String message = startingSquare.toString() + "." + destinationSquare;
+        if (move.contains("=")) {
+            message += move.charAt(move.length() - 1);
+        }
+        sendMessageToClientOrServer(message);
+        if (move.equals("O-O")) {
+            String castlingMove = GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()
+                    ? "77.75" : "70.72";
+            sendMessageToClientOrServer(castlingMove);
+        } else if (move.equals("O-O-O")) {
+            String castlingMove = GameStates.isServer() && GameStates.isServerWhite() || !GameStates.isServer() && !GameStates.isServerWhite()
+                    ? "70.73" : "77.74";
+            sendMessageToClientOrServer(castlingMove);
         }
     }
 
