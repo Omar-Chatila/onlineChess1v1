@@ -1,7 +1,10 @@
 package chessModel;
 
 import Exceptions.IllegalMoveException;
+import com.example.controller.ClientController;
 import com.example.controller.GameStates;
+import com.example.controller.MovesTableController;
+import com.example.controller.ServerController;
 import util.ApplicationData;
 import util.GameHelper;
 import util.IntIntPair;
@@ -20,6 +23,7 @@ public class Game {
     public static List<String[][]> playedPositions = new ArrayList<>();
     public static String[][] board = new String[8][8];
     private static int fiftyMoveRule;
+    private static MovesTableController movesTableController;
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
@@ -270,8 +274,16 @@ public class Game {
     }
 
     public static void executeMove(String move, boolean white) {
+        if (movesTableController == null) {
+            if (GameStates.isServer()) {
+                movesTableController = ServerController.getMtc();
+            } else {
+                movesTableController = ClientController.getMtc();
+            }
+        }
         try {
             print(movePieces(move, white));
+            updateMovesTable(move, white);
             if (stalemated(!white)) {
                 System.out.println("Game over! - Draw by stalemate");
                 ApplicationData.getInstance().getIvc().updateInfoText("Game over! - Draw by stalemate");
@@ -302,6 +314,14 @@ public class Game {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void updateMovesTable(String move, boolean white) {
+        if (white) {
+            movesTableController.addMove(movesTableController.getCurrentMove(), move, null);
+        } else {
+            movesTableController.addMove(movesTableController.getCurrentMove(), null, move);
         }
     }
 }

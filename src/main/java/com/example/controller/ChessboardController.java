@@ -41,14 +41,11 @@ public class ChessboardController {
     public static String move;
     private IntIntPair startingSquare;
     private IntIntPair destinationsSquare;
-    private static MovesTableController mtc;
-
-
+    
     @FXML
     private void initialize() {
         if (!GameStates.isServer())
             new SoundPlayer().playGameStartSound();
-        setMovesTableController();
         for (Node node : chessboardGrid.getChildren()) {
             if (node instanceof StackPane current) {
                 setSquareAccessibleText(current);
@@ -86,7 +83,6 @@ public class ChessboardController {
                 if ((movePlayed - Game.moveList.size()) != 0) {
                     highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
                 }
-                addMoveToTable();
             }
             clearHighlighting();
         });
@@ -234,9 +230,6 @@ public class ChessboardController {
         }
     }
 
-    static String wLastAdded = "";
-    static String bLastAdded = "";
-
     public void updateBoard(String opponentMove) {
         System.out.println("MOVE: " + move);
         updateCheckStatus();
@@ -271,17 +264,6 @@ public class ChessboardController {
             StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(endCell) - 1, GridPane.getColumnIndex(endCell)));
             removablePawn.getChildren().remove(1);
         }
-        String lastPlayed = Game.moveList.get(Game.moveList.size() - 1);
-        if (GameStates.iAmWhite()) {
-            if (!wLastAdded.equals(lastPlayed))
-                mtc.addMove(mtc.getCurrentMove(), null, Game.moveList.get(Game.moveList.size() - 1));
-            wLastAdded = lastPlayed;
-        } else {
-            if (!bLastAdded.equals(lastPlayed))
-                mtc.addMove(mtc.getCurrentMove(), Game.moveList.get(Game.moveList.size() - 1), null);
-            bLastAdded = lastPlayed;
-        }
-
     }
 
     private String generateMove(IntIntPair destinationSquare, StackPane cell) {
@@ -360,13 +342,6 @@ public class ChessboardController {
             move = "O-O-O";
         }
         System.out.println(move);
-        if (move.startsWith("O-")) {
-            if (GameStates.iAmWhite()) {
-                mtc.addMove(mtc.getCurrentMove(), move, null);
-            } else {
-                mtc.addMove(mtc.getCurrentMove(), null, move);
-            }
-        }
         if (move.matches("([a-h]x)?[a-h]8") || move.matches("([a-h]x)?[a-h]1")) {
             Button movingButton = (Button) getPaneFromCoordinate(startingSquare).getChildren().get(1);
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("PawnPromotion.fxml"));
@@ -498,25 +473,6 @@ public class ChessboardController {
                 getPaneFromCoordinate(new IntIntPair(7, 3)).getChildren().remove(1);
                 getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 0 : 7)).getChildren().remove(1);
             }
-        }
-    }
-
-    private void setMovesTableController() {
-        if (GameStates.isServer()) {
-            System.out.println("HIEEEER");
-            mtc = ServerController.getMtc();
-        } else {
-            mtc = ClientController.getMtc();
-        }
-    }
-
-    private void addMoveToTable() {
-        if (GameStates.iAmWhite() && !move.startsWith("O-")) {
-            System.out.println("toAdd " + move);
-            mtc.addMove(mtc.getCurrentMove(), move, null);
-        } else if (!move.startsWith("O-")) {
-            System.out.println("toAdd " + move);
-            mtc.addMove(mtc.getCurrentMove(), null, move);
         }
     }
 
