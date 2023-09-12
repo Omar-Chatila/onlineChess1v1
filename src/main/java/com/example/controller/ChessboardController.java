@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -34,6 +35,10 @@ public class ChessboardController {
     private Button whiteKingButton;
     @FXML
     private Button blackKingButton;
+    @FXML
+    private ImageView whiteKing;
+    @FXML
+    private ImageView blackKing;
     private Button selectedPiece;
     private int pawnFile;
     private int pawnRank;
@@ -141,18 +146,22 @@ public class ChessboardController {
     private void updateCheckStatus() {
         System.out.println("White King checked: " + Game.kingChecked(true) + "\n Black checked: " + Game.kingChecked(false));
         if (Game.kingChecked(false) && !Game.checkMated(false)) {
+            blackKing.setEffect(new Glow(0.7));
             blackKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
         } else if (Game.checkMated(false)) {
             blackKingButton.setStyle("-fx-background-color: #990c02;");
         } else if (!Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: transparent;");
+            blackKing.setEffect(null);
         }
         if (Game.kingChecked(true) && !Game.checkMated(true)) {
+            whiteKing.setEffect(new Glow(0.4));
             whiteKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
         } else if (Game.checkMated(true)) {
             whiteKingButton.setStyle("-fx-background-color: #990c02;");
         } else if (!Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: transparent;");
+            whiteKing.setEffect(null);
         }
     }
 
@@ -189,7 +198,7 @@ public class ChessboardController {
                 Button b = (Button) square.getChildren().get(0);
                 Image highlight = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/transparent.png")));
                 ImageView h = new ImageView(highlight);
-                h.setOpacity(0.5);
+                h.setOpacity(0.7);
                 boolean found = false;
                 for (Node n : b.getChildrenUnmodifiable()) {
                     if (n instanceof StackPane k) {

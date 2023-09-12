@@ -132,7 +132,7 @@
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
                 <Button fx:id="blackKingButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="blackKing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../../images/bK.png" />
                             </image>
@@ -671,15 +671,11 @@
                </graphic></Button>
                 <Button fx:id="whiteKingButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
-                  <StackPane>
-                     <children>
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                      <Image url="@../../../images/wK.png" />
-                                  </image>
-                              </ImageView>
-                     </children>
-                  </StackPane>
+                        <ImageView fx:id="whiteKing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../images/wK.png" />
+                            </image>
+                        </ImageView>
                     </graphic>
                 </Button>
             </children>
@@ -725,15 +721,11 @@
                </graphic></Button>
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
-                  <StackPane>
-                     <children>
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                      <Image url="@../../../images/wN.png" />
-                                  </image>
-                              </ImageView>
-                     </children>
-                  </StackPane>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../images/wN.png" />
+                            </image>
+                        </ImageView>
                     </graphic>
                 </Button>
             </children>
@@ -779,15 +771,11 @@
                </graphic></Button>
                 <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
-                  <StackPane>
-                     <children>
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                      <Image url="@../../../images/wB.png" />
-                                  </image>
-                              </ImageView>
-                     </children>
-                  </StackPane>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../images/wB.png" />
+                            </image>
+                        </ImageView>
                     </graphic>
                 </Button>
             </children>
