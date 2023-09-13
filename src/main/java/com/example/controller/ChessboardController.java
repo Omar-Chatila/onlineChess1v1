@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -149,6 +150,7 @@ public class ChessboardController {
             blackKing.setEffect(new Glow(0.7));
             blackKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
         } else if (Game.checkMated(false)) {
+            blackKing.setEffect(new Glow(0.8));
             blackKingButton.setStyle("-fx-background-color: #990c02;");
         } else if (!Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: transparent;");
@@ -158,6 +160,7 @@ public class ChessboardController {
             whiteKing.setEffect(new Glow(0.4));
             whiteKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
         } else if (Game.checkMated(true)) {
+            whiteKing.setEffect(new Glow(0.8));
             whiteKingButton.setStyle("-fx-background-color: #990c02;");
         } else if (!Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: transparent;");
