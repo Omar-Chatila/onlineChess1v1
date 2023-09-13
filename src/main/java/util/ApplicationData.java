@@ -13,7 +13,6 @@ public class ApplicationData {
     private ChessboardController chessboardController;
     private boolean illegalMove;
     private String promotedPiece;
-
     private InfoViewController ivc;
 
     private ApplicationData() {

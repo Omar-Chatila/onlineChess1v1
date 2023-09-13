@@ -6,6 +6,7 @@ import com.example.controller.LoginViewController;
 import com.example.controller.ServerController;
 import javafx.application.Platform;
 import util.ApplicationData;
+import util.ChessClock;
 import util.SoundPlayer;
 
 import java.io.*;
@@ -17,8 +18,12 @@ public class Server {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+    private final ChessClock serverClock;
+    private final ChessClock clientClock;
 
     public Server(ServerSocket serverSocket) {
+        serverClock = new ChessClock(5 * 60, true);
+        clientClock = new ChessClock((5 * 60), false);
         try {
             this.socket = serverSocket.accept();
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -41,6 +46,8 @@ public class Server {
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                        serverClock.pauseClock();
+                        clientClock.startTimer();
                         ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                     }
                 }
@@ -77,6 +84,8 @@ public class Server {
                             Game.executeMove(messageFromClient, !GameStates.isServerWhite());
                             if (!ApplicationData.getInstance().isIllegalMove()) {
                                 GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
+                                serverClock.startTimer();
+                                clientClock.pauseClock();
                                 ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                             }
                         } else {

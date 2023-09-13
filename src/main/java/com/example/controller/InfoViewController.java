@@ -44,6 +44,14 @@ public class InfoViewController {
         oppTurnIndicator.setSelected(!oppTurnIndicator.isSelected());
     }
 
+    public void updateMyClock(String time) {
+        myTimeLabel.setText(time);
+    }
+
+    public void updateOppClock(String time) {
+        oppTimeLabel.setText(time);
+    }
+
     public void updateInfoText(String message) {
         Platform.runLater(() -> infoText.setText(message));
     }
