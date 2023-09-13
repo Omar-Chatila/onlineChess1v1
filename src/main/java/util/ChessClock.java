@@ -5,6 +5,7 @@ import javafx.application.Platform;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 public class ChessClock {
     private Timer timer;
     private int remainingTime;
@@ -23,9 +24,13 @@ public class ChessClock {
             @Override
             public void run() {
                 remainingTime--;
+                if (remainingTime == 10) {
+                    new SoundPlayer().playLowTimeSound();
+                }
                 updateTimeLabels();
                 if (remainingTime <= 0 || GameStates.isGameOver()) {
                     timer.cancel();
+                    playerFlagged();
                 }
             }
         }, 50, 1000);
@@ -37,6 +42,18 @@ public class ChessClock {
         } else {
             Platform.runLater(() -> ApplicationData.getInstance().getIvc().updateOppClock(getClockText()));
         }
+    }
+
+    private void playerFlagged() {
+        GameStates.setGameOver(true);
+        new SoundPlayer().playGameEndSound();
+        Platform.runLater(() -> {
+            if (isMyClock && GameStates.iAmWhite() || !isMyClock && !GameStates.iAmWhite()) {
+                ApplicationData.getInstance().getIvc().updateInfoText("Time Up! Black won!");
+            } else if (isMyClock && !GameStates.iAmWhite() || !isMyClock && GameStates.iAmWhite()) {
+                ApplicationData.getInstance().getIvc().updateInfoText("Time Up! White won!");
+            }
+        });
     }
 
     public String getClockText() {

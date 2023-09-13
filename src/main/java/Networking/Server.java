@@ -22,8 +22,8 @@ public class Server {
     private final ChessClock clientClock;
 
     public Server(ServerSocket serverSocket) {
-        serverClock = new ChessClock(5 * 60, true);
-        clientClock = new ChessClock((5 * 60), false);
+        serverClock = new ChessClock(GameStates.getTimeControl(), true);
+        clientClock = new ChessClock((GameStates.getTimeControl()), false);
         try {
             this.socket = serverSocket.accept();
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -42,12 +42,13 @@ public class Server {
     public void sendMessageToClient(String messageToClient) {
         try {
             if (GameStates.isIsMyTurn()) {
-                if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?") && !messageToClient.startsWith("/t")) {
+                if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?") && !messageToClient.startsWith("/t") && !messageToClient.startsWith("/cl")) {
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                         serverClock.pauseClock();
-                        clientClock.startTimer();
+                        if (Game.moveList.size() > 1)
+                            clientClock.startTimer();
                         ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                     }
                 }
@@ -72,6 +73,7 @@ public class Server {
                 if (!soundPlayed) {
                     soundPlayed = true;
                     new SoundPlayer().playGameStartSound();
+                    ApplicationData.getInstance().getServer().sendMessageToClient("/cl" + GameStates.getTimeControl());
                 }
                 try {
                     String messageFromClient = bufferedReader.readLine();
@@ -84,7 +86,8 @@ public class Server {
                             Game.executeMove(messageFromClient, !GameStates.isServerWhite());
                             if (!ApplicationData.getInstance().isIllegalMove()) {
                                 GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
-                                serverClock.startTimer();
+                                if (Game.moveList.size() > 1)
+                                    serverClock.startTimer();
                                 clientClock.pauseClock();
                                 ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                             }

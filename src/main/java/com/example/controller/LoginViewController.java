@@ -1,14 +1,14 @@
 package com.example.controller;
 
+import com.jfoenix.controls.JFXSlider;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,10 +29,38 @@ public class LoginViewController {
     private Button whitePieceColor;
     @FXML
     private Button connectButton;
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private JFXSlider timeSlider;
 
     private static ServerController serverController;
     private static ClientController clientController;
 
+
+    @FXML
+    private void initialize() {
+        setTimeSlider();
+    }
+
+    private void setTimeSlider() {
+        timeLabel.setText("10:00");
+        GameStates.setTimeControl(10 * 60);
+        timeSlider.setMin(1);
+        timeSlider.setMax(30);
+        timeSlider.setValue(10);
+        timeSlider.setBlockIncrement(1);
+
+        timeSlider.valueProperty().addListener(
+                new ChangeListener<Number>() {
+                    public void changed(ObservableValue<? extends Number>
+                                                observable, Number oldValue, Number newValue) {
+                        int tc = (int) Math.ceil(newValue.doubleValue());
+                        GameStates.setTimeControl(tc * 60);
+                        timeLabel.setText(tc + ":00");
+                    }
+                });
+    }
 
     @FXML
     void randomPieces() {

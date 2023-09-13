@@ -76,4 +76,11 @@ public class SoundPlayer {
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
     }
+
+    public void playLowTimeSound() {
+        String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/tenseconds.mp3")).toString();
+        Media sound = new Media(soundFile);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
 }

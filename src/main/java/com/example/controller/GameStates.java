@@ -6,6 +6,16 @@ public class GameStates {
     private static boolean isServer;
     private static boolean gameOver;
 
+    public static Integer getTimeControl() {
+        return timeControl;
+    }
+
+    public static void setTimeControl(Integer timeControl) {
+        GameStates.timeControl = timeControl;
+    }
+
+    private static Integer timeControl;
+
     public static boolean isGameOver() {
         return gameOver;
     }

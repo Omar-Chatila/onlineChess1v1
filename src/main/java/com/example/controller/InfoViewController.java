@@ -23,6 +23,9 @@ public class InfoViewController {
 
     @FXML
     private void initialize() {
+        System.out.println(GameStates.getTimeControl() / 60);
+        myTimeLabel.setText((GameStates.getTimeControl() / 60) + ":00");
+        oppTimeLabel.setText((GameStates.getTimeControl() / 60) + ":00");
         if (GameStates.iAmWhite()) {
             myTurnIndicator.setSelected(true);
             oppTurnIndicator.setSelected(false);

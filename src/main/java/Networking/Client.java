@@ -16,13 +16,10 @@ public class Client {
     private Socket socket;
     private BufferedWriter bufferedWriter;
     private BufferedReader bufferedReader;
-    private final ChessClock serverClock;
-    private final ChessClock clientClock;
+    private ChessClock serverClock;
+    private ChessClock clientClock;
 
     public Client(Socket socket) {
-        serverClock = new ChessClock(5 * 60, false);
-        //serverClock.startTimer();
-        clientClock = new ChessClock((5 * 60), true);
         try {
             this.socket = socket;
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -42,7 +39,8 @@ public class Client {
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                         clientClock.pauseClock();
-                        serverClock.startTimer();
+                        if (Game.moveList.size() > 1)
+                            serverClock.startTimer();
                         ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                     }
                 }
@@ -64,7 +62,12 @@ public class Client {
             while (socket.isConnected()) {
                 try {
                     String messageFromServer = bufferedReader.readLine();
-                    if (messageFromServer.startsWith("/t")) {
+                    if (messageFromServer.startsWith("/cl")) {
+                        GameStates.setTimeControl(Integer.parseInt(messageFromServer.substring(3)));
+                        serverClock = new ChessClock(GameStates.getTimeControl(), false);
+                        clientClock = new ChessClock(GameStates.getTimeControl(), true);
+
+                    } else if (messageFromServer.startsWith("/t")) {
                         ClientController.getChatController().addLabel(messageFromServer.substring(2));
                         LoginViewController.getClientController().setMessageIndicatorVisibility(true);
                     } else {
@@ -80,7 +83,8 @@ public class Client {
                                 if (!ApplicationData.getInstance().isIllegalMove()) {
                                     GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                                     serverClock.pauseClock();
-                                    clientClock.startTimer();
+                                    if (Game.moveList.size() > 1)
+                                        clientClock.startTimer();
                                     ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                                 }
                             } else {
