@@ -9,15 +9,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="490.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ClientController">
+<AnchorPane prefHeight="490.0" prefWidth="834.0" style="-fx-background-color: #211E1A;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ClientController">
     <children>
         <Label fx:id="roleLabel" layoutX="205.0" layoutY="17.0" text="Chess - Black">
             <font>
                 <Font name="Arial Rounded MT Bold" size="23" />
             </font>
         </Label>
-        <AnchorPane fx:id="chessBoardPane" layoutX="205.0" layoutY="60.0" minHeight="400.0" minWidth="400.0" style="-fx-border-color: BLACK;" />
-        <StackPane fx:id="stackpane" layoutX="618.0" layoutY="59.0" style="-fx-border-color: black;">
+        <AnchorPane fx:id="chessBoardPane" layoutX="205.0" layoutY="60.0" minHeight="400.0" minWidth="400.0" />
+        <StackPane fx:id="stackpane" layoutX="618.0" layoutY="59.0">
             <children>
                 <VBox fx:id="tableBox" prefHeight="400.0" prefWidth="200.0" />
             </children>
@@ -28,6 +28,6 @@
             <Image url="@../../../images/message.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="infopane" layoutX="27.0" layoutY="119.0" prefHeight="307.0" prefWidth="159.0" style="-fx-border-color: black;" />
+      <AnchorPane fx:id="infopane" layoutX="27.0" layoutY="119.0" prefHeight="307.0" prefWidth="159.0" />
     </children>
 </AnchorPane>

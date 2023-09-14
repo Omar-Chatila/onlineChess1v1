@@ -46,6 +46,7 @@ public class ServerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadUIElements();
+        stackpane.getChildren().get(0).setVisible(false);
         new Thread(this::startServer).start();
     }
 
@@ -98,7 +99,10 @@ public class ServerController implements Initializable {
     @FXML
     void toggle() {
         setMessageIndicatorVisibility(false);
+        stackpane.getChildren().get(1).setVisible(false);
+        stackpane.getChildren().get(0).setVisible(true);
         stackpane.getChildren().get(0).toFront();
+
         if (toggleButton.getText().equals("Chat")) {
             toggleButton.setText("Moves");
         } else {
