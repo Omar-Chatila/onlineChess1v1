@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="484.0" prefWidth="822.0" style="-fx-background-color: #211E1A;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ServerController">
+<AnchorPane prefHeight="484.0" prefWidth="822.0" style="-fx-background-color: #2C2923;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ServerController">
     <children>
       <AnchorPane fx:id="infopane" layoutX="20.0" layoutY="108.0" prefHeight="307.0" prefWidth="159.0" />
         <Label fx:id="roleLabel" layoutX="192.0" layoutY="17.0" style="-fx-text-fill: white;" text="Chess - White">

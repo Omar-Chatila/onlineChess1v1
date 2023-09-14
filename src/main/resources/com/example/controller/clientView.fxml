@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="490.0" prefWidth="834.0" style="-fx-background-color: #211E1A;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ClientController">
+<AnchorPane prefHeight="490.0" prefWidth="834.0" style="-fx-background-color: #2C2923;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ClientController">
     <children>
-        <Label fx:id="roleLabel" layoutX="205.0" layoutY="17.0" text="Chess - Black">
+        <Label fx:id="roleLabel" layoutX="205.0" layoutY="17.0" style="-fx-text-fill: white;" text="Chess - Black">
             <font>
                 <Font name="Arial Rounded MT Bold" size="23" />
             </font>
