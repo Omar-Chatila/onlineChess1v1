@@ -35,8 +35,6 @@ public class Game {
             String currentPiece = Character.toString(move.charAt(0));
             if (!currentPiece.matches("[NKBRQ]")) {
                 legal = movePawn(board, move, white);
-                System.out.println("Black En Passant square: " + getBlackEnpassant());
-                System.out.println("White En Passant square: " + getWhiteEnpassant());
             } else if (currentPiece.matches("N")) {
                 legal = KnightMoveTracker.validateKnight(board, move, white);
             } else if (currentPiece.matches("R")) {
@@ -95,7 +93,6 @@ public class Game {
         if (kingChecked(white)) {
             checkMate = hasNoMoves(white);
         }
-        System.out.println("CheckMate?" + checkMate);
         GameStates.setGameOver(checkMate);
         return checkMate;
     }
@@ -145,7 +142,6 @@ public class Game {
                 }
             }
         }
-        System.out.println("has moves?: " + hasMoves);
         return !hasMoves;
     }
 
@@ -208,8 +204,6 @@ public class Game {
             file = 7 - file;
             startFile = 7 - startFile;
         }
-        System.out.println("FILEEEE: " + file);
-        System.out.println("ROW  " + row);
         int found = 0;
         char piece = move.charAt(0);
         List<List<String>> allMoves = new ArrayList<>();
@@ -233,7 +227,6 @@ public class Game {
             }
         }
         for (List<String> moveList : allMoves) {
-            System.out.println(moveList);
             if (moveList.contains(row + "" + file)) {
                 found++;
             }
@@ -274,6 +267,7 @@ public class Game {
     }
 
     public static void executeMove(String move, boolean white) {
+        System.out.println("Current Move:  " + move);
         if (movesTableController == null) {
             if (GameStates.isServer()) {
                 movesTableController = ServerController.getMtc();

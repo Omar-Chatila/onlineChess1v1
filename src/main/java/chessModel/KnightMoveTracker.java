@@ -34,7 +34,6 @@ public class KnightMoveTracker {
                         && ((move.contains("x") && white && board[rank][file].matches("[npkqrb]")
                         || move.contains("x") && !white && board[rank][file].matches("[NPKBRQ]"))
                         || !move.contains("x"))) {
-                    System.out.println("FIRST");
                     if ((move.matches("N[a-h][a-h][1-8]") && fileX == startFile) ||
                             (move.matches("N[1-8][a-h][1-8]") && rankY == startRank) ||
                             (!move.matches("N[a-h][a-h][1-8]") && !move.matches("N[1-8][a-h][1-8]"))) {

@@ -32,7 +32,6 @@ public class Server {
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (IOException e) {
-            System.out.println("Error creating server.");
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
             closeEverything(socket, bufferedReader, bufferedWriter);
@@ -59,7 +58,6 @@ public class Server {
         } catch (IOException e) {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
-            System.out.println("Error sending message to client");
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
 
@@ -101,7 +99,6 @@ public class Server {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    System.out.println("Error receiving message from the client");
                     closeEverything(socket, bufferedReader, bufferedWriter);
                     break;
                 }

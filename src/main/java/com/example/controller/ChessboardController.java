@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -107,7 +106,6 @@ public class ChessboardController {
             boolean isWhitePiece;
             if (imageUrl != null) {
                 String movedP = imageUrl.substring(imageUrl.length() - 6);
-                System.out.println("moved piece  " + movedP);
                 isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
                 movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
             } else {
@@ -119,7 +117,6 @@ public class ChessboardController {
                 this.pawnRank = startingSquare.getRow();
             }
             if (GameStates.isIsMyTurn()) {
-                System.out.println("MYYYY TTTTTUUUUURN??????");
                 if (GameStates.iAmWhite() && isWhitePiece || !GameStates.iAmWhite() && !isWhitePiece)
                     highlightPossibleSquares(movedPiece, isWhitePiece);
             }
@@ -261,11 +258,9 @@ public class ChessboardController {
     }
 
     public void updateBoard(String opponentMove) {
-        System.out.println("MOVE: " + move);
         this.destinationsSquare = null;
         updateCheckStatus();
         clearHighlighting();
-        System.out.println("transform " + opponentMove);
         int startRow = 7 - Character.getNumericValue(opponentMove.charAt(0));
         int startCol = 7 - Character.getNumericValue(opponentMove.charAt(1));
         int destRow = 7 - Character.getNumericValue(opponentMove.charAt(3));
@@ -373,7 +368,6 @@ public class ChessboardController {
                 || Game.board[0][4].equals("k") && (move.equals("Kb8") || move.equals("Kc8") || move.equals("Kxa8"))) {
             move = "O-O-O";
         }
-        System.out.println(move);
         if (move.matches("([a-h]x)?[a-h]8") || move.matches("([a-h]x)?[a-h]1")) {
             Button movingButton = (Button) getPaneFromCoordinate(startingSquare).getChildren().get(1);
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("PawnPromotion.fxml"));
@@ -387,7 +381,6 @@ public class ChessboardController {
                 dialog.initStyle(StageStyle.UNDECORATED);
                 movingButton.getGraphic().setOpacity(0.5);
                 dialog.showAndWait();
-                System.out.println("Canceled");
                 move += "=" + ApplicationData.getInstance().getPromotedPiece();
             } catch (IOException e) {
                 throw new RuntimeException(e);

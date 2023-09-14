@@ -28,9 +28,12 @@ public class ChessClock {
                     new SoundPlayer().playLowTimeSound();
                 }
                 updateTimeLabels();
-                if (remainingTime <= 0 || GameStates.isGameOver()) {
+                if (remainingTime <= 0) {
                     timer.cancel();
                     playerFlagged();
+                }
+                if (GameStates.isGameOver()) {
+                    timer.cancel();
                 }
             }
         }, 50, 1000);

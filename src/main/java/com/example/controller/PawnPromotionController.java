@@ -62,7 +62,6 @@ public class PawnPromotionController {
     private void promote() {
         queenButton.setOnMouseClicked(e -> {
                     ApplicationData.getInstance().setPromotedPiece("Q");
-                    System.out.println("queen");
                     close();
                 }
         );

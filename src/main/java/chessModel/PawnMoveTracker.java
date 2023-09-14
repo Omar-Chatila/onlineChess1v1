@@ -73,7 +73,9 @@ public class PawnMoveTracker {
             int file = move.charAt(0) - 'a', rank = 8 - Character.getNumericValue(move.charAt(1));
             if (rank == (white ? 4 : 3)) {
                 board[rank + (white ? 1 : -1)][file] = ".";
-                board[rank + (white ? 2 : -2)][file] = ".";
+                if (board[rank + (white ? 2 : -2)][file].equals(white ? "P" : "p")) {
+                    board[rank + (white ? 2 : -2)][file] = ".";
+                }
             } else {
                 board[rank + (white ? 1 : -1)][file] = ".";
             }

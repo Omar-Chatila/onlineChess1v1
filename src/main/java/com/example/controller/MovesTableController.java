@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import chessModel.Game;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -76,5 +77,8 @@ public class MovesTableController {
             }
         }
         movesTable.refresh();
+        if (movesList.size() > 3) {
+            Platform.runLater(() -> movesTable.scrollTo(movesList.size() - 1));
+        }
     }
 }

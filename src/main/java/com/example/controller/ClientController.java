@@ -70,7 +70,6 @@ public class ClientController implements Initializable {
 
     private void loadChessBoard() throws Exception {
         FXMLLoader loader;
-        System.out.println("Application is white?" + GameStates.isServerWhite());
         if (GameStates.isServerWhite()) {
             loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
         } else {

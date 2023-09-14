@@ -23,7 +23,6 @@ public class ButtonTableCell extends TableCell<Item, String> {
         button.setOnAction(event -> {
             String move = getItem();
             if (move != null) {
-                System.out.println(move);
                 // Handle button click event here
                 // You can access the data associated with this cell using getTableRow().getItem()
                 // For example: Item item = (Item) getTableRow().getItem();

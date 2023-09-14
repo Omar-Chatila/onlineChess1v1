@@ -33,6 +33,8 @@ public class LoginViewController {
     private Label timeLabel;
     @FXML
     private JFXSlider timeSlider;
+    @FXML
+    private Label tcLabel;
 
     private static ServerController serverController;
     private static ClientController clientController;
@@ -89,9 +91,7 @@ public class LoginViewController {
         this.ipField.setDisable(true);
         GameStates.setServer(true);
         this.connectButton.setVisible(false);
-        this.blackPieceColor.setVisible(true);
-        this.whitePieceColor.setVisible(true);
-        this.randomPieceColor.setVisible(true);
+        toggleVisibility(true);
     }
 
     @FXML
@@ -99,9 +99,7 @@ public class LoginViewController {
         this.ipField.setDisable(false);
         GameStates.setServer(false);
         this.connectButton.setVisible(true);
-        this.blackPieceColor.setVisible(false);
-        this.whitePieceColor.setVisible(false);
-        this.randomPieceColor.setVisible(false);
+        toggleVisibility(false);
     }
 
     @FXML
@@ -114,7 +112,6 @@ public class LoginViewController {
         Platform.runLater(() -> {
                     if (GameStates.isServer()) {
                         try {
-                            System.out.println("Server");
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("serverView.fxml"));
                             Parent mainWindowParent = loader.load();
                             serverController = loader.getController();
@@ -126,7 +123,6 @@ public class LoginViewController {
                             throw new RuntimeException(e);
                         }
                     } else {
-                        System.out.println("Client");
                         try {
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("clientView.fxml"));
                             Parent mainWindowParent = loader.load();
@@ -166,5 +162,14 @@ public class LoginViewController {
 
     public static ClientController getClientController() {
         return clientController;
+    }
+
+    private void toggleVisibility(boolean visible) {
+        this.blackPieceColor.setVisible(visible);
+        this.whitePieceColor.setVisible(visible);
+        this.randomPieceColor.setVisible(visible);
+        this.timeLabel.setVisible(visible);
+        this.timeSlider.setVisible(visible);
+        this.tcLabel.setVisible(visible);
     }
 }

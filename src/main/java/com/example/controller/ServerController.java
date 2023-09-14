@@ -140,7 +140,6 @@ public class ServerController implements Initializable {
             ApplicationData.getInstance().setServer(server);
             server.receiveMessageFromClient();
         } catch (IOException e) {
-            System.out.println("Error creating Server");
             throw new RuntimeException(e);
         }
     }
