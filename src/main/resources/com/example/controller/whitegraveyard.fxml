@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
-
-<HBox fx:id="gyBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="175.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.WhiteGraveyardController">
+<HBox fx:id="gyBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="175.0" spacing="3.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.WhiteGraveyardController">
    <children>
-      <ImageView fx:id="queenImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="rookImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="bishopImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="knightImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="pawnImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+      <StackPane fx:id="queenPane">
+         <children>
+            <Label fx:id="qLabel" maxHeight="10.0" maxWidth="10.0" prefHeight="10.0" prefWidth="10.0" translateX="14.0" translateY="12.0" />
+            <ImageView fx:id="queenImage" fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <StackPane>
+         <children>
+            <Label fx:id="rLabel" maxHeight="10.0" maxWidth="10.0" prefHeight="10.0" prefWidth="10.0" translateX="14.0" translateY="12.0" />
+            <ImageView fx:id="rookImage" fitHeight="35.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <StackPane>
+         <children>
+            <Label fx:id="bLabel" maxHeight="10.0" maxWidth="10.0" prefHeight="10.0" prefWidth="10.0" translateX="14.0" translateY="12.0" />
+            <ImageView fx:id="bishopImage" fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <StackPane>
+         <children>
+            <Label fx:id="nLabel" maxHeight="10.0" maxWidth="10.0" prefHeight="10.0" prefWidth="10.0" translateX="14.0" translateY="12.0" />
+            <ImageView fx:id="knightImage" fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <StackPane>
+         <children>
+            <Label fx:id="pLabel" maxHeight="10.0" maxWidth="10.0" prefHeight="10.0" prefWidth="10.0" translateX="14.0" translateY="12.0" />
+            <ImageView fx:id="pawnImage" fitHeight="35.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <Label fx:id="diffLabel" prefHeight="35.0" prefWidth="42.0" style="-fx-text-fill: white;" />
    </children>
 </HBox>

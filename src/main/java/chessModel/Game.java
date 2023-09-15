@@ -5,6 +5,7 @@ import com.example.controller.ClientController;
 import com.example.controller.GameStates;
 import com.example.controller.MovesTableController;
 import com.example.controller.ServerController;
+import javafx.application.Platform;
 import util.ApplicationData;
 import util.GameHelper;
 import util.IntIntPair;
@@ -26,6 +27,7 @@ public class Game {
     private static MovesTableController movesTableController;
     private static final Graveyard whiteGraveyard = new Graveyard(true);
     private static final Graveyard blackGraveyard = new Graveyard(false);
+    private static int materialDifference;
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
@@ -65,7 +67,14 @@ public class Game {
             int file = move.charAt(index + 1) - 'a';
             int rank = 8 - Character.getNumericValue(move.charAt(index + 2));
             String piece = playedPositions.get(playedPositions.size() - 1)[rank][file].toUpperCase();
-            System.out.println("capped piece " + piece);
+            switch (piece) {
+                case "Q" -> materialDifference += white ? 9 : -9;
+                case "R" -> materialDifference += white ? 5 : -5;
+                case "B", "N" -> materialDifference += white ? 3 : -3;
+                case "P" -> materialDifference += white ? 1 : -1;
+            }
+            Platform.runLater(() -> ApplicationData.getInstance().getWgc().updateDiffLabel());
+            Platform.runLater(() -> ApplicationData.getInstance().getBgc().updateDiffLabel());
             if (white) {
                 blackGraveyard.addPiece(piece);
             } else {
@@ -334,5 +343,17 @@ public class Game {
         } else {
             movesTableController.addMove(movesTableController.getCurrentMove(), null, move);
         }
+    }
+
+    public static Graveyard getBlackGraveyard() {
+        return blackGraveyard;
+    }
+
+    public static Graveyard getWhiteGraveyard() {
+        return whiteGraveyard;
+    }
+
+    public static int getMaterialDifference() {
+        return materialDifference;
     }
 }

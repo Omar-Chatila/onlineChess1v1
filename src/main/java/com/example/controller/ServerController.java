@@ -106,7 +106,7 @@ public class ServerController implements Initializable {
         loader2 = new FXMLLoader(getClass().getResource("blackgraveyard.fxml"));
         HBox graveYard2 = loader2.load();
         ApplicationData.getInstance().setBgc(loader2.getController());
-        if (GameStates.iAmWhite()) {
+        if (!GameStates.iAmWhite()) {
             this.myGraveYardPane.getChildren().add(graveYard);
             this.oppGraveyardPane.getChildren().add(graveYard2);
         } else {

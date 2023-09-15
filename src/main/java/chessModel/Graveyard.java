@@ -53,56 +53,15 @@ public class Graveyard {
         capturedPieces.set(j, t);
     }
 
-    public List<String> getCapturedPieces() {
-        return capturedPieces;
-    }
-
-    public int getDifference(Graveyard other) {
-        if (this.isWhite() != other.isWhite()) {
-            int myScore = 0;
-            int otherScore = 0;
-            for (String p : this.capturedPieces) {
-                switch (p) {
-                    case "Q" -> myScore += 9;
-                    case "P" -> myScore += 1;
-                    case "R" -> myScore += 5;
-                    case "N", "B" -> myScore += 3;
-                }
-            }
-            for (String p : other.capturedPieces) {
-                switch (p) {
-                    case "Q" -> otherScore += 9;
-                    case "P" -> otherScore += 1;
-                    case "R" -> otherScore += 5;
-                    case "N", "B" -> otherScore += 3;
-                }
-            }
-            return myScore - otherScore;
-        }
-        throw new IllegalArgumentException("same color graveyard");
-    }
-
     public boolean isWhite() {
         return this.white;
     }
 
-    public static void main(String[] args) {
-        Graveyard graveyard = new Graveyard(true);
-        graveyard.addPiece("P");
-        graveyard.addPiece("Q");
-        graveyard.addPiece("N");
-        graveyard.addPiece("R");
-        graveyard.addPiece("Q");
-
-
-        Graveyard graveyard2 = new Graveyard(true);
-        graveyard2.addPiece("R");
-        graveyard2.addPiece("P");
-        graveyard2.addPiece("P");
-        graveyard2.addPiece("N");
-        graveyard2.addPiece("Q");
-        System.out.println(graveyard.getCapturedPieces());
-        System.out.println(graveyard2.getCapturedPieces());
-        System.out.println(graveyard.getDifference(graveyard2));
+    public int count(String p) {
+        int result = 0;
+        for (String s : this.capturedPieces) {
+            if (s.equals(p)) result++;
+        }
+        return result;
     }
 }
