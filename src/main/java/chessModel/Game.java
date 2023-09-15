@@ -24,11 +24,12 @@ public class Game {
     public static String[][] board = new String[8][8];
     private static int fiftyMoveRule;
     private static MovesTableController movesTableController;
+    private static final Graveyard whiteGraveyard = new Graveyard(true);
+    private static final Graveyard blackGraveyard = new Graveyard(false);
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
         boolean legal = true;
         resetEnpassant();
-
         if (move.equals("O-O") || move.equals("O-O-O")) {
             legal = KingMoveTracker.validateKing(board, move, white);
         } else {
@@ -53,8 +54,24 @@ public class Game {
             throw new IllegalMoveException(move);
         } else {
             playMoveSound(move, white);
+            updateGraveyard(move, white);
         }
         return board;
+    }
+
+    private static void updateGraveyard(String move, boolean white) {
+        if (move.contains("x")) {
+            int index = move.indexOf('x');
+            int file = move.charAt(index + 1) - 'a';
+            int rank = 8 - Character.getNumericValue(move.charAt(index + 2));
+            String piece = playedPositions.get(playedPositions.size() - 1)[rank][file].toUpperCase();
+            System.out.println("capped piece " + piece);
+            if (white) {
+                blackGraveyard.addPiece(piece);
+            } else {
+                whiteGraveyard.addPiece(piece);
+            }
+        }
     }
 
     public static boolean kingChecked(boolean white, String[][] board) {

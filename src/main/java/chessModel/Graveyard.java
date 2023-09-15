@@ -1,11 +1,15 @@
 package chessModel;
 
+import javafx.application.Platform;
+import util.ApplicationData;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Graveyard {
     private final List<String> capturedPieces;
-    private boolean white;
+    private final boolean white;
+
     public Graveyard(boolean white) {
         capturedPieces = new ArrayList<>();
         this.white = white;
@@ -14,6 +18,11 @@ public class Graveyard {
     public void addPiece(String piece) {
         capturedPieces.add(piece);
         sortList();
+        if (white) {
+            Platform.runLater(() -> ApplicationData.getInstance().getWgc().addPiece(piece));
+        } else {
+            Platform.runLater(() -> ApplicationData.getInstance().getBgc().addPiece(piece));
+        }
     }
 
     private void sortList() {

@@ -2,9 +2,7 @@ package util;
 
 import Networking.Client;
 import Networking.Server;
-import com.example.controller.ChessboardController;
-import com.example.controller.GameStates;
-import com.example.controller.InfoViewController;
+import com.example.controller.*;
 
 public class ApplicationData {
     private static final ApplicationData instance = new ApplicationData();
@@ -14,6 +12,8 @@ public class ApplicationData {
     private boolean illegalMove;
     private String promotedPiece;
     private InfoViewController ivc;
+    private WhiteGraveyardController wgc;
+    private BlackGraveyardController bgc;
 
     private ApplicationData() {
 
@@ -75,4 +75,19 @@ public class ApplicationData {
         this.ivc = ivc;
     }
 
+    public WhiteGraveyardController getWgc() {
+        return wgc;
+    }
+
+    public void setWgc(WhiteGraveyardController wgc) {
+        this.wgc = wgc;
+    }
+
+    public BlackGraveyardController getBgc() {
+        return this.bgc;
+    }
+
+    public void setBgc(BlackGraveyardController bgc) {
+        this.bgc = bgc;
+    }
 }

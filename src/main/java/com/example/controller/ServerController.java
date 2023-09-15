@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import util.ApplicationData;
@@ -39,6 +36,10 @@ public class ServerController implements Initializable {
     private ImageView newMessage;
     @FXML
     private AnchorPane infopane;
+    @FXML
+    private AnchorPane oppGraveyardPane;
+    @FXML
+    private AnchorPane myGraveYardPane;
 
     private static MovesTableController mtc;
     private static ChatController chatController;
@@ -96,6 +97,24 @@ public class ServerController implements Initializable {
         this.infopane.getChildren().add(infoPane);
     }
 
+    private void loadGraveyards() throws IOException {
+        FXMLLoader loader;
+        loader = new FXMLLoader(getClass().getResource("whitegraveyard.fxml"));
+        HBox graveYard = loader.load();
+        ApplicationData.getInstance().setWgc(loader.getController());
+        FXMLLoader loader2;
+        loader2 = new FXMLLoader(getClass().getResource("blackgraveyard.fxml"));
+        HBox graveYard2 = loader2.load();
+        ApplicationData.getInstance().setBgc(loader2.getController());
+        if (GameStates.iAmWhite()) {
+            this.myGraveYardPane.getChildren().add(graveYard);
+            this.oppGraveyardPane.getChildren().add(graveYard2);
+        } else {
+            this.myGraveYardPane.getChildren().add(graveYard2);
+            this.oppGraveyardPane.getChildren().add(graveYard);
+        }
+    }
+
     @FXML
     void toggle() {
         setMessageIndicatorVisibility(false);
@@ -131,6 +150,7 @@ public class ServerController implements Initializable {
             loadChessBoard();
             loadChatBox();
             loadInfoPane();
+            loadGraveyards();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.HBox?>
+<HBox fx:id="gyBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="35.0" prefWidth="175.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.BlackGraveyardController">
+    <children>
+        <ImageView fx:id="queenImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="rookImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="bishopImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="knightImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="pawnImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true"/>
+    </children>
+</HBox>
