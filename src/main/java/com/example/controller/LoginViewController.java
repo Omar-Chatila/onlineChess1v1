@@ -196,9 +196,24 @@ public class LoginViewController {
     void mouseEntered(MouseEvent event) {
         if (event.getSource() instanceof Button hovered) {
             switch (hovered.getAccessibleText()) {
-                case "white" -> infoLabel.setText("Play as White!");
-                case "black" -> infoLabel.setText("Play with the black Pieces!");
-                default -> infoLabel.setText("Play with a random color!");
+                case "white" -> {
+                    infoLabel.setText("Play as White!");
+                    whitePieceColor.setScaleX(1.2);
+                    whitePieceColor.setScaleY(1.2);
+                    whitePieceColor.setScaleZ(1.2);
+                }
+                case "black" -> {
+                    infoLabel.setText("Play with the black Pieces!");
+                    blackPieceColor.setScaleX(1.2);
+                    blackPieceColor.setScaleY(1.2);
+                    blackPieceColor.setScaleZ(1.2);
+                }
+                default -> {
+                    infoLabel.setText("Play with a random color!");
+                    randomPieceColor.setScaleX(1.2);
+                    randomPieceColor.setScaleY(1.2);
+                    randomPieceColor.setScaleZ(1.2);
+                }
             }
         } else if (event.getSource() instanceof JFXRadioButton radioButton) {
             if (radioButton.getText().equals("Create")) {
@@ -225,6 +240,15 @@ public class LoginViewController {
     @FXML
     void mouseExited(MouseEvent event) {
         infoLabel.setText("");
+        whitePieceColor.setScaleX(1.0);
+        whitePieceColor.setScaleY(1.0);
+        whitePieceColor.setScaleZ(1.0);
+        blackPieceColor.setScaleX(1.0);
+        blackPieceColor.setScaleY(1.0);
+        blackPieceColor.setScaleZ(1.0);
+        randomPieceColor.setScaleX(1);
+        randomPieceColor.setScaleY(1);
+        randomPieceColor.setScaleZ(1);
     }
 
     @FXML

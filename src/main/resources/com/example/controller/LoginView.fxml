@@ -50,7 +50,7 @@
                 <TextField fx:id="ipField" accessibleText="IP" disable="true" layoutX="45.0" layoutY="84.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0" prefWidth="250.0" promptText="IP Address" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
                 <HBox layoutX="65.0" layoutY="236.0" prefHeight="50.0" prefWidth="191.0" spacing="20.0">
                     <children>
-                        <Button fx:id="blackPieceColor" accessibleText="black" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#blackPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #4285f4; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
+                        <Button fx:id="blackPieceColor" accessibleText="black" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#blackPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
                             <graphic>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -59,7 +59,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="randomPieceColor" accessibleText="random" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#randomPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #4285f4; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
+                        <Button fx:id="randomPieceColor" accessibleText="random" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#randomPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
                             <graphic>
                                 <ImageView fitHeight="61.0" fitWidth="60.0" layoutX="20.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -68,7 +68,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="whitePieceColor" accessibleText="white" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#whitePieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #4285f4; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
+                        <Button fx:id="whitePieceColor" accessibleText="white" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#whitePieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
                             <graphic>
                                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true">
                                     <image>
