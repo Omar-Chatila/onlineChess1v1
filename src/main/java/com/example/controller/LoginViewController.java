@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -35,6 +36,8 @@ public class LoginViewController {
     private JFXSlider timeSlider;
     @FXML
     private Label tcLabel;
+    @FXML
+    private JFXButton closeButton;
 
     private static ServerController serverController;
     private static ClientController clientController;
@@ -43,6 +46,7 @@ public class LoginViewController {
     @FXML
     private void initialize() {
         setTimeSlider();
+        closeButton.setOnAction(e -> Platform.exit());
     }
 
     private void setTimeSlider() {

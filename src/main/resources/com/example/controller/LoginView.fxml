@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
@@ -31,7 +32,7 @@
     <right>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="321.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="connectButton" layoutX="20.0" layoutY="192.0" mnemonicParsing="false" onAction="#connectClient" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #4285f4; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;" text="Connect" visible="false" />
+                <Button fx:id="connectButton" layoutX="225.0" layoutY="192.0" mnemonicParsing="false" onAction="#connectClient" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #1E3050; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;" text="Connect" visible="false" />
                 <TextField fx:id="ipField" disable="true" layoutX="45.0" layoutY="96.0" prefHeight="27.0" prefWidth="250.0" promptText="IP Address" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
                 <TextField fx:id="portField" layoutX="45.0" layoutY="146.0" prefHeight="27.0" prefWidth="250.0" promptText="Port Number" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
                 <HBox layoutX="65.0" layoutY="192.0" prefHeight="50.0" prefWidth="191.0" spacing="20.0">
@@ -109,6 +110,11 @@
             <FontAwesomeIcon fill="#1e3050" glyphName="USER" layoutX="21.0" layoutY="120.0" size="20" />
             <FontAwesomeIcon fill="#1e3050" glyphName="KEY" layoutX="21.0" layoutY="168.0" size="20" />
             <FontAwesomeIcon glyphName="SERVER" layoutX="19.0" layoutY="81.0" size="20" />
+            <JFXButton fx:id="closeButton" layoutX="294.0" layoutY="-4.0" text=" ">
+               <graphic>
+                  <FontAwesomeIcon fill="#1e3050" glyphName="CLOSE" size="20" wrappingWidth="1.0" />
+               </graphic>
+            </JFXButton>
             </children>
         </AnchorPane>
     </right>
