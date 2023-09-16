@@ -10,7 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import util.StageMover;
 
 import java.io.IOException;
 
@@ -122,6 +124,8 @@ public class LoginViewController {
                             Scene mainWindowScene = new Scene(mainWindowParent);
                             Stage window = (Stage) whitePieceColor.getScene().getWindow();
                             window.setScene(mainWindowScene);
+                            Pane root = loader.getRoot();
+                            new StageMover(root, window);
                             window.show();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -134,6 +138,8 @@ public class LoginViewController {
                             Scene mainWindowScene = new Scene(mainWindowParent);
                             Stage window = (Stage) whitePieceColor.getScene().getWindow();
                             window.setScene(mainWindowScene);
+                            Pane root = loader.getRoot();
+                            new StageMover(root, window);
                             window.show();
                         } catch (IOException e) {
                             throw new RuntimeException(e);

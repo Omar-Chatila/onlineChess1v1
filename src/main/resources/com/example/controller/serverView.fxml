@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
@@ -7,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="484.0" prefWidth="824.0" style="-fx-background-color: #2C2923;"
+<AnchorPane prefHeight="484.0" prefWidth="824.0" style="-fx-background-color: #1E3050;"
             xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.controller.ServerController">
     <children>
@@ -41,5 +43,10 @@
                 <Image url="@../../../images/message.png"/>
             </image>
         </ImageView>
+        <JFXButton layoutX="799.0" layoutY="3.0" onAction="#close" prefHeight="28.0" prefWidth="19.0" text=" ">
+            <graphic>
+                <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" size="20"/>
+            </graphic>
+        </JFXButton>
     </children>
 </AnchorPane>

@@ -7,13 +7,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.GameHelper;
+import util.StageMover;
 
 import java.io.IOException;
 
 public class Application extends javafx.application.Application {
-    private double xOffset = 0;
-    private double yOffset = 0;
-
     @Override
     public void start(Stage stage) throws IOException {
         GameHelper.initialize(Game.board);
@@ -23,17 +21,7 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Chess-Game");
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
-
-        root.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-
-        root.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
-        });
-
+        new StageMover(root, stage);
         stage.show();
     }
 

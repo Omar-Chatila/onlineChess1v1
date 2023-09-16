@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import Networking.Client;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -164,5 +166,9 @@ public class ClientController implements Initializable {
 
     public static MovesTableController getMtc() {
         return mtc;
+    }
+
+    public void close(ActionEvent actionEvent) {
+        Platform.exit();
     }
 }

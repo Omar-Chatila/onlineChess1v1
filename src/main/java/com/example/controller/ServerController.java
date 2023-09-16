@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import Networking.Server;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -166,6 +167,11 @@ public class ServerController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    void close() {
+        Platform.exit();
     }
 
     public static MovesTableController getMtc() {
