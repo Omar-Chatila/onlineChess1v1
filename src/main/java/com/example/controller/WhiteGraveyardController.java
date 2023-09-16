@@ -84,17 +84,11 @@ public class WhiteGraveyardController {
 
     private StackPane createIcon(int number) {
         StackPane stackPane = new StackPane();
-
-        // Create a circular background using a Circle shape
-        Circle circle = new Circle(6); // Adjust the radius as needed
+        Circle circle = new Circle(6);
         circle.setFill(Color.RED);
-
-        // Create a label with the digit 3
         Label label = new Label(number + "");
-        label.setFont(Font.font("Arial", 11)); // Set the font and size
-        label.setTextFill(Color.WHITE); // Set the font color to white
-
-        // Add the circle and label to the StackPane
+        label.setFont(Font.font("Arial", 11));
+        label.setTextFill(Color.WHITE);
         stackPane.getChildren().addAll(circle, label);
         return stackPane;
     }

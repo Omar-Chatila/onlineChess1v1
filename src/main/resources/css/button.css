@@ -4,3 +4,14 @@
     bottom: 0;
     left: 0;
 }
+
+.slider {
+    -fx-background-color: transparent; /* Change the track color to red */
+}
+
+.slider .thumb {
+    -fx-background-color:  #354253; /* Change the thumb color to blue */
+}
+.jfx-slider>.colored-track {
+    -fx-background-color: linear-gradient(to right, white, #354253);
+}
