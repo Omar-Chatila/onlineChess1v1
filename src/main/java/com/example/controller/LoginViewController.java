@@ -12,15 +12,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import util.StageMover;
 
 import java.io.IOException;
 
+
 public class LoginViewController {
 
+    @FXML
+    private ImageView chessIcon;
     @FXML
     private Button blackPieceColor;
     @FXML
@@ -49,6 +56,8 @@ public class LoginViewController {
     private JFXRadioButton serverRadioButton;
     @FXML
     private JFXRadioButton clientRadioButton;
+    @FXML
+    private Hyperlink helpLink;
 
     private static ServerController serverController;
     private static ClientController clientController;
@@ -58,6 +67,10 @@ public class LoginViewController {
     private void initialize() {
         setTimeSlider();
         closeButton.setOnAction(e -> Platform.exit());
+        helpLink.setBorder(Border.EMPTY);
+        portField.setOnKeyPressed(e -> {
+            if (e.getCode().equals(KeyCode.ENTER)) connectButton.fire();
+        });
     }
 
     private void setTimeSlider() {
@@ -119,6 +132,7 @@ public class LoginViewController {
 
     @FXML
     void connectClient() {
+        System.out.println("connect");
         connect();
     }
 
@@ -197,19 +211,19 @@ public class LoginViewController {
         if (event.getSource() instanceof Button hovered) {
             switch (hovered.getAccessibleText()) {
                 case "white" -> {
-                    infoLabel.setText("Play as White!");
+                    infoLabel.setText("Play with the White Pieces!");
                     whitePieceColor.setScaleX(1.2);
                     whitePieceColor.setScaleY(1.2);
                     whitePieceColor.setScaleZ(1.2);
                 }
                 case "black" -> {
-                    infoLabel.setText("Play with the black Pieces!");
+                    infoLabel.setText("Play with the Black Pieces!");
                     blackPieceColor.setScaleX(1.2);
                     blackPieceColor.setScaleY(1.2);
                     blackPieceColor.setScaleZ(1.2);
                 }
                 default -> {
-                    infoLabel.setText("Play with a random color!");
+                    infoLabel.setText("Play with a Random color!");
                     randomPieceColor.setScaleX(1.2);
                     randomPieceColor.setScaleY(1.2);
                     randomPieceColor.setScaleZ(1.2);
@@ -257,5 +271,15 @@ public class LoginViewController {
         stage.setIconified(true);
         JFXButton min = (JFXButton) event.getSource();
         ipField.getParent().requestFocus();
+    }
+
+    @FXML
+    void openGithub(ActionEvent event) {
+        Stage helpStage = new Stage();
+        WebView webView = new WebView();
+        webView.getEngine().load("https://github.com/Omar-Chatila/onlineChess1v1/blob/main/README.md");
+        Scene scene = new Scene(webView, 800, 600);
+        helpStage.setScene(scene);
+        helpStage.show();
     }
 }

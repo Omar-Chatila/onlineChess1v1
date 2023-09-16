@@ -1,13 +1,13 @@
 package com.example.controller;
 
 import Networking.Server;
+import com.jfoenix.controls.JFXButton;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -30,11 +30,11 @@ public class ServerController implements Initializable {
     @FXML
     private Label roleLabel;
     @FXML
-    private ToggleButton toggleButton;
+    private JFXButton toggleButton;
     @FXML
     private StackPane stackpane;
     @FXML
-    private ImageView newMessage;
+    private FontAwesomeIcon newMessage;
     @FXML
     private AnchorPane infopane;
     @FXML

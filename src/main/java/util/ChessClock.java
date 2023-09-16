@@ -9,7 +9,6 @@ import java.util.TimerTask;
 public class ChessClock {
     private Timer timer;
     private int remainingTime;
-    private boolean timeUp;
     private final boolean isMyClock;
 
     public ChessClock(int totalTime, boolean myClock) {

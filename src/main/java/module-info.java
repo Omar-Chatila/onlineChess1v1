@@ -4,6 +4,7 @@ module com.example.messengerserver {
     requires javafx.media;
     requires com.jfoenix;
     requires fontawesomefx;
+    requires javafx.web;
 
 
     opens com.example.controller to javafx.fxml;
