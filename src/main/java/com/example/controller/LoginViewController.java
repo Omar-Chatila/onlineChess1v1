@@ -1,15 +1,18 @@
 package com.example.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import util.StageMover;
@@ -40,6 +43,12 @@ public class LoginViewController {
     private Label tcLabel;
     @FXML
     private JFXButton closeButton;
+    @FXML
+    private Label infoLabel;
+    @FXML
+    private JFXRadioButton serverRadioButton;
+    @FXML
+    private JFXRadioButton clientRadioButton;
 
     private static ServerController serverController;
     private static ClientController clientController;
@@ -155,7 +164,7 @@ public class LoginViewController {
             port = Integer.parseInt(this.portField.getText());
         }
         RadioButton selected = (RadioButton) toggleGroup.getSelectedToggle();
-        if (selected.getText().equals("Client")) {
+        if (selected.getText().equals("Join")) {
             GameStates.setServer(false);
             String ip = this.ipField.getText();
             ClientController.setIp_Address(ip);
@@ -181,5 +190,48 @@ public class LoginViewController {
         this.timeLabel.setVisible(visible);
         this.timeSlider.setVisible(visible);
         this.tcLabel.setVisible(visible);
+    }
+
+    @FXML
+    void mouseEntered(MouseEvent event) {
+        if (event.getSource() instanceof Button hovered) {
+            switch (hovered.getAccessibleText()) {
+                case "white" -> infoLabel.setText("Play as White!");
+                case "black" -> infoLabel.setText("Play with the black Pieces!");
+                default -> infoLabel.setText("Play with a random color!");
+            }
+        } else if (event.getSource() instanceof JFXRadioButton radioButton) {
+            if (radioButton.getText().equals("Create")) {
+                infoLabel.setText("Create a new Game");
+            } else {
+                infoLabel.setText("Join an existing game");
+            }
+        } else {
+            TextField hovered = (TextField) event.getSource();
+            if (hovered.getAccessibleText().equals("Port")) {
+                if (clientRadioButton.isSelected()) {
+                    infoLabel.setText("Enter the Host's Port");
+                } else {
+                    infoLabel.setText("Set Port");
+                }
+            } else {
+                if (clientRadioButton.isSelected()) {
+                    infoLabel.setText("Enter the Host's IP-Address");
+                }
+            }
+        }
+    }
+
+    @FXML
+    void mouseExited(MouseEvent event) {
+        infoLabel.setText("");
+    }
+
+    @FXML
+    void minimize(ActionEvent event) {
+        Stage stage = (Stage) infoLabel.getScene().getWindow();
+        stage.setIconified(true);
+        JFXButton min = (JFXButton) event.getSource();
+        ipField.getParent().requestFocus();
     }
 }
