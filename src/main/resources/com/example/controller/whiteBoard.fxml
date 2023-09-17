@@ -1,45 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<GridPane fx:id="chessboardGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ChessboardController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<GridPane fx:id="chessboardGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.example.controller.ChessboardController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <children>
         <StackPane accessibleText="a8">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bR.png" />
+                                <Image url="@../../../images/bR.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -48,12 +46,14 @@
         </StackPane>
         <StackPane accessibleText="b8" GridPane.columnIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bN.png" />
+                                <Image url="@../../../images/bN.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -62,23 +62,27 @@
         </StackPane>
         <StackPane GridPane.columnIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="8" translateX="20.0" translateY="-18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="8"
+                                      translateX="20.0" translateY="-18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bR.png" />
+                                <Image url="@../../../images/bR.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -87,12 +91,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bN.png" />
+                                <Image url="@../../../images/bN.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -101,12 +107,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bQ.png" />
+                                <Image url="@../../../images/bQ.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -115,12 +123,14 @@
         </StackPane>
         <StackPane accessibleText="c8" GridPane.columnIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bB.png" />
+                                <Image url="@../../../images/bB.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -129,12 +139,16 @@
         </StackPane>
         <StackPane GridPane.columnIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button fx:id="blackKingButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button fx:id="blackKingButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0"
+                        mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0"
+                        style="-fx-background-color: transparent;">
                     <graphic>
-                        <ImageView fx:id="blackKing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="blackKing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true"
+                                   preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bK.png" />
+                                <Image url="@../../../images/bK.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -143,12 +157,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bB.png" />
+                                <Image url="@../../../images/bB.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -157,12 +173,14 @@
         </StackPane>
         <StackPane GridPane.rowIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png" />
+                                <Image url="@../../../images/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -171,12 +189,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png" />
+                                <Image url="@../../../images/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -185,12 +205,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="2" GridPane.rowIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png" />
+                                <Image url="@../../../images/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -199,12 +221,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="3" GridPane.rowIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png" />
+                                <Image url="@../../../images/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -213,12 +237,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="4" GridPane.rowIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png" />
+                                <Image url="@../../../images/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -227,12 +253,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="5" GridPane.rowIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png" />
+                                <Image url="@../../../images/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -241,12 +269,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="6" GridPane.rowIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png" />
+                                <Image url="@../../../images/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -255,23 +285,27 @@
         </StackPane>
         <StackPane GridPane.columnIndex="7" GridPane.rowIndex="1">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="7" translateX="20.0" translateY="-18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="7"
+                                      translateX="20.0" translateY="-18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png" />
+                                <Image url="@../../../images/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -280,216 +314,258 @@
         </StackPane>
         <StackPane GridPane.rowIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="2" GridPane.rowIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="4" GridPane.rowIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="6" GridPane.rowIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="1" GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="3" GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="5" GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="7" GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="5" translateX="20.0" translateY="-18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="5"
+                                      translateX="20.0" translateY="-18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
             </children>
         </StackPane>
         <StackPane GridPane.rowIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white; -fx-alignment: center;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white; -fx-alignment: center;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="2" GridPane.rowIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="4" GridPane.rowIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="6" GridPane.rowIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="1" GridPane.rowIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="3" GridPane.rowIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="5" GridPane.rowIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="7" GridPane.rowIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="3" translateX="20.0" translateY="-18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: white;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="3"
+                                      translateX="20.0" translateY="-18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="1" GridPane.rowIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="3" GridPane.rowIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="5" GridPane.rowIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="7" GridPane.rowIndex="2">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="6" translateX="20.0" translateY="-18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="6"
+                                      translateX="20.0" translateY="-18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="2" GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="4" GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="6" GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="7" GridPane.rowIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="4" translateX="20.0" translateY="-18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="4"
+                                      translateX="20.0" translateY="-18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="1" GridPane.rowIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="3" GridPane.rowIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="5" GridPane.rowIndex="4">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="6" GridPane.rowIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="4" GridPane.rowIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.columnIndex="2" GridPane.rowIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.rowIndex="5">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
             </children>
         </StackPane>
         <StackPane GridPane.rowIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png" />
+                                <Image url="@../../../images/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -498,12 +574,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="2" GridPane.rowIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png" />
+                                <Image url="@../../../images/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -512,12 +590,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="4" GridPane.rowIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png" />
+                                <Image url="@../../../images/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -526,12 +606,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="6" GridPane.rowIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png" />
+                                <Image url="@../../../images/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -540,12 +622,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="1" GridPane.rowIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png" />
+                                <Image url="@../../../images/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -554,12 +638,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="3" GridPane.rowIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png" />
+                                <Image url="@../../../images/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -568,12 +654,14 @@
         </StackPane>
         <StackPane GridPane.columnIndex="5" GridPane.rowIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;" />
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;"/>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png" />
+                                <Image url="@../../../images/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -582,23 +670,27 @@
         </StackPane>
         <StackPane GridPane.columnIndex="7" GridPane.rowIndex="6">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="2" translateX="20.0" translateY="-18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="2"
+                                      translateX="20.0" translateY="-18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png" />
+                                <Image url="@../../../images/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -607,23 +699,27 @@
         </StackPane>
         <StackPane GridPane.rowIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="a" translateX="-20.0" translateY="18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="a"
+                                      translateX="-20.0" translateY="18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wR.png" />
+                                <Image url="@../../../images/wR.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -632,23 +728,27 @@
         </StackPane>
         <StackPane GridPane.columnIndex="2" GridPane.rowIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="c" translateX="-20.0" translateY="18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="c"
+                                      translateX="-20.0" translateY="18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wB.png" />
+                                <Image url="@../../../images/wB.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -657,23 +757,29 @@
         </StackPane>
         <StackPane GridPane.columnIndex="4" GridPane.rowIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="e" translateX="-20.0" translateY="18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button fx:id="whiteKingButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
                     <graphic>
-                        <ImageView fx:id="whiteKing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="e"
+                                      translateX="-20.0" translateY="18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button fx:id="whiteKingButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0"
+                        mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0"
+                        style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fx:id="whiteKing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true"
+                                   preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wK.png" />
+                                <Image url="@../../../images/wK.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -682,23 +788,27 @@
         </StackPane>
         <StackPane GridPane.columnIndex="6" GridPane.rowIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
-               <graphic>
-                  <StackPane prefHeight="50.0" prefWidth="50.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" text="g" translateX="-20.0" translateY="16.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: darkgrey;">
+                    <graphic>
+                        <StackPane prefHeight="50.0" prefWidth="50.0">
+                            <children>
+                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;"
+                                      text="g" translateX="-20.0" translateY="16.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wN.png" />
+                                <Image url="@../../../images/wN.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -707,23 +817,27 @@
         </StackPane>
         <StackPane GridPane.columnIndex="1" GridPane.rowIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="b" translateX="-20.0" translateY="18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="b"
+                                      translateX="-20.0" translateY="18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wN.png" />
+                                <Image url="@../../../images/wN.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -732,23 +846,27 @@
         </StackPane>
         <StackPane GridPane.columnIndex="3" GridPane.rowIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="d" translateX="-20.0" translateY="18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="d"
+                                      translateX="-20.0" translateY="18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wQ.png" />
+                                <Image url="@../../../images/wQ.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -757,23 +875,27 @@
         </StackPane>
         <StackPane GridPane.columnIndex="5" GridPane.rowIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="f" translateX="-20.0" translateY="18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
+                    <graphic>
+                        <StackPane>
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="f"
+                                      translateX="-20.0" translateY="18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wB.png" />
+                                <Image url="@../../../images/wB.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -782,28 +904,33 @@
         </StackPane>
         <StackPane GridPane.columnIndex="7" GridPane.rowIndex="7">
             <children>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
-               <graphic>
-                  <StackPane prefHeight="50.0" prefWidth="50.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="1" translateX="20.0" translateY="-18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="h" translateX="-20.0" translateY="18.0">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </graphic></Button>
-                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: WHITE;">
+                    <graphic>
+                        <StackPane prefHeight="50.0" prefWidth="50.0">
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="1"
+                                      translateX="20.0" translateY="-18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: darkgrey;" text="h"
+                                      translateX="-20.0" translateY="18.0">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
+                        prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wR.png" />
+                                <Image url="@../../../images/wR.png"/>
                             </image>
                         </ImageView>
                     </graphic>

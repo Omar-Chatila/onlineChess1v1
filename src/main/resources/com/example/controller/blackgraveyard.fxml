@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <HBox fx:id="gyBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="35.0" prefWidth="175.0" spacing="3.0" xmlns="http://javafx.com/javafx/20.0.1"
+      prefHeight="35.0" prefWidth="175.0" spacing="3.0" xmlns="http://javafx.com/javafx/20"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.BlackGraveyardController">
     <children>
         <StackPane fx:id="queenPane">

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.controller.LoginViewController">
     <left>
         <AnchorPane prefHeight="312.0" prefWidth="255.0" style="-fx-background-color: #1E3050;"
