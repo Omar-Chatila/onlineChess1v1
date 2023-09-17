@@ -41,6 +41,10 @@ public class ServerController implements Initializable {
     private AnchorPane oppGraveyardPane;
     @FXML
     private AnchorPane myGraveYardPane;
+    @FXML
+    private FontAwesomeIcon toggleIcon;
+
+    private AnchorPane chatBox;
 
     private static MovesTableController mtc;
     private static ChatController chatController;
@@ -79,6 +83,7 @@ public class ServerController implements Initializable {
         chatController = loader.getController();
         stackpane.getChildren().add(chatPane);
         stackpane.getChildren().get(1).toBack();
+        this.chatBox = chatPane;
         newMessage.setVisible(false);
     }
 
@@ -125,8 +130,10 @@ public class ServerController implements Initializable {
 
         if (toggleButton.getText().equals("Chat")) {
             toggleButton.setText("Moves");
+            toggleIcon.setGlyphName("TABLE");
         } else {
             toggleButton.setText("Chat");
+            toggleIcon.setGlyphName("COMMENTS_ALT");
         }
     }
 
