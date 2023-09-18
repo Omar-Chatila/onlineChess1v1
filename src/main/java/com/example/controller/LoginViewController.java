@@ -273,7 +273,7 @@ public class LoginViewController {
     void openGithub() {
         Stage helpStage = new Stage();
         WebView webView = new WebView();
-        webView.getEngine().load("https://github.com/Omar-Chatila/onlineChess1v1/blob/main/README.md");
+        webView.getEngine().load("https://raw.githubusercontent.com/Omar-Chatila/onlineChess1v1/main/README.md");
         Scene scene = new Scene(webView, 800, 600);
         helpStage.setScene(scene);
         helpStage.show();
