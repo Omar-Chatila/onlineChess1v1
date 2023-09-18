@@ -3,22 +3,20 @@ package com.example.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import util.StageMover;
 
 import java.io.IOException;
@@ -26,8 +24,6 @@ import java.io.IOException;
 
 public class LoginViewController {
 
-    @FXML
-    private ImageView chessIcon;
     @FXML
     private Button blackPieceColor;
     @FXML
@@ -53,11 +49,10 @@ public class LoginViewController {
     @FXML
     private Label infoLabel;
     @FXML
-    private JFXRadioButton serverRadioButton;
-    @FXML
     private JFXRadioButton clientRadioButton;
     @FXML
     private Hyperlink helpLink;
+    private ScaleTransition scaleTransition;
 
     private static ServerController serverController;
     private static ClientController clientController;
@@ -82,13 +77,10 @@ public class LoginViewController {
         timeSlider.setBlockIncrement(1);
 
         timeSlider.valueProperty().addListener(
-                new ChangeListener<Number>() {
-                    public void changed(ObservableValue<? extends Number>
-                                                observable, Number oldValue, Number newValue) {
-                        int tc = (int) Math.ceil(newValue.doubleValue());
-                        GameStates.setTimeControl(tc * 60);
-                        timeLabel.setText(tc + ":00");
-                    }
+                (observable, oldValue, newValue) -> {
+                    int tc = (int) Math.ceil(newValue.doubleValue());
+                    GameStates.setTimeControl(tc * 60);
+                    timeLabel.setText(tc + ":00");
                 });
     }
 
@@ -212,21 +204,15 @@ public class LoginViewController {
             switch (hovered.getAccessibleText()) {
                 case "white" -> {
                     infoLabel.setText("Play with the White Pieces!");
-                    whitePieceColor.setScaleX(1.2);
-                    whitePieceColor.setScaleY(1.2);
-                    whitePieceColor.setScaleZ(1.2);
+                    playScaleAnimation(whitePieceColor);
                 }
                 case "black" -> {
                     infoLabel.setText("Play with the Black Pieces!");
-                    blackPieceColor.setScaleX(1.2);
-                    blackPieceColor.setScaleY(1.2);
-                    blackPieceColor.setScaleZ(1.2);
+                    playScaleAnimation(blackPieceColor);
                 }
                 default -> {
                     infoLabel.setText("Play with a Random color!");
-                    randomPieceColor.setScaleX(1.2);
-                    randomPieceColor.setScaleY(1.2);
-                    randomPieceColor.setScaleZ(1.2);
+                    playScaleAnimation(randomPieceColor);
                 }
             }
         } else if (event.getSource() instanceof JFXRadioButton radioButton) {
@@ -252,8 +238,10 @@ public class LoginViewController {
     }
 
     @FXML
-    void mouseExited(MouseEvent event) {
+    void mouseExited() {
         infoLabel.setText("");
+        if (scaleTransition != null)
+            scaleTransition.stop();
         whitePieceColor.setScaleX(1.0);
         whitePieceColor.setScaleY(1.0);
         whitePieceColor.setScaleZ(1.0);
@@ -266,15 +254,23 @@ public class LoginViewController {
     }
 
     @FXML
-    void minimize(ActionEvent event) {
+    void minimize() {
         Stage stage = (Stage) infoLabel.getScene().getWindow();
         stage.setIconified(true);
-        JFXButton min = (JFXButton) event.getSource();
         ipField.getParent().requestFocus();
     }
 
+    private void playScaleAnimation(Button button) {
+        scaleTransition = new ScaleTransition(Duration.seconds(0.5), button);
+        scaleTransition.setToX(1.2);
+        scaleTransition.setToY(1.2);
+        scaleTransition.setCycleCount(ScaleTransition.INDEFINITE);
+        scaleTransition.setAutoReverse(true);
+        scaleTransition.play();
+    }
+
     @FXML
-    void openGithub(ActionEvent event) {
+    void openGithub() {
         Stage helpStage = new Stage();
         WebView webView = new WebView();
         webView.getEngine().load("https://github.com/Omar-Chatila/onlineChess1v1/blob/main/README.md");

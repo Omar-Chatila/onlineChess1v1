@@ -3,14 +3,12 @@ package com.example.controller;
 import Networking.Server;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -165,11 +163,27 @@ public class ServerController implements Initializable {
         }
     }
 
+    private ScaleTransition scaleTransition;
+    private void playScaleAnimation(FontAwesomeIcon button) {
+        scaleTransition = new ScaleTransition(Duration.seconds(0.5), button);
+        scaleTransition.setToX(1.2);
+        scaleTransition.setToY(1.2);
+        scaleTransition.setCycleCount(4);
+        scaleTransition.setAutoReverse(true);
+        scaleTransition.play();
+    }
+
     public void setMessageIndicatorVisibility(boolean visible) {
         if (tableOpened) {
             newMessage.setVisible(false);
+            newMessage.setScaleX(1);
+            newMessage.setScaleY(1);
+            newMessage.setScaleZ(1);
+            if (scaleTransition != null)
+                scaleTransition.stop();
         } else {
             newMessage.setVisible(visible);
+            playScaleAnimation(newMessage);
             if (visible) {
                 String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/notify.mp3")).toString();
                 Media sound = new Media(soundFile);
