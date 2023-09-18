@@ -11,7 +11,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -50,10 +49,11 @@ public class ServerController implements Initializable {
     @FXML
     private FontAwesomeIcon toggleIcon;
 
-    private static int serverPort;
     private AnchorPane chatBox;
     private AnchorPane tablePane;
+    private boolean tableOpened;
 
+    private static int serverPort;
     private static MovesTableController mtc;
     private static ChatController chatController;
 
@@ -129,29 +129,36 @@ public class ServerController implements Initializable {
 
     @FXML
     void toggle() {
+        setMessageIndicatorVisibility(false);
         if (toggleButton.getText().equals("Chat")) {
+            tableOpened = true;
             toggleButton.setText("Moves");
             toggleIcon.setGlyphName("TABLE");
-            Scene scene = toggleButton.getScene();
-            chatBox.translateYProperty().set(scene.getHeight());
-
-            stackpane.getChildren().add(chatBox);
-
+            chatBox.translateXProperty().set(stackpane.getWidth());
+            try {
+                stackpane.getChildren().add(chatBox);
+            } catch (IllegalArgumentException e) {
+                return;
+            }
             Timeline timeline = new Timeline();
-            KeyValue kv = new KeyValue(chatBox.translateYProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyValue kv = new KeyValue(chatBox.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.4), kv);
             timeline.getKeyFrames().add(kf);
             timeline.setOnFinished(t -> stackpane.getChildren().remove(tablePane));
             timeline.play();
         } else {
+            tableOpened = false;
             toggleButton.setText("Chat");
             toggleIcon.setGlyphName("COMMENTS_ALT");
-            Scene scene = toggleButton.getScene();
-            tablePane.translateYProperty().set(scene.getHeight());
-            stackpane.getChildren().add(tablePane);
+            tablePane.translateXProperty().set(stackpane.getWidth());
+            try {
+                stackpane.getChildren().add(tablePane);
+            } catch (IllegalArgumentException e) {
+                return;
+            }
             Timeline timeline = new Timeline();
-            KeyValue kv = new KeyValue(tablePane.translateYProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyValue kv = new KeyValue(tablePane.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.4), kv);
             timeline.getKeyFrames().add(kf);
             timeline.setOnFinished(t -> stackpane.getChildren().remove(chatBox));
             timeline.play();
@@ -159,7 +166,7 @@ public class ServerController implements Initializable {
     }
 
     public void setMessageIndicatorVisibility(boolean visible) {
-        if (stackpane.getChildren().get(1) instanceof AnchorPane) {
+        if (tableOpened) {
             newMessage.setVisible(false);
         } else {
             newMessage.setVisible(visible);
@@ -168,7 +175,6 @@ public class ServerController implements Initializable {
                 Media sound = new Media(soundFile);
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.play();
-
             }
         }
     }

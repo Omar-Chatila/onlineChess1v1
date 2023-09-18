@@ -11,19 +11,20 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import util.ApplicationData;
-import util.SoundPlayer;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("CallToPrintStackTrace")
@@ -52,9 +53,9 @@ public class ClientController implements Initializable {
     private static int portNr;
     private static MovesTableController mtc;
     private static ChatController chatController;
-    private static int serverPort;
     private AnchorPane chatBox;
     private AnchorPane tablePane;
+    private boolean tableOpened;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -144,29 +145,36 @@ public class ClientController implements Initializable {
 
     @FXML
     void toggle() {
+        setMessageIndicatorVisibility(false);
         if (toggleButton.getText().equals("Chat")) {
+            tableOpened = true;
             toggleButton.setText("Moves");
             toggleIcon.setGlyphName("TABLE");
-            Scene scene = toggleButton.getScene();
-            chatBox.translateYProperty().set(scene.getHeight());
-
-            stackpane.getChildren().add(chatBox);
-
+            chatBox.translateXProperty().set(stackpane.getWidth());
+            try {
+                stackpane.getChildren().add(chatBox);
+            } catch (IllegalArgumentException e) {
+                return;
+            }
             Timeline timeline = new Timeline();
-            KeyValue kv = new KeyValue(chatBox.translateYProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyValue kv = new KeyValue(chatBox.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.4), kv);
             timeline.getKeyFrames().add(kf);
             timeline.setOnFinished(t -> stackpane.getChildren().remove(tablePane));
             timeline.play();
         } else {
+            tableOpened = false;
             toggleButton.setText("Chat");
             toggleIcon.setGlyphName("COMMENTS_ALT");
-            Scene scene = toggleButton.getScene();
-            tablePane.translateYProperty().set(scene.getHeight());
-            stackpane.getChildren().add(tablePane);
+            tablePane.translateXProperty().set(stackpane.getWidth());
+            try {
+                stackpane.getChildren().add(tablePane);
+            } catch (IllegalArgumentException e) {
+                return;
+            }
             Timeline timeline = new Timeline();
-            KeyValue kv = new KeyValue(tablePane.translateYProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyValue kv = new KeyValue(tablePane.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.4), kv);
             timeline.getKeyFrames().add(kf);
             timeline.setOnFinished(t -> stackpane.getChildren().remove(chatBox));
             timeline.play();
@@ -174,15 +182,19 @@ public class ClientController implements Initializable {
     }
 
     public void setMessageIndicatorVisibility(boolean visible) {
-        if (stackpane.getChildren().get(1) instanceof AnchorPane) {
+        if (tableOpened) {
             newMessage.setVisible(false);
         } else {
             newMessage.setVisible(visible);
             if (visible) {
-                new SoundPlayer().playNotificationSound();
+                String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/notify.mp3")).toString();
+                Media sound = new Media(soundFile);
+                MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.play();
             }
         }
     }
+
 
     private void loadUIElements() throws Exception {
         loadMovesTable();

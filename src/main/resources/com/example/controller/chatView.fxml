@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="400.0" maxWidth="200.0" prefHeight="400.0" prefWidth="200.0"
-            xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.controller.ChatController">
+<AnchorPane maxHeight="400.0" maxWidth="200.0" prefHeight="400.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/20"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ChatController">
     <children>
         <VBox>
             <children>
@@ -18,29 +15,12 @@
                         <VBox fx:id="vbox_messages" maxWidth="200.0" prefWidth="200.0"/>
                     </content>
                 </ScrollPane>
-                <Separator prefWidth="200.0">
-                    <VBox.margin>
-                        <Insets/>
-                    </VBox.margin>
-                </Separator>
-                <HBox prefHeight="28.0" prefWidth="203.0" spacing="3.0">
-                    <children>
-                        <TextField fx:id="tf_messages" prefHeight="25.0" prefWidth="171.0">
-                            <HBox.margin>
-                                <Insets left="3.0"/>
-                            </HBox.margin>
-                            <font>
-                                <Font size="11.0"/>
-                            </font>
-                        </TextField>
-                        <Button fx:id="button_send" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
-                                prefHeight="25.0" prefWidth="24.0">
-                            <HBox.margin>
-                                <Insets right="3.0"/>
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                </HBox>
+                <TextField fx:id="tf_messages" prefHeight="28.0" prefWidth="210.0" promptText="Press Enter to send"
+                           style="-fx-border-radius: 0; -fx-border-width: 2 0 0 0; -fx-border-color: #1E3050;">
+                    <font>
+                        <Font size="11.0"/>
+                    </font>
+                </TextField>
             </children>
         </VBox>
     </children>
