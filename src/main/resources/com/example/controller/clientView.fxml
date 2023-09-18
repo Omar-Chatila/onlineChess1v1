@@ -3,45 +3,37 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="490.0" prefWidth="834.0" style="-fx-background-color: #1E3050;"
-            xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane prefHeight="484.0" prefWidth="824.0" style="-fx-background-color: #1E3050;"
+            xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.controller.ClientController">
     <children>
-        <Label fx:id="roleLabel" layoutX="205.0" layoutY="17.0" style="-fx-text-fill: white;" text="Chess - Black">
+        <VBox layoutX="4.0" layoutY="67.0" spacing="10.0">
+            <children>
+                <AnchorPane fx:id="oppGraveyardPane" prefHeight="35.0" prefWidth="175.0"/>
+                <AnchorPane fx:id="infoPane" prefHeight="307.0" prefWidth="175.0" style="-fx-background-color: white;"/>
+                <AnchorPane fx:id="myGraveYardPane" prefHeight="35.0" prefWidth="175.0"/>
+            </children>
+        </VBox>
+        <Label fx:id="roleLabel" layoutX="192.0" layoutY="17.0" style="-fx-text-fill: white;" text="Chess - White">
             <font>
                 <Font name="Arial Rounded MT Bold" size="23"/>
             </font>
         </Label>
-        <AnchorPane fx:id="chessBoardPane" layoutX="205.0" layoutY="60.0" minHeight="400.0" minWidth="400.0"/>
-        <StackPane fx:id="stackpane" layoutX="618.0" layoutY="59.0">
-            <children>
-                <VBox fx:id="tableBox" prefHeight="400.0" prefWidth="200.0"/>
-            </children>
-        </StackPane>
-        <ToggleButton fx:id="toggleButton" layoutX="618.0" layoutY="21.0" mnemonicParsing="false" onAction="#toggle"
-                      text="Chat"/>
-        <ImageView fx:id="newMessage" fitHeight="34.0" fitWidth="41.0" layoutX="665.0" layoutY="17.0"
-                   pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../images/message.png"/>
-            </image>
-        </ImageView>
-        <VBox layoutX="14.0" layoutY="77.0" spacing="10.0">
-            <children>
-                <AnchorPane fx:id="oppGraveyardPane" prefHeight="35.0" prefWidth="175.0"/>
-                <AnchorPane fx:id="infopane" prefHeight="307.0" prefWidth="175.0" style="-fx-background-color: white;"/>
-                <AnchorPane fx:id="myGraveYardPane" prefHeight="35.0" prefWidth="175.0"/>
-            </children>
-        </VBox>
+        <StackPane fx:id="stackpane" layoutX="605.0" layoutY="61.0" prefHeight="400.0" prefWidth="200.0"/>
+        <AnchorPane fx:id="chessBoardPane" layoutX="192.0" layoutY="61.0" prefHeight="400.0" prefWidth="400.0"/>
+        <JFXButton layoutX="799.0" layoutY="3.0" onAction="#close" prefHeight="28.0" prefWidth="19.0" text=" ">
+            <graphic>
+                <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" size="20"/>
+            </graphic>
+        </JFXButton>
+        <FontAwesomeIcon fx:id="newMessage" fill="WHITE" glyphName="ENVELOPE" layoutX="675.0" layoutY="38.0" size="20"/>
+        <JFXButton fx:id="toggleButton" layoutX="605.0" layoutY="18.0" onAction="#toggle"
+                   style="-fx-background-color: white;" text="Chat">
+            <graphic>
+                <FontAwesomeIcon fx:id="toggleIcon" glyphName="COMMENTS_ALT" size="16" translateY="-1.0"/>
+            </graphic>
+        </JFXButton>
     </children>
-    <JFXButton layoutX="799.0" layoutY="3.0" onAction="#close" prefHeight="28.0" prefWidth="19.0" text=" ">
-        <graphic>
-            <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" size="20"/>
-        </graphic>
-    </JFXButton>
 </AnchorPane>

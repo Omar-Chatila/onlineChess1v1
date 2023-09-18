@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -14,7 +13,7 @@
         <VBox layoutX="4.0" layoutY="67.0" spacing="10.0">
             <children>
                 <AnchorPane fx:id="oppGraveyardPane" prefHeight="35.0" prefWidth="175.0" />
-                <AnchorPane fx:id="infopane" prefHeight="307.0" prefWidth="175.0" style="-fx-background-color: white;" />
+                <AnchorPane fx:id="infoPane" prefHeight="307.0" prefWidth="175.0" style="-fx-background-color: white;" />
                 <AnchorPane fx:id="myGraveYardPane" prefHeight="35.0" prefWidth="175.0" />
             </children>
         </VBox>
@@ -23,15 +22,7 @@
                 <Font name="Arial Rounded MT Bold" size="23" />
             </font>
         </Label>
-        <StackPane fx:id="stackpane" layoutX="605.0" layoutY="61.0">
-            <children>
-                <VBox fx:id="tableBox" prefHeight="400.0" prefWidth="200.0">
-                    <StackPane.margin>
-                        <Insets />
-                    </StackPane.margin>
-                </VBox>
-            </children>
-        </StackPane>
+        <StackPane fx:id="stackpane" layoutX="605.0" layoutY="61.0" prefHeight="400.0" prefWidth="200.0" />
         <AnchorPane fx:id="chessBoardPane" layoutX="192.0" layoutY="61.0" prefHeight="400.0" prefWidth="400.0" />
         <JFXButton layoutX="799.0" layoutY="3.0" onAction="#close" prefHeight="28.0" prefWidth="19.0" text=" ">
             <graphic>
@@ -40,8 +31,9 @@
         </JFXButton>
         <FontAwesomeIcon fx:id="newMessage" fill="WHITE" glyphName="ENVELOPE" layoutX="675.0" layoutY="38.0" size="20" />
         <JFXButton fx:id="toggleButton" layoutX="605.0" layoutY="18.0" onAction="#toggle" style="-fx-background-color: white;" text="Chat">
-         <graphic>
-            <FontAwesomeIcon fx:id="toggleIcon" glyphName="COMMENTS_ALT" size="16" translateY="-1.0" />
-         </graphic></JFXButton>
+            <graphic>
+                <FontAwesomeIcon fx:id="toggleIcon" glyphName="COMMENTS_ALT" size="16" translateY="-1.0" />
+            </graphic>
+        </JFXButton>
     </children>
 </AnchorPane>

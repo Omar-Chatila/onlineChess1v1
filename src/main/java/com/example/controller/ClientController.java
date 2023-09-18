@@ -1,15 +1,23 @@
 package com.example.controller;
 
 import Networking.Client;
+import com.jfoenix.controls.JFXButton;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import util.ApplicationData;
 import util.SoundPlayer;
 
@@ -24,26 +32,29 @@ public class ClientController implements Initializable {
     @FXML
     private AnchorPane chessBoardPane;
     @FXML
-    private Label roleLabel;
+    private AnchorPane infoPane;
     @FXML
-    private VBox tableBox;
+    private AnchorPane myGraveYardPane;
     @FXML
-    private ToggleButton toggleButton;
-    @FXML
-    private StackPane stackpane;
-    @FXML
-    private ImageView newMessage;
-    @FXML
-    private AnchorPane infopane;
+    private FontAwesomeIcon newMessage;
     @FXML
     private AnchorPane oppGraveyardPane;
     @FXML
-    private AnchorPane myGraveYardPane;
+    private Label roleLabel;
+    @FXML
+    private StackPane stackpane;
+    @FXML
+    private JFXButton toggleButton;
+    @FXML
+    private FontAwesomeIcon toggleIcon;
 
     private static String ip_Address;
     private static int portNr;
     private static MovesTableController mtc;
     private static ChatController chatController;
+    private static int serverPort;
+    private AnchorPane chatBox;
+    private AnchorPane tablePane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -106,20 +117,21 @@ public class ClientController implements Initializable {
     }
 
     private void loadChatBox() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("chatView.fxml"));
+        FXMLLoader loader;
+        loader = new FXMLLoader(getClass().getResource("chatView.fxml"));
         AnchorPane chatPane = loader.load();
         chatController = loader.getController();
-        stackpane.getChildren().add(chatPane);
-        stackpane.getChildren().get(1).toBack();
+        this.chatBox = chatPane;
         newMessage.setVisible(false);
     }
 
     private void loadMovesTable() throws Exception {
         FXMLLoader loader;
         loader = new FXMLLoader(getClass().getResource("movesTable.fxml"));
-        VBox vBox = loader.load();
+        AnchorPane tablePane = loader.load();
+        this.tablePane = tablePane;
         mtc = loader.getController();
-        tableBox.getChildren().add(vBox);
+        this.stackpane.getChildren().add(tablePane);
     }
 
     private void loadInfoPane() throws Exception {
@@ -127,18 +139,38 @@ public class ClientController implements Initializable {
         loader = new FXMLLoader(getClass().getResource("infoView.fxml"));
         AnchorPane infoPane = loader.load();
         ApplicationData.getInstance().setIvc(loader.getController());
-        this.infopane.getChildren().add(infoPane);
+        this.infoPane.getChildren().add(infoPane);
     }
 
     @FXML
     void toggle() {
-        stackpane.getChildren().get(0).toFront();
         if (toggleButton.getText().equals("Chat")) {
             toggleButton.setText("Moves");
+            toggleIcon.setGlyphName("TABLE");
+            Scene scene = toggleButton.getScene();
+            chatBox.translateYProperty().set(scene.getHeight());
+
+            stackpane.getChildren().add(chatBox);
+
+            Timeline timeline = new Timeline();
+            KeyValue kv = new KeyValue(chatBox.translateYProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            timeline.getKeyFrames().add(kf);
+            timeline.setOnFinished(t -> stackpane.getChildren().remove(tablePane));
+            timeline.play();
         } else {
             toggleButton.setText("Chat");
+            toggleIcon.setGlyphName("COMMENTS_ALT");
+            Scene scene = toggleButton.getScene();
+            tablePane.translateYProperty().set(scene.getHeight());
+            stackpane.getChildren().add(tablePane);
+            Timeline timeline = new Timeline();
+            KeyValue kv = new KeyValue(tablePane.translateYProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            timeline.getKeyFrames().add(kf);
+            timeline.setOnFinished(t -> stackpane.getChildren().remove(chatBox));
+            timeline.play();
         }
-        setMessageIndicatorVisibility(false);
     }
 
     public void setMessageIndicatorVisibility(boolean visible) {
@@ -168,7 +200,7 @@ public class ClientController implements Initializable {
         return mtc;
     }
 
-    public void close(ActionEvent actionEvent) {
+    public void close() {
         Platform.exit();
     }
 }
