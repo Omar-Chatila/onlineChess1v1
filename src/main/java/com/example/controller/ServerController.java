@@ -59,6 +59,7 @@ public class ServerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadUIElements();
         new Thread(this::startServer).start();
+        newMessage.setOnMouseClicked(e -> toggle());
     }
 
     public static void setServerPort(int serverPort) {

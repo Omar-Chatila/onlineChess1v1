@@ -70,6 +70,7 @@ public class ClientController implements Initializable, Client.ClientCallback {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        newMessage.setOnMouseClicked(e -> toggle());
         roleLabel.setText("Chess - " + (!GameStates.isServerWhite() ? "White" : "Black"));
     }
 
