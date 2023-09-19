@@ -31,9 +31,6 @@ public class ChessClock {
                     timer.cancel();
                     playerFlagged();
                 }
-                if (GameStates.isGameOver()) {
-                    timer.cancel();
-                }
             }
         }, 50, 1000);
     }

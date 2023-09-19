@@ -24,6 +24,8 @@ public class Server {
     public Server(ServerSocket serverSocket) {
         serverClock = new ChessClock(GameStates.getTimeControl(), true);
         clientClock = new ChessClock((GameStates.getTimeControl()), false);
+        ApplicationData.getInstance().setServerClock1(serverClock);
+        ApplicationData.getInstance().setServerClock2(clientClock);
         try {
             this.socket = serverSocket.accept();
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));

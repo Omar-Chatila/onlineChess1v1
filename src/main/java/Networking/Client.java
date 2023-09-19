@@ -80,7 +80,8 @@ public class Client {
                         GameStates.setTimeControl(Integer.parseInt(messageFromServer.substring(3)));
                         serverClock = new ChessClock(GameStates.getTimeControl(), false);
                         clientClock = new ChessClock(GameStates.getTimeControl(), true);
-
+                        ApplicationData.getInstance().setClientClock1(serverClock);
+                        ApplicationData.getInstance().setClientClock2(clientClock);
                     } else if (messageFromServer.startsWith("/t")) {
                         ClientController.getChatController().addLabel(messageFromServer.substring(2));
                         LoginViewController.getClientController().setMessageIndicatorVisibility(true);

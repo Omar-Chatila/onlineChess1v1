@@ -20,6 +20,7 @@ import javafx.util.Duration;
 import util.StageMover;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 
 public class LoginViewController {
@@ -190,9 +191,9 @@ public class LoginViewController {
     }
 
     private void toggleVisibility(boolean visible) {
-        this.blackPieceColor.setVisible(visible);
-        this.whitePieceColor.setVisible(visible);
-        this.randomPieceColor.setVisible(visible);
+        for (Button button : Arrays.asList(this.blackPieceColor, this.whitePieceColor, this.randomPieceColor)) {
+            button.setVisible(visible);
+        }
         this.timeLabel.setVisible(visible);
         this.timeSlider.setVisible(visible);
         this.tcLabel.setVisible(visible);
@@ -242,15 +243,11 @@ public class LoginViewController {
         infoLabel.setText("");
         if (scaleTransition != null)
             scaleTransition.stop();
-        whitePieceColor.setScaleX(1.0);
-        whitePieceColor.setScaleY(1.0);
-        whitePieceColor.setScaleZ(1.0);
-        blackPieceColor.setScaleX(1.0);
-        blackPieceColor.setScaleY(1.0);
-        blackPieceColor.setScaleZ(1.0);
-        randomPieceColor.setScaleX(1);
-        randomPieceColor.setScaleY(1);
-        randomPieceColor.setScaleZ(1);
+        for (Button button : Arrays.asList(whitePieceColor, blackPieceColor, randomPieceColor)) {
+            button.setScaleX(1.0);
+            button.setScaleY(1.0);
+            button.setScaleZ(1.0);
+        }
     }
 
     @FXML

@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import util.ApplicationData;
+
 public class GameStates {
     private static boolean serverIswhite;
     private static boolean isMyTurn;
@@ -21,6 +23,7 @@ public class GameStates {
     }
 
     public static void setGameOver(boolean gameOver) {
+        if (gameOver) ApplicationData.getInstance().closeTimers();
         GameStates.gameOver = gameOver;
     }
 
