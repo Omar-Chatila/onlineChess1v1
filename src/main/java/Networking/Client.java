@@ -13,11 +13,27 @@ import java.net.Socket;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class Client {
+
+    public void setCallback(ClientCallback callback) {
+        this.callback = callback;
+    }
+
+    public interface ClientCallback {
+        void onRoleReceived(boolean isServerWhite);
+    }
+
+    private void handleRoleInformation(boolean isServerWhite) {
+        if (callback != null) {
+            callback.onRoleReceived(isServerWhite);
+        }
+    }
+
     private Socket socket;
     private BufferedWriter bufferedWriter;
     private BufferedReader bufferedReader;
     private ChessClock serverClock;
     private ChessClock clientClock;
+    private ClientCallback callback;
 
     public Client(Socket socket) {
         try {
@@ -71,6 +87,7 @@ public class Client {
                     } else {
                         if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                             GameStates.setServerIswhite(messageFromServer.equals("true"));
+                            handleRoleInformation(messageFromServer.equals("true"));
                             if (!GameStates.isServerWhite()) {
                                 GameStates.setIsMyTurn(true);
                             }

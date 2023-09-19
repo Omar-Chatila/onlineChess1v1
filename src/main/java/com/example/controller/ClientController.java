@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("CallToPrintStackTrace")
-public class ClientController implements Initializable {
+public class ClientController implements Initializable, Client.ClientCallback {
 
     @FXML
     private AnchorPane chessBoardPane;
@@ -60,6 +60,7 @@ public class ClientController implements Initializable {
             Client client = new Client(new Socket(ip_Address, portNr));
             ApplicationData.getInstance().setClient(client);
             System.out.println("Connected to server");
+            client.setCallback(this);
             client.receiveMessageFromServer();
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,10 +81,12 @@ public class ClientController implements Initializable {
         ClientController.portNr = portNr;
     }
 
-    private void loadChessBoard() throws Exception {
+    private void loadChessBoard(boolean isServerWhite) throws Exception {
         FXMLLoader loader;
-        if (GameStates.isServerWhite()) {
+        System.out.println("Load cb" + isServerWhite);
+        if (isServerWhite) {
             loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
+            System.out.println("HEEEEERE");
         } else {
             loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
         }
@@ -179,6 +182,7 @@ public class ClientController implements Initializable {
     }
 
     private ScaleTransition scaleTransition;
+
     private void playScaleAnimation(FontAwesomeIcon button) {
         scaleTransition = new ScaleTransition(Duration.seconds(0.5), button);
         scaleTransition.setToX(1.2);
@@ -211,7 +215,6 @@ public class ClientController implements Initializable {
 
     private void loadUIElements() throws Exception {
         loadMovesTable();
-        loadChessBoard();
         loadChatBox();
         loadInfoPane();
         loadGraveyards();
@@ -227,5 +230,21 @@ public class ClientController implements Initializable {
 
     public void close() {
         Platform.exit();
+    }
+
+    @Override
+    public void onRoleReceived(boolean isServerWhite) {
+        try {
+            Platform.runLater(() ->
+            {
+                try {
+                    loadChessBoard(isServerWhite);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
