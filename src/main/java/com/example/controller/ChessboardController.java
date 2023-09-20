@@ -97,7 +97,11 @@ public class ChessboardController {
                         Objects.requireNonNullElse(GridPane.getColumnIndex(hovered.getParent()), 0);
                 if (this.possibleSquares.contains(coordinate)) {
                     hoveredButtonStyle = hovered.getParent().getStyle();
-                    hovered.setStyle("-fx-background-color: #87CEEB80");
+                    if (hovered.getParent().getChildrenUnmodifiable().size() > 1) {
+                        hovered.setStyle("-fx-background-color: #FF333370;" + "-fx-background-radius: 0;");
+                    } else {
+                        hovered.setStyle("-fx-background-color: #87CEEB80;" + "-fx-background-radius: 0;");
+                    }
                     lastHoveredButton = hovered;
                 }
             }
