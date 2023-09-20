@@ -46,6 +46,8 @@ public class ChessboardController {
     public static String move;
     private IntIntPair startingSquare;
     private IntIntPair destinationsSquare;
+    private Button lastHoveredButton;
+    private String hoveredButtonStyle;
 
     @FXML
     private void initialize() {
@@ -53,7 +55,7 @@ public class ChessboardController {
             new SoundPlayer().playGameStartSound();
         for (Node node : chessboardGrid.getChildren()) {
             if (node instanceof StackPane current) {
-                setSquareAccessibleText(current);
+                setSquareTxtNStyle(current);
                 for (Node button : current.getChildren()) {
                     if (button instanceof Button currentButton) {
                         setButtonListeners(currentButton);
@@ -63,13 +65,20 @@ public class ChessboardController {
         }
     }
 
-    private void setSquareAccessibleText(StackPane current) {
+    private void setSquareTxtNStyle(StackPane current) {
         Integer rowIndexConstraint = GridPane.getRowIndex(current);
         Integer columnIndexConstraint = GridPane.getColumnIndex(current);
         String square = (GameStates.iAmWhite()) ? Character.toString('a' + Objects.requireNonNullElse(columnIndexConstraint, 0))
                 + (8 - Objects.requireNonNullElse(rowIndexConstraint, 0)) : Character.toString('h' - Objects.requireNonNullElse(columnIndexConstraint, 0))
                 + (Objects.requireNonNullElse(rowIndexConstraint, 0) + 1);
         current.setAccessibleText(square);
+        int r = Objects.requireNonNullElse(GridPane.getRowIndex(current), 0);
+        int c = Objects.requireNonNullElse(GridPane.getColumnIndex(current), 0);
+        if ((r + c) % 2 == 0) {
+            current.setStyle("-fx-background-radius: 0;" + "-fx-background-color: white;");
+        } else {
+            current.setStyle("-fx-background-radius: 0;" + "-fx-background-color: darkgrey;");
+        }
     }
 
     private void setButtonListeners(Button currentButton) {
@@ -79,6 +88,25 @@ public class ChessboardController {
         currentButton.setOnDragOver(event -> {
             if (event.getGestureSource() != currentButton && event.getDragboard().hasImage()) {
                 event.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+        currentButton.setOnDragEntered(event -> {
+            if (GameStates.isIsMyTurn()) {
+                Button hovered = (Button) event.getSource();
+                String coordinate = Objects.requireNonNullElse(GridPane.getRowIndex(hovered.getParent()), 0) + "" +
+                        Objects.requireNonNullElse(GridPane.getColumnIndex(hovered.getParent()), 0);
+                if (this.possibleSquares.contains(coordinate)) {
+                    hoveredButtonStyle = hovered.getParent().getStyle();
+                    hovered.setStyle("-fx-background-color: #87CEEB80");
+                    lastHoveredButton = hovered;
+                }
+            }
+        });
+        currentButton.setOnDragExited(event -> {
+            if (GameStates.isIsMyTurn()) {
+                Button exited = (Button) event.getSource();
+                if (exited == lastHoveredButton)
+                    exited.setStyle(this.hoveredButtonStyle);
             }
         });
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
@@ -192,6 +220,7 @@ public class ChessboardController {
                 list = PawnMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
             }
             assert list != null;
+            this.possibleSquares = list;
             for (String coordinate : list) {
                 IntIntPair c = new IntIntPair(Character.getNumericValue(coordinate.charAt(0)), Character.getNumericValue(coordinate.charAt(1)));
                 StackPane square = getPaneFromCoordinate(c);
@@ -211,15 +240,18 @@ public class ChessboardController {
         }
     }
 
+    private List<String> possibleSquares;
+
+
     private void clearHighlighting() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 StackPane square = getPaneFromCoordinate(new IntIntPair(i, j));
                 Button button = (Button) square.getChildren().get(0);
                 if ((i + j) % 2 == 0) {
-                    button.setStyle(button.getStyle() + "-fx-background-color: White;");
+                    button.setStyle("-fx-background-color: white;" + "-fx-background-radius: 0;");
                 } else {
-                    button.setStyle(button.getStyle() + "-fx-background-color: darkgrey;");
+                    button.setStyle("-fx-background-color: darkgrey;" + "-fx-background-radius: 0;");
                 }
                 if (square.getChildren().size() > 1) {
                     Button movedPiece = (Button) square.getChildren().get(1);
