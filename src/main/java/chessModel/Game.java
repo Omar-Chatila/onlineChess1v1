@@ -53,6 +53,7 @@ public class Game {
         if (!legal) {
             ApplicationData.getInstance().setIllegalMove(true);
             new SoundPlayer().playIllegalMoveSound();
+            print(board);
             throw new IllegalMoveException(move);
         } else {
             playMoveSound(move, white);

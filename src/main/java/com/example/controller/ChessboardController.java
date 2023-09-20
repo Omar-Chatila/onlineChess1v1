@@ -115,7 +115,7 @@ public class ChessboardController {
         });
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
         currentButton.setOnDragDone(event -> {
-            if (isLegalDragDrop()) {
+            if (isLegalDragDrop() && !GameStates.isIsMyTurn()) {
                 updateCheckStatus();
                 if ((movePlayed - Game.moveList.size()) != 0) {
                     highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));

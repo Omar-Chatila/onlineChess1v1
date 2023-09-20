@@ -57,21 +57,37 @@ public class KingMoveTracker { // TODO check if king is in other king's space
     }
 
     private static boolean hasShortCastlingRight(boolean white) {
+        String[][] copy1 = copyBoard(Game.board);
+        copy1[7][5] = "K";
+        copy1[7][6] = "K";
+        String[][] copy2 = copyBoard(Game.board);
+        copy2[0][5] = "k";
+        copy2[0][6] = "k";
         boolean freeSpace = white ? Game.board[7][4].equals("K") && Game.board[7][5].equals(".") && Game.board[7][6].equals(".") && Game.board[7][7].equals("R")
                 : Game.board[0][4].equals("k") && Game.board[0][5].equals(".") && Game.board[0][6].equals(".") && Game.board[0][7].equals("r");
+        boolean castleTroughCheck = Game.kingChecked(white, white ? copy1 : copy2);
         if (white)
-            return !whiteKingHasMoved && !Game.kingChecked(true) && freeSpace;
+            return !whiteKingHasMoved && !Game.kingChecked(true) && freeSpace && !castleTroughCheck;
         else
-            return !blackKingHasMoved && !Game.kingChecked(false) && freeSpace;
+            return !blackKingHasMoved && !Game.kingChecked(false) && freeSpace && !castleTroughCheck;
     }
 
     private static boolean hasLongCastlingRight(boolean white) {
+        String[][] copy1 = copyBoard(Game.board);
+        copy1[7][1] = "K";
+        copy1[7][2] = "K";
+        copy1[7][3] = "K";
+        String[][] copy2 = copyBoard(Game.board);
+        copy2[0][1] = "k";
+        copy2[0][2] = "k";
+        copy2[0][3] = "k";
+        boolean castleTroughCheck = Game.kingChecked(white, white ? copy1 : copy2);
         boolean freeSpace = white ? Game.board[7][4].equals("K") && Game.board[7][3].equals(".") && Game.board[7][2].equals(".") && Game.board[7][1].equals(".") && Game.board[7][0].equals("R")
                 : Game.board[0][4].equals("k") && Game.board[0][3].equals(".") && Game.board[0][2].equals(".") && Game.board[0][1].equals(".") && Game.board[0][0].equals("r");
         if (white)
-            return !whiteKingHasMoved && !Game.kingChecked(true) && freeSpace;
+            return !whiteKingHasMoved && !Game.kingChecked(true) && freeSpace && !castleTroughCheck;
         else
-            return !blackKingHasMoved && !Game.kingChecked(false) && freeSpace;
+            return !blackKingHasMoved && !Game.kingChecked(false) && freeSpace && !castleTroughCheck;
     }
 
     public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
