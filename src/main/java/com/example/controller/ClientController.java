@@ -84,10 +84,8 @@ public class ClientController implements Initializable, Client.ClientCallback {
 
     private void loadChessBoard(boolean isServerWhite) throws Exception {
         FXMLLoader loader;
-        System.out.println("Load cb" + isServerWhite);
         if (isServerWhite) {
             loader = new FXMLLoader(getClass().getResource("blackBoard.fxml"));
-            System.out.println("HEEEEERE");
         } else {
             loader = new FXMLLoader(getClass().getResource("whiteBoard.fxml"));
         }

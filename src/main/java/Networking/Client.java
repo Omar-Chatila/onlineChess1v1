@@ -1,5 +1,6 @@
 package Networking;
 
+import Exceptions.IllegalMoveException;
 import chessModel.Game;
 import com.example.controller.ClientController;
 import com.example.controller.GameStates;
@@ -7,6 +8,7 @@ import com.example.controller.LoginViewController;
 import javafx.application.Platform;
 import util.ApplicationData;
 import util.ChessClock;
+import util.SoundPlayer;
 
 import java.io.*;
 import java.net.Socket;
@@ -68,6 +70,8 @@ public class Client {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
             closeEverything(socket, bufferedReader, bufferedWriter);
+        } catch (IllegalMoveException e) {
+            new SoundPlayer().playIllegalMoveSound();
         }
     }
 

@@ -173,8 +173,8 @@ public class Game {
     }
 
     public static boolean isAmbiguousMove(String move, boolean white, IntIntPair destinationSquare) {
-        int file = destinationSquare.getColumn();
-        int row = destinationSquare.getRow();
+        int file = destinationSquare.column();
+        int row = destinationSquare.row();
         if (!white) {
             file = 7 - file;
             row = 7 - row;
@@ -223,9 +223,9 @@ public class Game {
     }
 
     public static boolean pieceOnSameFile(String move, boolean white, IntIntPair destinationSquare, IntIntPair startingSquare) {
-        int file = destinationSquare.getColumn();
-        int row = destinationSquare.getRow();
-        int startFile = startingSquare.getColumn();
+        int file = destinationSquare.column();
+        int row = destinationSquare.row();
+        int startFile = startingSquare.column();
         if (!white) {
             row = 7 - row;
             file = 7 - file;

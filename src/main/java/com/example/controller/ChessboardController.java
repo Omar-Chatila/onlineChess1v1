@@ -91,7 +91,7 @@ public class ChessboardController {
             }
         });
         currentButton.setOnDragEntered(event -> {
-            if (GameStates.isIsMyTurn()) {
+            if (GameStates.isIsMyTurn() && isMyPiece()) {
                 Button hovered = (Button) event.getSource();
                 String coordinate = Objects.requireNonNullElse(GridPane.getRowIndex(hovered.getParent()), 0) + "" +
                         Objects.requireNonNullElse(GridPane.getColumnIndex(hovered.getParent()), 0);
@@ -107,23 +107,14 @@ public class ChessboardController {
             }
         });
         currentButton.setOnDragExited(event -> {
-            if (GameStates.isIsMyTurn()) {
+            if (GameStates.isIsMyTurn() && isMyPiece()) {
                 Button exited = (Button) event.getSource();
                 if (exited == lastHoveredButton)
                     exited.setStyle(this.hoveredButtonStyle);
             }
         });
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
-        currentButton.setOnDragDone(event -> {
-            if (isLegalDragDrop() && !GameStates.isIsMyTurn()) {
-                updateCheckStatus();
-                if ((movePlayed - Game.moveList.size()) != 0) {
-                    highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
-                }
-            } else {
-                clearHighlighting();
-            }
-        });
+        currentButton.setOnDragDone(this::handleDragDone);
     }
 
     private void setOnDragDetection(Button currentButton) {
@@ -145,10 +136,10 @@ public class ChessboardController {
                 isWhitePiece = currentButton.getAccessibleText().charAt(0) == 'w';
             }
             if (movedPiece.isEmpty()) {
-                this.pawnFile = startingSquare.getColumn();
-                this.pawnRank = startingSquare.getRow();
+                this.pawnFile = startingSquare.column();
+                this.pawnRank = startingSquare.row();
             }
-            if (GameStates.isIsMyTurn()) {
+            if (GameStates.isIsMyTurn() && isMyPiece()) {
                 if (GameStates.iAmWhite() && isWhitePiece || !GameStates.iAmWhite() && !isWhitePiece)
                     highlightPossibleSquares(movedPiece, isWhitePiece);
             }
@@ -159,7 +150,7 @@ public class ChessboardController {
 
     private void setOnDragDropped(Button currentButton, DragEvent event) {
         clearHighlighting();
-        if (!GameStates.isIsMyTurn() || selectedPiece == null) return;
+        if (!GameStates.isIsMyTurn() || selectedPiece == null || !isMyPiece()) return;
         StackPane cell = (StackPane) currentButton.getParent();
         IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
         this.destinationsSquare = destinationSquare;
@@ -174,7 +165,6 @@ public class ChessboardController {
     }
 
     private void updateCheckStatus() {
-        System.out.println("White King checked: " + Game.kingChecked(true) + "\n Black checked: " + Game.kingChecked(false));
         if (Game.kingChecked(false) && !Game.checkMated(false)) {
             blackKing.setEffect(new Glow(0.7));
             blackKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
@@ -200,7 +190,7 @@ public class ChessboardController {
     private StackPane getPaneFromCoordinate(IntIntPair rc) {
         StackPane result = null;
         for (Node node : chessboardGrid.getChildren()) {
-            if (Objects.requireNonNullElse(GridPane.getRowIndex(node), 0) == rc.getRow() && Objects.requireNonNullElse(GridPane.getColumnIndex(node), 0) == rc.getColumn()) {
+            if (Objects.requireNonNullElse(GridPane.getRowIndex(node), 0) == rc.row() && Objects.requireNonNullElse(GridPane.getColumnIndex(node), 0) == rc.column()) {
                 result = (StackPane) node;
             }
         }
@@ -211,17 +201,17 @@ public class ChessboardController {
         if (isWhitePiece && GameStates.iAmWhite() || !isWhitePiece && !GameStates.iAmWhite()) {
             List<String> list = null;
             if (movedPiece.matches("[bB]")) {
-                list = BishopMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+                list = BishopMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
             } else if (movedPiece.matches("[nN]")) {
-                list = KnightMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+                list = KnightMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
             } else if (movedPiece.matches("[qQ]")) {
-                list = QueenMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+                list = QueenMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
             } else if (movedPiece.matches("[rR]")) {
-                list = RookMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+                list = RookMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
             } else if (movedPiece.matches("[kK]")) {
-                list = KingMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+                list = KingMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
             } else if (movedPiece.isEmpty()) {
-                list = PawnMoveTracker.possibleMoves(Game.board, startingSquare.getRow(), startingSquare.getColumn(), isWhitePiece);
+                list = PawnMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
             }
             assert list != null;
             this.possibleSquares = list;
@@ -247,7 +237,7 @@ public class ChessboardController {
     private List<String> possibleSquares;
 
 
-    private void clearHighlighting() {
+    public void clearHighlighting() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 StackPane square = getPaneFromCoordinate(new IntIntPair(i, j));
@@ -373,25 +363,25 @@ public class ChessboardController {
                 }
             }
         }
-        if (movedPiece.isEmpty() && !move.contains("x") && (destinationSquare.getColumn() != pawnFile || destinationSquare.getRow() >= pawnRank)) {
+        if (movedPiece.isEmpty() && !move.contains("x") && (destinationSquare.column() != pawnFile || destinationSquare.row() >= pawnRank)) {
             move = "wrong";
         }
-        if (movedPiece.isEmpty() && move.contains("x") && (Math.abs(destinationSquare.getColumn() - pawnFile) != 1 || destinationSquare.getRow() + 1 != pawnRank)) {
+        if (movedPiece.isEmpty() && move.contains("x") && (Math.abs(destinationSquare.column() - pawnFile) != 1 || destinationSquare.row() + 1 != pawnRank)) {
             move = "wrong";
         }
         if (movedPiece.isEmpty() && !move.contains("x")) { // en passant
-            if (startingSquare.getRow() == 3 && destinationSquare.getRow() == 2 && Math.abs(destinationSquare.getColumn() - startingSquare.getColumn()) == 1) {
+            if (startingSquare.row() == 3 && destinationSquare.row() == 2 && Math.abs(destinationSquare.column() - startingSquare.column()) == 1) {
                 try {
-                    if (isWhite && (Game.board[startingSquare.getRow()][startingSquare.getColumn() - 1].equals("p"))) {
+                    if (isWhite && (Game.board[startingSquare.row()][startingSquare.column() - 1].equals("p"))) {
                         move = file + "x" + cell.getAccessibleText();
-                    } else if (!isWhite && (Game.board[7 - startingSquare.getRow()][7 - startingSquare.getColumn() - 1].equals("P"))) {
+                    } else if (!isWhite && (Game.board[7 - startingSquare.row()][7 - startingSquare.column() - 1].equals("P"))) {
                         move = file + "x" + cell.getAccessibleText();
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {}
                 try {
-                    if (isWhite && Game.board[startingSquare.getRow()][startingSquare.getColumn() + 1].equals("p")) {
+                    if (isWhite && Game.board[startingSquare.row()][startingSquare.column() + 1].equals("p")) {
                         move = movedPiece + file + "x" + cell.getAccessibleText();
-                    } else if (!isWhite && (Game.board[7 - startingSquare.getRow()][7 - startingSquare.getColumn() + 1].equals("P"))) {
+                    } else if (!isWhite && (Game.board[7 - startingSquare.row()][7 - startingSquare.column() + 1].equals("P"))) {
                         move = file + "x" + cell.getAccessibleText();
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {}
@@ -522,4 +512,26 @@ public class ChessboardController {
     private boolean isLegalDragDrop() {
         return !ApplicationData.getInstance().isIllegalMove() && this.destinationsSquare != null && !this.destinationsSquare.equals(this.startingSquare) && !move.equals("wrong");
     }
+
+    private boolean isMyPiece() {
+        int rank = GameStates.iAmWhite() ? startingSquare.row() : 7 - startingSquare.row();
+        int file = GameStates.iAmWhite() ? startingSquare.column() : 7 - startingSquare.column();
+        if (GameStates.iAmWhite()) {
+            return Game.board[rank][file].matches("[BQRKNP]");
+        } else {
+            return Game.board[rank][file].matches("[bqrknp]");
+        }
+    }
+
+    private void handleDragDone(DragEvent event) {
+        System.out.println("My turn " + !GameStates.isIsMyTurn());
+        updateCheckStatus();
+        if (!GameStates.isIsMyTurn() && isLegalDragDrop()) {
+            highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
+        } else {
+            new SoundPlayer().playIllegalMoveSound();
+            clearHighlighting();
+        }
+    }
+
 }

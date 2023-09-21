@@ -1,5 +1,6 @@
 package Networking;
 
+import Exceptions.IllegalMoveException;
 import chessModel.Game;
 import com.example.controller.GameStates;
 import com.example.controller.LoginViewController;
@@ -103,6 +104,8 @@ public class Server {
                     e.printStackTrace();
                     closeEverything(socket, bufferedReader, bufferedWriter);
                     break;
+                } catch (IllegalMoveException e) {
+                    new SoundPlayer().playIllegalMoveSound();
                 }
             }
         }).start();
