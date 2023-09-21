@@ -54,6 +54,7 @@ public class Game {
             ApplicationData.getInstance().setIllegalMove(true);
             new SoundPlayer().playIllegalMoveSound();
             print(board);
+            Platform.runLater(() -> ApplicationData.getInstance().getChessboardController().clearHighlighting());
             throw new IllegalMoveException(move);
         } else {
             playMoveSound(move, white);

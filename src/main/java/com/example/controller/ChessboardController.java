@@ -48,9 +48,13 @@ public class ChessboardController {
     private IntIntPair destinationsSquare;
     private Button lastHoveredButton;
     private String hoveredButtonStyle;
+    private boolean myTurn;
+    private StackPane lastStart;
+    private StackPane lastEnd;
 
     @FXML
     private void initialize() {
+        this.myTurn = GameStates.iAmWhite();
         if (!GameStates.isServer())
             new SoundPlayer().playGameStartSound();
         for (Node node : chessboardGrid.getChildren()) {
@@ -82,7 +86,6 @@ public class ChessboardController {
     }
 
     private void setButtonListeners(Button currentButton) {
-        int movePlayed = Game.moveList.size();
         currentButton.setStyle(currentButton.getStyle() + "-fx-background-radius: 0;");
         currentButton.setOnDragDetected(event -> setOnDragDetection(currentButton));
         currentButton.setOnDragOver(event -> {
@@ -285,6 +288,7 @@ public class ChessboardController {
 
     public void updateBoard(String opponentMove) {
         this.destinationsSquare = null;
+        this.myTurn = true;
         updateCheckStatus();
         clearHighlighting();
         int startRow = 7 - Character.getNumericValue(opponentMove.charAt(0));
@@ -421,6 +425,20 @@ public class ChessboardController {
         } else {
             ApplicationData.getInstance().getClient().sendMessageToServer(message);
         }
+        if (message.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?")) {
+            myTurn = false;
+            String coordinate = message.replaceAll("[^0-9]", "");
+            System.out.println("Message: " + message + "coordinate: " + coordinate);
+            IntIntPair startPair = new IntIntPair(Character.getNumericValue(coordinate.charAt(0)), Character.getNumericValue(coordinate.charAt(1)));
+            System.out.println("start " + startPair);
+            IntIntPair endPair = new IntIntPair(Character.getNumericValue(coordinate.charAt(2)), Character.getNumericValue(coordinate.charAt(3)));
+            System.out.println("endpair " + endPair);
+            StackPane start = getPaneFromCoordinate(startPair);
+            StackPane end = getPaneFromCoordinate(endPair);
+            this.lastStart = start;
+            this.lastEnd = end;
+            highlightLastMove(start, end);
+        }
     }
 
     private void handleMoveTransmission(IntIntPair destinationSquare) {
@@ -526,11 +544,11 @@ public class ChessboardController {
     private void handleDragDone(DragEvent event) {
         System.out.println("My turn " + !GameStates.isIsMyTurn());
         updateCheckStatus();
-        if (!GameStates.isIsMyTurn() && isLegalDragDrop()) {
-            highlightLastMove(getPaneFromCoordinate(startingSquare), getPaneFromCoordinate(destinationsSquare));
-        } else {
+        if (GameStates.isIsMyTurn() || !isLegalDragDrop()) {
             new SoundPlayer().playIllegalMoveSound();
-            clearHighlighting();
+        }
+        if (!myTurn) {
+            highlightLastMove(this.lastStart, this.lastEnd);
         }
     }
 

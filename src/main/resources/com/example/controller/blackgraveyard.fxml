@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<HBox fx:id="gyBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="35.0" prefWidth="175.0" spacing="3.0" xmlns="http://javafx.com/javafx/20"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.BlackGraveyardController">
     <children>
-        <StackPane fx:id="queenPane">
+        <StackPane>
             <children>
                 <Label fx:id="qLabel" maxHeight="10.0" maxWidth="10.0" prefHeight="10.0" prefWidth="10.0"
                        translateX="14.0" translateY="12.0"/>
