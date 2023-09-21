@@ -15,3 +15,9 @@
 .jfx-slider>.colored-track {
     -fx-background-color: linear-gradient(to right, white, #354253);
 }
+
+
+/* Styling the animated thumb */
+.jfx-slider>.animated-thumb {
+    -fx-background-color: #354253;
+}
