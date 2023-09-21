@@ -134,7 +134,7 @@
                         <configuration>
                             <headerType>gui</headerType>
                             <jar>${project.build.directory}/${artifactId}-${version}-shaded.jar</jar>
-                            <outfile>${project.build.directory}/howtodoinjava.exe</outfile>
+                            <outfile>${project.build.directory}/onlineChess.exe</outfile>
                             <downloadUrl>http://java.com/download</downloadUrl>
                             <classPath>
                                 <mainClass>com.example.controller.Main</mainClass>
