@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import themes.StandardTheme;
 import util.ApplicationData;
 import util.IntIntPair;
 import util.SoundPlayer;
@@ -79,14 +80,15 @@ public class ChessboardController {
         int r = Objects.requireNonNullElse(GridPane.getRowIndex(current), 0);
         int c = Objects.requireNonNullElse(GridPane.getColumnIndex(current), 0);
         if ((r + c) % 2 == 0) {
-            current.setStyle("-fx-background-radius: 0;" + "-fx-background-color: white;");
+            current.setStyle(StandardTheme.lightSquareStyle);
+            current.getChildren().get(0).setStyle(StandardTheme.lightSquareStyle);
         } else {
-            current.setStyle("-fx-background-radius: 0;" + "-fx-background-color: darkgrey;");
+            current.setStyle(StandardTheme.darkSquareStyle);
+            current.getChildren().get(0).setStyle(StandardTheme.darkSquareStyle);
         }
     }
 
     private void setButtonListeners(Button currentButton) {
-        currentButton.setStyle(currentButton.getStyle() + "-fx-background-radius: 0;");
         currentButton.setOnDragDetected(event -> setOnDragDetection(currentButton));
         currentButton.setOnDragOver(event -> {
             if (event.getGestureSource() != currentButton && event.getDragboard().hasImage()) {
@@ -101,9 +103,9 @@ public class ChessboardController {
                 if (this.possibleSquares.contains(coordinate)) {
                     hoveredButtonStyle = hovered.getParent().getStyle();
                     if (hovered.getParent().getChildrenUnmodifiable().size() > 1) {
-                        hovered.setStyle("-fx-background-color: #FF333370;" + "-fx-background-radius: 0;");
+                        hovered.setStyle(StandardTheme.hoveredXStyle);
                     } else {
-                        hovered.setStyle("-fx-background-color: #87CEEB80;" + "-fx-background-radius: 0;");
+                        hovered.setStyle(StandardTheme.hoveredStyle);
                     }
                     lastHoveredButton = hovered;
                 }
@@ -170,20 +172,20 @@ public class ChessboardController {
     private void updateCheckStatus() {
         if (Game.kingChecked(false) && !Game.checkMated(false)) {
             blackKing.setEffect(new Glow(0.7));
-            blackKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+            blackKingButton.setStyle(StandardTheme.kingChecked);
         } else if (Game.checkMated(false)) {
             blackKing.setEffect(new Glow(0.8));
-            blackKingButton.setStyle("-fx-background-color: #990c02;");
+            blackKingButton.setStyle(StandardTheme.kingChecked);
         } else if (!Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: transparent;");
             blackKing.setEffect(null);
         }
         if (Game.kingChecked(true) && !Game.checkMated(true)) {
             whiteKing.setEffect(new Glow(0.4));
-            whiteKingButton.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5);");
+            whiteKingButton.setStyle(StandardTheme.kingChecked);
         } else if (Game.checkMated(true)) {
             whiteKing.setEffect(new Glow(0.8));
-            whiteKingButton.setStyle("-fx-background-color: #990c02;");
+            whiteKingButton.setStyle(StandardTheme.kingChecked);
         } else if (!Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: transparent;");
             whiteKing.setEffect(null);
@@ -246,9 +248,9 @@ public class ChessboardController {
                 StackPane square = getPaneFromCoordinate(new IntIntPair(i, j));
                 Button button = (Button) square.getChildren().get(0);
                 if ((i + j) % 2 == 0) {
-                    button.setStyle("-fx-background-color: white;" + "-fx-background-radius: 0;");
+                    button.setStyle(StandardTheme.lightSquareStyle);
                 } else {
-                    button.setStyle("-fx-background-color: darkgrey;" + "-fx-background-radius: 0;");
+                    button.setStyle(StandardTheme.darkSquareStyle);
                 }
                 if (square.getChildren().size() > 1) {
                     Button movedPiece = (Button) square.getChildren().get(1);
@@ -272,8 +274,8 @@ public class ChessboardController {
         int scCi = Objects.requireNonNullElse(GridPane.getColumnIndex(startCell), 0);
         int ecRi = Objects.requireNonNullElse(GridPane.getRowIndex(endCell), 0);
         int ecCi = Objects.requireNonNullElse(GridPane.getColumnIndex(endCell), 0);
-        String light = "-fx-background-color: #d1f0d5;"; /* Green color */
-        String dark = "-fx-background-color: derive(#d1f0d5, -20%);";
+        String light = StandardTheme.lastMoveLight; /* Green color */
+        String dark = StandardTheme.lastMoveDark;
         if ((scCi + scRi) % 2 == 0) { // white square
             startCell.getChildren().get(0).setStyle(startCell.getChildren().get(0).getStyle() + light);
         } else {
@@ -302,15 +304,10 @@ public class ChessboardController {
         highlightLastMove(startCell, endCell);
         boolean enpassant = Game.moveList.get(Game.moveList.size() - 1).contains("x") && endCell.getChildren().size() == 1;
         Button movingPiece = (Button) startCell.getChildren().remove(1);
-        if (opponentMove.matches("[0-9]{2}\\.[0-9]{2}[A-Q]")) {
+        if (opponentMove.matches("[0-9]{2}\\.[0-9]{2}[A-R]")) {
             String piece = (GameStates.iAmWhite() ? "b" : "w") + opponentMove.charAt(opponentMove.length() - 1);
             System.out.println(piece);
-            Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + piece + ".png")));
-            ImageView h = new ImageView(promotion);
-            h.setFitHeight(50);
-            h.setFitWidth(50);
-            movingPiece.setGraphic(h);
-            movingPiece.setAccessibleText(piece);
+            setPromotedPiece(piece, movingPiece);
         }
         endCell.getChildren().add(movingPiece);
         if (endCell.getChildren().size() == 3) {
@@ -381,14 +378,16 @@ public class ChessboardController {
                     } else if (!isWhite && (Game.board[7 - startingSquare.row()][7 - startingSquare.column() - 1].equals("P"))) {
                         move = file + "x" + cell.getAccessibleText();
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {}
+                } catch (ArrayIndexOutOfBoundsException e) {
+                }
                 try {
                     if (isWhite && Game.board[startingSquare.row()][startingSquare.column() + 1].equals("p")) {
                         move = movedPiece + file + "x" + cell.getAccessibleText();
                     } else if (!isWhite && (Game.board[7 - startingSquare.row()][7 - startingSquare.column() + 1].equals("P"))) {
                         move = file + "x" + cell.getAccessibleText();
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {}
+                } catch (ArrayIndexOutOfBoundsException e) {
+                }
             }
         }
         if (Game.board[7][4].equals("K") && (move.equals("Kg1") || move.equals("Kxh1"))
@@ -473,12 +472,7 @@ public class ChessboardController {
                     case "R" -> piece = (GameStates.iAmWhite()) ? "wR" : "bR";
                     case "B" -> piece = (GameStates.iAmWhite()) ? "wB" : "bB";
                 }
-                Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + piece + ".png")));
-                ImageView h = new ImageView(promotion);
-                h.setFitHeight(50);
-                h.setFitWidth(50);
-                selectedPiece.setGraphic(h);
-                selectedPiece.setAccessibleText(piece);
+                setPromotedPiece(piece, selectedPiece);
                 ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
                 cell.getChildren().add(selectedPiece);
                 setButtonListeners(selectedPiece);
@@ -525,6 +519,15 @@ public class ChessboardController {
                 getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 0 : 7)).getChildren().remove(1);
             }
         }
+    }
+
+    private void setPromotedPiece(String piece, Button selectedPiece) {
+        Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + piece + ".png")));
+        ImageView h = new ImageView(promotion);
+        h.setFitHeight(50);
+        h.setFitWidth(50);
+        selectedPiece.setGraphic(h);
+        selectedPiece.setAccessibleText(piece);
     }
 
     private boolean isLegalDragDrop() {
