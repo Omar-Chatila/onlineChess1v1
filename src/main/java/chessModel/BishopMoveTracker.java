@@ -32,13 +32,25 @@ public class BishopMoveTracker {
             while (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
                 String squareContent = board[rank + i * dy[d]][file + i * dx[d]];
                 if (squareContent.matches("B") && white) {
-                    board[rank + i * dy[d]][file + i * dx[d]] = ".";
-                    board[rank][file] = "B";
-                    return !Game.kingChecked(true, board);
+                    String[][] copy = copyBoard(board);
+                    copy[rank + i * dy[d]][file + i * dx[d]] = ".";
+                    copy[rank][file] = "B";
+                    if(!Game.kingChecked(true, copy)) {
+                        Game.board = copy;
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else if (squareContent.matches("b") && !white) {
-                    board[rank + i * dy[d]][file + i * dx[d]] = ".";
-                    board[rank][file] = "b";
-                    return !Game.kingChecked(false, board);
+                    String[][] copy = copyBoard(board);
+                    copy[rank + i * dy[d]][file + i * dx[d]] = ".";
+                    copy[rank][file] = "b";
+                    if(!Game.kingChecked(true, copy)) {
+                        Game.board = copy;
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else if (!squareContent.matches("[bB.]")) {
                     break;
                 }
@@ -72,19 +84,8 @@ public class BishopMoveTracker {
                             moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
                         }
                     }
-                } else if (white && squareContent.matches("[bqrnp]")) {
-                    copy[rank + i * dy[d]][file + i * dx[d]] = "B";
-                    copy[rank][file] = ".";
-                    if (!Game.kingChecked(true, copy))
-                        moves.add(toAdd);
-                    break;
-                } else if (!white && squareContent.matches("[BQRNP]")) {
-                    copy[rank + i * dy[d]][file + i * dx[d]] = "b";
-                    copy[rank][file] = ".";
-                    if (!Game.kingChecked(false, copy))
-                        moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
-                    break;
                 } else {
+                    whitesOppPiece(rank, file, white, moves, copy, d, i, squareContent, toAdd);
                     break;
                 }
                 i++;
@@ -92,6 +93,21 @@ public class BishopMoveTracker {
             }
         }
         return moves;
+    }
+
+    private static void whitesOppPiece(int rank, int file, boolean white, List<String> moves, String[][] copy, int d, int i, String squareContent, String toAdd) {
+        if (white && squareContent.matches("[bqrnp]")) {
+            copy[rank + i * dy[d]][file + i * dx[d]] = "B";
+            copy[rank][file] = ".";
+            if (!Game.kingChecked(true, copy))
+                moves.add(toAdd);
+        } else if (!white && squareContent.matches("[BQRNP]")) {
+            copy[rank + i * dy[d]][file + i * dx[d]] = "b";
+            copy[rank][file] = ".";
+            if (!Game.kingChecked(false, copy))
+                moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
+
+        }
     }
 
     public static List<String> possibleMovesLogic(String[][] board, int rank, int file, boolean white) {
@@ -114,21 +130,7 @@ public class BishopMoveTracker {
                             moves.add(((rank + i * dy[d])) + "" + ((file + i * dx[d])));
                         }
                     }
-                } else if (white && squareContent.matches("[bqrnp]")) {
-                    copy[rank + i * dy[d]][file + i * dx[d]] = "B";
-                    copy[rank][file] = ".";
-                    if (!Game.kingChecked(true, copy))
-                        moves.add(toAdd);
-                    break;
-                } else if (!white && squareContent.matches("[BQRNP]")) {
-                    copy[rank + i * dy[d]][file + i * dx[d]] = "b";
-                    copy[rank][file] = ".";
-                    if (!Game.kingChecked(false, copy))
-                        moves.add((7 - (rank + i * dy[d])) + "" + (7 - (file + i * dx[d])));
-                    break;
-                } else {
-                    break;
-                }
+                } else whitesOppPiece(rank, file, white, moves, copy, d, i, squareContent, toAdd);
                 i++;
                 copy = copyBoard(board);
             }

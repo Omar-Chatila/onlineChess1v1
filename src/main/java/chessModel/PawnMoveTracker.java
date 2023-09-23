@@ -8,15 +8,6 @@ import static util.GameHelper.copyBoard;
 public class PawnMoveTracker {
     private static final List<String> possibleMovesLogicList = new ArrayList<>();
     private static String whiteEnpassant;
-
-    public static String getWhiteEnpassant() {
-        return whiteEnpassant;
-    }
-
-    public static String getBlackEnpassant() {
-        return blackEnpassant;
-    }
-
     private static String blackEnpassant;
 
 
@@ -56,43 +47,58 @@ public class PawnMoveTracker {
 
     public static boolean movePawn(String[][] board, String move, boolean white) {
         if (move.contains("=")) {
+            String[][] copy = copyBoard(board);
             int file = move.charAt(0) - 'a', rank = 8 - Character.getNumericValue(move.charAt(move.contains("x") ? 3 : 1));
             if (move.contains("x")) {
                 String piece = Character.toString(move.charAt(move.length() - 1));
                 String newPiece = white ? piece : piece.toLowerCase();
                 int capFile = move.charAt(2) - 'a';
-                board[rank + (white ? 1 : -1)][file] = ".";
-                board[rank][capFile] = newPiece;
+                copy[rank + (white ? 1 : -1)][file] = ".";
+                copy[rank][capFile] = newPiece;
             } else {
-                board[rank + (white ? 1 : -1)][file] = ".";
-                board[rank][file] = white ? Character.toString(move.charAt(3)) : Character.toString(move.charAt(3)).toLowerCase();
+                copy[rank + (white ? 1 : -1)][file] = ".";
+                copy[rank][file] = white ? Character.toString(move.charAt(3)) : Character.toString(move.charAt(3)).toLowerCase();
             }
-            return !Game.kingChecked(white);
+            if( !Game.kingChecked(white)) {
+                Game.board = copy;
+                return true;
+            }
+            return false;
         }
         if (validatePawn(board, move, white) && !move.contains("x")) {
             int file = move.charAt(0) - 'a', rank = 8 - Character.getNumericValue(move.charAt(1));
+            String[][] copy = copyBoard(board);
             if (rank == (white ? 4 : 3)) {
-                board[rank + (white ? 1 : -1)][file] = ".";
-                if (board[rank + (white ? 2 : -2)][file].equals(white ? "P" : "p")) {
-                    board[rank + (white ? 2 : -2)][file] = ".";
+                copy[rank + (white ? 1 : -1)][file] = ".";
+                if (copy[rank + (white ? 2 : -2)][file].equals(white ? "P" : "p")) {
+                    copy[rank + (white ? 2 : -2)][file] = ".";
                 }
             } else {
-                board[rank + (white ? 1 : -1)][file] = ".";
+                copy[rank + (white ? 1 : -1)][file] = ".";
             }
-            board[rank][file] = white ? "P" : "p";
-            return !Game.kingChecked(white);
+            copy[rank][file] = white ? "P" : "p";
+            if( !Game.kingChecked(white)) {
+                Game.board = copy;
+                return true;
+            }
+            return false;
         } else if (validatePawn(board, move, white) && move.contains("x")) {
             int pawnFile = move.charAt(0) - 'a', capFile = move.charAt(2) - 'a';
             int capRank = 8 - Character.getNumericValue(move.charAt(3));
             int pawnRank = white ? capRank + 1 : capRank - 1;
+            String[][] copy = copyBoard(board);
             if (white && blackEnpassant != null && blackEnpassant.equals(move.substring(2))) {
-                board[3][capFile] = ".";
+                copy[3][capFile] = ".";
             } else if (!white && whiteEnpassant != null && whiteEnpassant.equals(move.substring(2))) {
-                board[4][capFile] = ".";
+                copy[4][capFile] = ".";
             }
-            board[pawnRank][pawnFile] = ".";
-            board[capRank][capFile] = white ? "P" : "p";
-            return !Game.kingChecked(white);
+            copy[pawnRank][pawnFile] = ".";
+            copy[capRank][capFile] = white ? "P" : "p";
+            if( !Game.kingChecked(white)) {
+                Game.board = copy;
+                return true;
+            }
+            return false;
         }
         return false;
     }

@@ -161,6 +161,7 @@ public class ChessboardController {
         StackPane cell = (StackPane) currentButton.getParent();
         IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
         this.destinationsSquare = destinationSquare;
+        if (!this.possibleSquares.contains(destinationSquare.toString())) return;
         String move = generateMove(destinationSquare, cell);
         if (ApplicationData.getInstance().isIllegalMove()) return;
         if (this.destinationsSquare.equals(this.startingSquare)) return;

@@ -37,9 +37,15 @@ public class KnightMoveTracker {
                     if ((move.matches("N[a-h][a-h][1-8]") && fileX == startFile) ||
                             (move.matches("N[1-8][a-h][1-8]") && rankY == startRank) ||
                             (!move.matches("N[a-h][a-h][1-8]") && !move.matches("N[1-8][a-h][1-8]"))) {
-                        board[rankY][fileX] = ".";
-                        board[rank][file] = white ? "N" : "n";
-                        return !Game.kingChecked(white);
+                        String[][] copy = copyBoard(board);
+                        copy[rankY][fileX] = ".";
+                        copy[rank][file] = white ? "N" : "n";
+                        if (!Game.kingChecked(white)) {
+                            Game.board = copy;
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                 }
             }

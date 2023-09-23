@@ -41,15 +41,27 @@ public class KingMoveTracker { // TODO check if king is in other king's space
             if (isValidSquare(rank + i * dy[d], file + i * dx[d])) {
                 String squareContent = board[rank + i * dy[d]][file + i * dx[d]];
                 if (squareContent.matches("K") && white) {
-                    board[rank + i * dy[d]][file + i * dx[d]] = ".";
-                    board[rank][file] = "K";
+                    String[][] copy = copyBoard(board);
+                    copy[rank + i * dy[d]][file + i * dx[d]] = ".";
+                    copy[rank][file] = "K";
                     whiteKingHasMoved = true;
-                    return !Game.kingChecked(true);
+                    if(!Game.kingChecked(true, copy)) {
+                        Game.board = copy;
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else if (squareContent.matches("k") && !white) {
-                    board[rank + i * dy[d]][file + i * dx[d]] = ".";
-                    board[rank][file] = "k";
+                    String[][] copy = copyBoard(board);
+                    copy[rank + i * dy[d]][file + i * dx[d]] = ".";
+                    copy[rank][file] = "k";
                     blackKingHasMoved = true;
-                    return !Game.kingChecked(false);
+                    if(!Game.kingChecked(false, copy)) {
+                        Game.board = copy;
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
