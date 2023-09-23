@@ -53,6 +53,7 @@ public class ChessboardController {
     private StackPane lastStart;
     private StackPane lastEnd;
     private Theme theme;
+    private List<String> possibleSquares;
 
     @FXML
     private void initialize() {
@@ -122,6 +123,23 @@ public class ChessboardController {
         });
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
         currentButton.setOnDragDone(this::handleDragDone);
+        currentButton.setOnAction(event -> {
+            clearHighlighting();
+            Node button = (Node) event.getSource();
+            StackPane square = (StackPane) button.getParent();
+            int rank = Objects.requireNonNullElse(GridPane.getRowIndex(square), 0);
+            int file = Objects.requireNonNullElse(GridPane.getColumnIndex(square), 0);
+            boolean isWhite = GameStates.iAmWhite();
+            this.startingSquare = new IntIntPair(rank, file);
+            if (!isWhite) {
+                rank = 7 - rank;
+                file = 7 - file;
+            }
+            highlightPossibleSquares(Game.board[rank][file], isWhite);
+            if (possibleSquares.contains(startingSquare.toString())) {
+                System.out.println("MOOOOOOOOOOOOVE");
+            }
+        });
     }
 
     private void setOnDragDetection(Button currentButton) {
@@ -218,7 +236,7 @@ public class ChessboardController {
                 list = RookMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
             } else if (movedPiece.matches("[kK]")) {
                 list = KingMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
-            } else if (movedPiece.isEmpty()) {
+            } else if (movedPiece.isEmpty() || movedPiece.matches("[pP]")) {
                 list = PawnMoveTracker.possibleMoves(Game.board, startingSquare.row(), startingSquare.column(), isWhitePiece);
             }
             assert list != null;
@@ -241,9 +259,6 @@ public class ChessboardController {
             }
         }
     }
-
-    private List<String> possibleSquares;
-
 
     public void clearHighlighting() {
         for (int i = 0; i < 8; i++) {
