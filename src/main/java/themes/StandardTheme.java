@@ -1,12 +1,43 @@
 package themes;
 
-public class StandardTheme {
-    public static final String lightSquareStyle = "-fx-background-radius: 0;" + "-fx-background-color: #DEE3E6;";
-    public static final String darkSquareStyle = "-fx-background-radius: 0;" + "-fx-background-color: #8CA2AD;";
-    public static final String lastMoveLight = "-fx-background-color: #d1f0d5;"; /* Green color */
-    public static final String lastMoveDark = "-fx-background-color: derive(#d1f0d5, -20%);";
-    public static final String hoveredXStyle = "-fx-background-color: rgba(236,88,88,0.44);" + "-fx-background-radius: 0;";
-    public static final String hoveredStyle = "-fx-background-color: #87CEEB80;" + "-fx-background-radius: 0;";
-    public static final String kingChecked = "-fx-background-color: rgba(255, 0, 0, 0.5);" + "-fx-background-radius: 0;";
+public class StandardTheme extends Theme {
+    public String getLightSquareStyle() {
+        return "-fx-background-radius: 0;" + "-fx-background-color: #DEE3E6;";
+    }
 
+    @Override
+    public String getDarkSquareStyle() {
+        return "-fx-background-radius: 0;" + "-fx-background-color: #8CA2AD;";
+    }
+
+    @Override
+    public String getLastMoveLight() {
+        /* Green color */
+        return "-fx-background-color: #d1f0d5;";
+    }
+
+    @Override
+    public String getLastMoveDark() {
+        return "-fx-background-color: derive(#d1f0d5, -20%);";
+    }
+
+    @Override
+    public String getHoveredXStyle() {
+        return "-fx-background-color: rgba(236,88,88,0.44);" + "-fx-background-radius: 0;";
+    }
+
+    @Override
+    public String getHoveredStyle() {
+        return "-fx-background-color: #87CEEB80;" + "-fx-background-radius: 0;";
+    }
+
+    @Override
+    public String getKingCheckedStyle() {
+        return "-fx-background-color: rgba(255, 0, 0, 0.5);" + "-fx-background-radius: 0;";
+    }
+
+    @Override
+    public String getBackGround() {
+        return "-fx-background-color: linear-gradient(to bottom, #1E3050, #1E3050E0); -fx-background-size: cover;";
+    }
 }

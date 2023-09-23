@@ -17,6 +17,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import themes.StandardTheme;
+import themes.Theme;
+import util.ApplicationData;
 import util.StageMover;
 
 import java.io.IOException;
@@ -54,7 +57,7 @@ public class LoginViewController {
     @FXML
     private Hyperlink helpLink;
     private ScaleTransition scaleTransition;
-
+    private Theme theme;
     private static ServerController serverController;
     private static ClientController clientController;
 
@@ -67,6 +70,8 @@ public class LoginViewController {
         portField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) connectButton.fire();
         });
+        theme = new StandardTheme();
+        ApplicationData.getInstance().setTheme(theme);
     }
 
     private void setTimeSlider() {

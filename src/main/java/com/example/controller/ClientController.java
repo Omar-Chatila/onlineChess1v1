@@ -16,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import themes.Theme;
 import util.ApplicationData;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.util.ResourceBundle;
 @SuppressWarnings("CallToPrintStackTrace")
 public class ClientController implements Initializable, Client.ClientCallback {
 
+    public AnchorPane backGroundPane;
     @FXML
     private AnchorPane chessBoardPane;
     @FXML
@@ -53,6 +55,7 @@ public class ClientController implements Initializable, Client.ClientCallback {
     private AnchorPane chatBox;
     private AnchorPane tablePane;
     private boolean tableOpened;
+    private Theme theme;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -213,6 +216,8 @@ public class ClientController implements Initializable, Client.ClientCallback {
 
 
     private void loadUIElements() throws Exception {
+        this.theme = ApplicationData.getInstance().getTheme();
+        backGroundPane.setStyle(theme.getBackGround());
         loadMovesTable();
         loadChatBox();
         loadInfoPane();

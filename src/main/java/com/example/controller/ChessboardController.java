@@ -20,7 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import themes.StandardTheme;
+import themes.Theme;
 import util.ApplicationData;
 import util.IntIntPair;
 import util.SoundPlayer;
@@ -52,9 +52,11 @@ public class ChessboardController {
     private boolean myTurn;
     private StackPane lastStart;
     private StackPane lastEnd;
+    private Theme theme;
 
     @FXML
     private void initialize() {
+        this.theme = ApplicationData.getInstance().getTheme();
         this.myTurn = GameStates.iAmWhite();
         if (!GameStates.isServer())
             new SoundPlayer().playGameStartSound();
@@ -80,11 +82,11 @@ public class ChessboardController {
         int r = Objects.requireNonNullElse(GridPane.getRowIndex(current), 0);
         int c = Objects.requireNonNullElse(GridPane.getColumnIndex(current), 0);
         if ((r + c) % 2 == 0) {
-            current.setStyle(StandardTheme.lightSquareStyle);
-            current.getChildren().get(0).setStyle(StandardTheme.lightSquareStyle);
+            current.setStyle(theme.getLightSquareStyle());
+            current.getChildren().get(0).setStyle(theme.getLightSquareStyle());
         } else {
-            current.setStyle(StandardTheme.darkSquareStyle);
-            current.getChildren().get(0).setStyle(StandardTheme.darkSquareStyle);
+            current.setStyle(theme.getDarkSquareStyle());
+            current.getChildren().get(0).setStyle(theme.getDarkSquareStyle());
         }
     }
 
@@ -103,9 +105,9 @@ public class ChessboardController {
                 if (this.possibleSquares.contains(coordinate)) {
                     hoveredButtonStyle = hovered.getParent().getStyle();
                     if (hovered.getParent().getChildrenUnmodifiable().size() > 1) {
-                        hovered.setStyle(StandardTheme.hoveredXStyle);
+                        hovered.setStyle(theme.getHoveredXStyle());
                     } else {
-                        hovered.setStyle(StandardTheme.hoveredStyle);
+                        hovered.setStyle(theme.getHoveredStyle());
                     }
                     lastHoveredButton = hovered;
                 }
@@ -172,20 +174,20 @@ public class ChessboardController {
     private void updateCheckStatus() {
         if (Game.kingChecked(false) && !Game.checkMated(false)) {
             blackKing.setEffect(new Glow(0.7));
-            blackKingButton.setStyle(StandardTheme.kingChecked);
+            blackKingButton.setStyle(theme.getKingCheckedStyle());
         } else if (Game.checkMated(false)) {
             blackKing.setEffect(new Glow(0.8));
-            blackKingButton.setStyle(StandardTheme.kingChecked);
+            blackKingButton.setStyle(theme.getKingCheckedStyle());
         } else if (!Game.kingChecked(false)) {
             blackKingButton.setStyle("-fx-background-color: transparent;");
             blackKing.setEffect(null);
         }
         if (Game.kingChecked(true) && !Game.checkMated(true)) {
             whiteKing.setEffect(new Glow(0.4));
-            whiteKingButton.setStyle(StandardTheme.kingChecked);
+            whiteKingButton.setStyle(theme.getKingCheckedStyle());
         } else if (Game.checkMated(true)) {
             whiteKing.setEffect(new Glow(0.8));
-            whiteKingButton.setStyle(StandardTheme.kingChecked);
+            whiteKingButton.setStyle(theme.getKingCheckedStyle());
         } else if (!Game.kingChecked(true)) {
             whiteKingButton.setStyle("-fx-background-color: transparent;");
             whiteKing.setEffect(null);
@@ -248,9 +250,9 @@ public class ChessboardController {
                 StackPane square = getPaneFromCoordinate(new IntIntPair(i, j));
                 Button button = (Button) square.getChildren().get(0);
                 if ((i + j) % 2 == 0) {
-                    button.setStyle(StandardTheme.lightSquareStyle);
+                    button.setStyle(theme.getLightSquareStyle());
                 } else {
-                    button.setStyle(StandardTheme.darkSquareStyle);
+                    button.setStyle(theme.getDarkSquareStyle());
                 }
                 if (square.getChildren().size() > 1) {
                     Button movedPiece = (Button) square.getChildren().get(1);
@@ -274,8 +276,8 @@ public class ChessboardController {
         int scCi = Objects.requireNonNullElse(GridPane.getColumnIndex(startCell), 0);
         int ecRi = Objects.requireNonNullElse(GridPane.getRowIndex(endCell), 0);
         int ecCi = Objects.requireNonNullElse(GridPane.getColumnIndex(endCell), 0);
-        String light = StandardTheme.lastMoveLight; /* Green color */
-        String dark = StandardTheme.lastMoveDark;
+        String light = theme.getLastMoveLight(); /* Green color */
+        String dark = theme.getLastMoveDark();
         if ((scCi + scRi) % 2 == 0) { // white square
             startCell.getChildren().get(0).setStyle(startCell.getChildren().get(0).getStyle() + light);
         } else {

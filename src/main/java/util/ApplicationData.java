@@ -3,6 +3,7 @@ package util;
 import Networking.Client;
 import Networking.Server;
 import com.example.controller.*;
+import themes.Theme;
 
 import java.util.Arrays;
 
@@ -20,6 +21,7 @@ public class ApplicationData {
     private ChessClock serverClock2;
     private ChessClock clientClock1;
     private ChessClock clientClock2;
+    private Theme theme;
 
     private ApplicationData() {
 
@@ -111,6 +113,14 @@ public class ApplicationData {
 
     public void setClientClock2(ChessClock clientClock2) {
         this.clientClock2 = clientClock2;
+    }
+
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
     }
 
     public void closeTimers() {

@@ -8,7 +8,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -17,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import themes.Theme;
 import util.ApplicationData;
 
 import java.io.IOException;
@@ -28,6 +28,8 @@ import java.util.ResourceBundle;
 @SuppressWarnings("CallToPrintStackTrace")
 public class ServerController implements Initializable {
 
+    @FXML
+    private AnchorPane backGroundPane;
     @FXML
     private AnchorPane chessBoardPane;
     @FXML
@@ -50,6 +52,7 @@ public class ServerController implements Initializable {
     private AnchorPane chatBox;
     private AnchorPane tablePane;
     private boolean tableOpened;
+    private Theme theme;
 
     private static int serverPort;
     private static MovesTableController mtc;
@@ -165,6 +168,7 @@ public class ServerController implements Initializable {
     }
 
     private ScaleTransition scaleTransition;
+
     private void playScaleAnimation(FontAwesomeIcon button) {
         scaleTransition = new ScaleTransition(Duration.seconds(0.5), button);
         scaleTransition.setToX(1.2);
@@ -195,6 +199,8 @@ public class ServerController implements Initializable {
     }
 
     private void loadUIElements() {
+        this.theme = ApplicationData.getInstance().getTheme();
+        backGroundPane.setStyle(theme.getBackGround());
         try {
             loadMovesTable();
             loadChessBoard();

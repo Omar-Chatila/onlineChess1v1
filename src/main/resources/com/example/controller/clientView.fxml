@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="484.0" prefWidth="824.0" style="-fx-background-color: #1E3050;"
+<AnchorPane fx:id="backGroundPane" prefHeight="484.0" prefWidth="824.0" style="-fx-background-color: #1E3050;"
             xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.controller.ClientController">
     <children>
