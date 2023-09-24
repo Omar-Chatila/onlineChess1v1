@@ -40,7 +40,7 @@ public class KnightMoveTracker {
                         String[][] copy = copyBoard(board);
                         copy[rankY][fileX] = ".";
                         copy[rank][file] = white ? "N" : "n";
-                        if (!Game.kingChecked(white)) {
+                        if (!Game.kingChecked(white, copy)) {
                             Game.board = copy;
                             return true;
                         } else {

@@ -589,6 +589,7 @@ public class ChessboardController {
         if (myPiece) {
             // this.startingSquare = new IntIntPair(rank, file);
             this.selectedPiece = (Button) button;
+            square.getChildren().get(0).setStyle((rank + file) % 2 == 0 ? theme.getLastMoveLight() : theme.getLastMoveDark());
             startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
             initMove(currentButton);
         } else {

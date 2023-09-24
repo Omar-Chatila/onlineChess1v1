@@ -35,7 +35,7 @@ public class BishopMoveTracker {
                     String[][] copy = copyBoard(board);
                     copy[rank + i * dy[d]][file + i * dx[d]] = ".";
                     copy[rank][file] = "B";
-                    if(!Game.kingChecked(true, copy)) {
+                    if (!Game.kingChecked(true, copy)) {
                         Game.board = copy;
                         return true;
                     } else {
@@ -45,7 +45,7 @@ public class BishopMoveTracker {
                     String[][] copy = copyBoard(board);
                     copy[rank + i * dy[d]][file + i * dx[d]] = ".";
                     copy[rank][file] = "b";
-                    if(!Game.kingChecked(true, copy)) {
+                    if (!Game.kingChecked(false, copy)) {
                         Game.board = copy;
                         return true;
                     } else {

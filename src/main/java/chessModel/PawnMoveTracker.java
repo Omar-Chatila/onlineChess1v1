@@ -59,7 +59,7 @@ public class PawnMoveTracker {
                 copy[rank + (white ? 1 : -1)][file] = ".";
                 copy[rank][file] = white ? Character.toString(move.charAt(3)) : Character.toString(move.charAt(3)).toLowerCase();
             }
-            if( !Game.kingChecked(white)) {
+            if (!Game.kingChecked(white, copy)) {
                 Game.board = copy;
                 return true;
             }
@@ -77,7 +77,7 @@ public class PawnMoveTracker {
                 copy[rank + (white ? 1 : -1)][file] = ".";
             }
             copy[rank][file] = white ? "P" : "p";
-            if( !Game.kingChecked(white)) {
+            if (!Game.kingChecked(white, copy)) {
                 Game.board = copy;
                 return true;
             }
@@ -94,7 +94,7 @@ public class PawnMoveTracker {
             }
             copy[pawnRank][pawnFile] = ".";
             copy[capRank][capFile] = white ? "P" : "p";
-            if( !Game.kingChecked(white)) {
+            if (!Game.kingChecked(white, copy)) {
                 Game.board = copy;
                 return true;
             }
