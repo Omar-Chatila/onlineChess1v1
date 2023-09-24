@@ -5,7 +5,7 @@ import java.util.List;
 
 import static util.GameHelper.copyBoard;
 
-public class KingMoveTracker { // TODO check if king is in other king's space
+public class KingMoveTracker {
     private static final int[] dx = {-1, 1, -1, 1, 0, 0, 1, -1};
     private static final int[] dy = {-1, 1, 1, -1, 1, -1, 0, 0};
     private static boolean whiteKingHasMoved;
@@ -35,6 +35,20 @@ public class KingMoveTracker { // TODO check if king is in other king's space
         return false;
     }
 
+    private static boolean inKingTerritory(String[][] copy, int rank, int file) {
+        for (int i = rank - 1; i <= rank + 1; i++) {
+            for (int j = file - 1; j <= file + 1; j++) {
+                if (isValidSquare(i, j)) {
+                    if (rank == i && file == j) continue;
+                    if (copy[i][j].matches("[kK]")) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     private static boolean validateKingHelper(String[][] board, int rank, int file, boolean white) {
         for (int d = 0; d < 8; d++) {
             int i = 1;
@@ -45,7 +59,7 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                     copy[rank + i * dy[d]][file + i * dx[d]] = ".";
                     copy[rank][file] = "K";
                     whiteKingHasMoved = true;
-                    if(!Game.kingChecked(true, copy)) {
+                    if (!Game.kingChecked(true, copy) && !inKingTerritory(copy, rank, file)) {
                         Game.board = copy;
                         return true;
                     } else {
@@ -56,7 +70,7 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                     copy[rank + i * dy[d]][file + i * dx[d]] = ".";
                     copy[rank][file] = "k";
                     blackKingHasMoved = true;
-                    if(!Game.kingChecked(false, copy)) {
+                    if (!Game.kingChecked(false, copy) && !inKingTerritory(copy, rank, file)) {
                         Game.board = copy;
                         return true;
                     } else {
@@ -118,7 +132,7 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                 if ((white && squareContent.matches("[.bqrnp]")) || (!white && squareContent.matches("[.BQRNP]"))) {
                     copy[rank + dy[d]][file + dx[d]] = white ? "K" : "k";
                     copy[rank][file] = ".";
-                    if (white && !Game.kingChecked(true, copy) || !white && !Game.kingChecked(false, copy)) {
+                    if ((white && !Game.kingChecked(true, copy) || !white && !Game.kingChecked(false, copy)) && !inKingTerritory(copy, rank + dy[d], file + dx[d])) {
                         if (white) {
                             moves.add(toAdd);
                         } else {
@@ -129,6 +143,10 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                 copy = copyBoard(board);
             }
         }
+        return addLongCastleMoves(white, moves);
+    }
+
+    private static List<String> addLongCastleMoves(boolean white, List<String> moves) {
         if (white && hasLongCastlingRight(true)) {
             moves.add("72");
             moves.add("71");
@@ -162,7 +180,7 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                 if ((white && squareContent.matches("[.bqrnp]")) || (!white && squareContent.matches("[.BQRNP]"))) {
                     copy[rank + dy[d]][file + dx[d]] = white ? "K" : "k";
                     copy[rank][file] = ".";
-                    if (white && !Game.kingChecked(true, copy) || !white && !Game.kingChecked(false, copy)) {
+                    if (white && !Game.kingChecked(true, copy) || !white && !Game.kingChecked(false, copy) && !inKingTerritory(copy, rank + dy[d], file + dx[d])) {
                         if (white) {
                             moves.add(toAdd);
                         } else {
@@ -173,25 +191,7 @@ public class KingMoveTracker { // TODO check if king is in other king's space
                 copy = copyBoard(board);
             }
         }
-        if (white && hasLongCastlingRight(true)) {
-            moves.add("72");
-            moves.add("71");
-            moves.add("70");
-        }
-        if (white && hasShortCastlingRight(true)) {
-            moves.add("76");
-            moves.add("77");
-        }
-        if (!white && hasLongCastlingRight(false)) {
-            moves.add("75");
-            moves.add("76");
-            moves.add("77");
-        }
-        if (!white && hasShortCastlingRight(false)) {
-            moves.add("71");
-            moves.add("70");
-        }
-        return moves;
+        return addLongCastleMoves(white, moves);
     }
 
     private static boolean castleShort(boolean white) {
