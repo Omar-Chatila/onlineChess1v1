@@ -149,6 +149,7 @@ public class ChessboardController {
     }
 
     private void setOnDragDetection(Button currentButton) {
+        clearHighlighting();
         if (!GameStates.isGameOver()) {
             ApplicationData.getInstance().setIllegalMove(false);
             currentButton.getGraphic().setOpacity(0.5);

@@ -19,11 +19,11 @@ public class PawnMoveTracker {
             if (white) {
                 if (rank < 3) return false;
                 return rank != 4 && board[8 - (rank - 1)][file].equals("P")
-                        || rank == 4 && (board[8 - (rank - 1)][file].equals("P") || board[8 - (rank - 2)][file].equals("P"));
+                        || rank == 4 && (board[8 - (rank - 1)][file].equals("P") || (board[8 - (rank - 2)][file].equals("P") && board[8 - (rank - 1)][file].equals(".")));
             } else {
                 if (rank > 6) return false;
                 return rank != 5 && board[8 - rank - 1][file].equals("p")
-                        || rank == 5 && (board[8 - rank - 1][file].equals("p") || board[8 - rank - 2][file].equals("p"));
+                        || rank == 5 && (board[8 - rank - 1][file].equals("p") || (board[8 - rank - 2][file].equals("p") && board[8 - rank - 1][file].equals(".")));
             }
         }
 
@@ -69,8 +69,7 @@ public class PawnMoveTracker {
             int file = move.charAt(0) - 'a', rank = 8 - Character.getNumericValue(move.charAt(1));
             String[][] copy = copyBoard(board);
             if (rank == (white ? 4 : 3)) {
-                copy[rank + (white ? 1 : -1)][file] = ".";
-                if (copy[rank + (white ? 2 : -2)][file].equals(white ? "P" : "p")) {
+                if (copy[rank + (white ? 2 : -2)][file].equals(white ? "P" : "p") && copy[rank + (white ? 1 : -1)][file].equals(".")) {
                     copy[rank + (white ? 2 : -2)][file] = ".";
                 }
             } else {
@@ -148,7 +147,6 @@ public class PawnMoveTracker {
         }
     }
 
-    // TODO black highlighting squares
     public static List<String> possibleMoves(String[][] board, int rank, int file, boolean white) {
         possibleMovesLogicList.clear();
         List<String> moves = new ArrayList<>();
@@ -178,7 +176,7 @@ public class PawnMoveTracker {
         }
         copy = copyBoard(board);
         if (rank == startRank) {
-            if (board[logicRank + direction * 2][logicFile].equals(".")) {
+            if (board[logicRank + direction * 2][logicFile].equals(".") && board[logicRank + direction][logicFile].equals(".")) {
                 copy[logicRank + direction * 2][logicFile] = white ? "P" : "p";
                 copy[logicRank][logicFile] = ".";
                 if (white) {
