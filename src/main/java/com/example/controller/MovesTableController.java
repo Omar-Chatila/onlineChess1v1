@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import chessModel.Game;
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,8 +11,13 @@ import javafx.scene.control.TableView;
 import tableView.ButtonTableCell;
 import tableView.IntegerTableCell;
 import tableView.Item;
+import util.ApplicationData;
 
 public class MovesTableController {
+    public JFXButton firstBoard;
+    public JFXButton priorBoard;
+    public JFXButton nextBoard;
+    public JFXButton lastBoard;
     @FXML
     private TableView<Item> movesTable;
     private final ObservableList<Item> movesList = FXCollections.observableArrayList();
@@ -21,6 +27,10 @@ public class MovesTableController {
     private void initialize() {
         createMovesTable();
         movesTable.setItems(movesList);
+        priorBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showPreviousBoard());
+        nextBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showNextBoard());
+        lastBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showLastBoard());
+        firstBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showFirstBoard());
     }
 
     private void createMovesTable() {

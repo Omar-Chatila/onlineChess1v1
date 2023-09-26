@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import Networking.Server;
+import chessModel.Game;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.*;
@@ -48,21 +49,24 @@ public class ServerController implements Initializable {
     private AnchorPane myGraveYardPane;
     @FXML
     private FontAwesomeIcon toggleIcon;
+    @FXML
+    private StackPane boardStackPane;
 
     private AnchorPane chatBox;
     private AnchorPane tablePane;
     private boolean tableOpened;
-    private Theme theme;
-
     private static int serverPort;
     private static MovesTableController mtc;
     private static ChatController chatController;
+    private GridPane gameStates;
+    public static int currentPositionNr;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadUIElements();
         new Thread(this::startServer).start();
         newMessage.setOnMouseClicked(e -> toggle());
+        ApplicationData.getInstance().setServerController(this);
     }
 
     public static void setServerPort(int serverPort) {
@@ -127,6 +131,54 @@ public class ServerController implements Initializable {
             this.myGraveYardPane.getChildren().add(graveYard2);
             this.oppGraveyardPane.getChildren().add(graveYard);
         }
+    }
+
+    private void loadStateBoard() throws IOException {
+        FXMLLoader loader;
+        loader = new FXMLLoader(getClass().getResource("gamestate.fxml"));
+        this.gameStates = loader.load();
+        ApplicationData.getInstance().setGameStatesController(loader.getController());
+        boardStackPane.getChildren().add(gameStates);
+        gameStates.toBack();
+    }
+
+    public void showPreviousBoard() {
+        chessBoardPane.toBack();
+        chessBoardPane.setVisible(false);
+        gameStates.toFront();
+        if (currentPositionNr > 0)
+            ApplicationData.getInstance().getGameStatesController().initBoard(--currentPositionNr);
+    }
+
+    public void showNextBoard() {
+        chessBoardPane.toBack();
+        chessBoardPane.setVisible(false);
+        gameStates.toFront();
+        if (currentPositionNr < Game.moveList.size()) {
+            ApplicationData.getInstance().getGameStatesController().initBoard(++currentPositionNr);
+        } else {
+            chessBoardPane.toFront();
+            chessBoardPane.setVisible(true);
+        }
+    }
+
+    public void showBoardAt(int posNumber) {
+        chessBoardPane.toBack();
+        chessBoardPane.setVisible(false);
+        gameStates.toFront();
+        ApplicationData.getInstance().getGameStatesController().initBoard(posNumber);
+    }
+
+    public void showLastBoard() {
+        chessBoardPane.toFront();
+        chessBoardPane.setVisible(true);
+    }
+
+    public void showFirstBoard() {
+        chessBoardPane.toBack();
+        chessBoardPane.setVisible(false);
+        gameStates.toFront();
+        ApplicationData.getInstance().getGameStatesController().initBoard(0);
     }
 
     @FXML
@@ -199,7 +251,7 @@ public class ServerController implements Initializable {
     }
 
     private void loadUIElements() {
-        this.theme = ApplicationData.getInstance().getTheme();
+        Theme theme = ApplicationData.getInstance().getTheme();
         backGroundPane.setStyle(theme.getBackGround());
         try {
             loadMovesTable();
@@ -207,6 +259,7 @@ public class ServerController implements Initializable {
             loadChatBox();
             loadInfoPane();
             loadGraveyards();
+            loadStateBoard();
         } catch (Exception e) {
             e.printStackTrace();
         }

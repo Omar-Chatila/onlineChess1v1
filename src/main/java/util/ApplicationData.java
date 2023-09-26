@@ -22,6 +22,8 @@ public class ApplicationData {
     private ChessClock clientClock1;
     private ChessClock clientClock2;
     private Theme theme;
+    private ServerController serverController;
+    private GameStatesController gameStatesController;
 
     private ApplicationData() {
 
@@ -128,5 +130,21 @@ public class ApplicationData {
             if (chessClock != null)
                 chessClock.pauseClock();
         }
+    }
+
+    public ServerController getServerController() {
+        return serverController;
+    }
+
+    public void setServerController(ServerController serverController) {
+        this.serverController = serverController;
+    }
+
+    public GameStatesController getGameStatesController() {
+        return gameStatesController;
+    }
+
+    public void setGameStatesController(GameStatesController gameStatesController) {
+        this.gameStatesController = gameStatesController;
     }
 }

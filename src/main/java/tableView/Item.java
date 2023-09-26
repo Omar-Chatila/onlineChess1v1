@@ -32,8 +32,11 @@ public class Item {
         this.blackMove.set(blackMove);
     }
 
-    // New method to get either white or black move based on a flag
-    public String getMove(boolean isWhite) {
-        return isWhite ? whiteMove.get() : blackMove.get();
+    public int getNumber() {
+        return number.get();
+    }
+
+    public boolean isBlack() {
+        return whiteMoveProperty() == null;
     }
 }
