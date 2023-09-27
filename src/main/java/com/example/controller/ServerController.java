@@ -163,10 +163,14 @@ public class ServerController implements Initializable {
     }
 
     public void showBoardAt(int posNumber) {
-        chessBoardPane.toBack();
-        chessBoardPane.setVisible(false);
-        gameStates.toFront();
-        ApplicationData.getInstance().getGameStatesController().initBoard(posNumber);
+        if (posNumber == Game.moveList.size()) {
+            showLastBoard();
+        } else {
+            chessBoardPane.toBack();
+            chessBoardPane.setVisible(false);
+            gameStates.toFront();
+            ApplicationData.getInstance().getGameStatesController().initBoard(posNumber);
+        }
     }
 
     public void showLastBoard() {

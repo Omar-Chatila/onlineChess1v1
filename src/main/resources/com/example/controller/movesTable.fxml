@@ -7,35 +7,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.controller.MovesTableController">
+
+<AnchorPane stylesheets="@../../../css/table.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MovesTableController">
     <VBox>
-        <TableView fx:id="movesTable" maxHeight="370.0" prefHeight="370.0" prefWidth="200.0"
-                   stylesheets="@../../../css/table.css"/>
-        <HBox alignment="CENTER" prefHeight="13.0" prefWidth="200.0" spacing="3.0"
-              style="-fx-border-width: 0 1.5 1.5 1.5; -fx-border-color: black;">
+        <TableView fx:id="movesTable" maxHeight="370.0" prefHeight="370.0" prefWidth="200.0" stylesheets="@../../../css/table.css" />
+        <HBox alignment="CENTER" prefHeight="13.0" prefWidth="200.0" spacing="3.0" style="-fx-border-width: 0 1.5 1.5 1.5; -fx-border-color: white;">
             <JFXButton fx:id="firstBoard" prefWidth="43.0" text=" ">
                 <graphic>
-                    <FontAwesomeIcon glyphName="ANGLE_DOUBLE_LEFT" size="20"/>
+                    <FontAwesomeIcon fill="WHITE" glyphName="ANGLE_DOUBLE_LEFT" size="20" />
                 </graphic>
             </JFXButton>
             <JFXButton fx:id="priorBoard" prefWidth="43.0" text=" ">
                 <graphic>
-                    <FontAwesomeIcon glyphName="ANGLE_LEFT" size="20"/>
+                    <FontAwesomeIcon fill="WHITE" glyphName="ANGLE_LEFT" size="20" />
                 </graphic>
             </JFXButton>
             <JFXButton fx:id="nextBoard" prefWidth="43.0" text=" ">
                 <graphic>
-                    <FontAwesomeIcon glyphName="ANGLE_RIGHT" size="20"/>
+                    <FontAwesomeIcon fill="WHITE" glyphName="ANGLE_RIGHT" size="20" />
                 </graphic>
             </JFXButton>
             <JFXButton fx:id="lastBoard" prefWidth="43.0" text=" ">
                 <graphic>
-                    <FontAwesomeIcon glyphName="ANGLE_DOUBLE_RIGHT" size="20"/>
+                    <FontAwesomeIcon fill="WHITE" glyphName="ANGLE_DOUBLE_RIGHT" size="20" />
                 </graphic>
             </JFXButton>
             <padding>
-                <Insets left="7.0"/>
+                <Insets left="7.0" />
             </padding>
         </HBox>
     </VBox>

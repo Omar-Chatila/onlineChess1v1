@@ -7,3 +7,19 @@
     -fx-pref-height: 0;
     -fx-max-height: 0;
 }
+
+/* Remove headers */
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+/* Remove column dividers */
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+/* Show divider for specific column (e.g., the second column) */
+.table-view .column-header-background .column-line {
+    -fx-background-color: black;
+    -fx-background-insets: 0 0 0 1;
+}

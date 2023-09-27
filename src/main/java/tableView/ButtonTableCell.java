@@ -1,5 +1,6 @@
 package tableView;
 
+import com.example.controller.ServerController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
@@ -9,12 +10,21 @@ public class ButtonTableCell extends TableCell<Item, String> {
     private final Button button;
     private final String defaultStyle = "-fx-background-color: transparent;" + "-fx-background-radius: 0;" + "-fx-text-fill: black;";
     private final String hoverStyle = "-fx-background-color: #3489eb;" + "-fx-background-radius: 0;" + "-fx-text-fill: black;";
+    private final String clickedStyle = "-fx-background-color: rgba(236,16,16,0.5);" + "-fx-background-radius: 0;" + "-fx-text-fill: black;";
 
     public ButtonTableCell() {
         button = new Button();
         button.setStyle(defaultStyle);
-        button.setOnMouseEntered(e -> button.setStyle(hoverStyle));
-        button.setOnMouseExited(e -> button.setStyle(defaultStyle));
+        button.setOnMouseEntered(e -> {
+            if (!button.getStyle().equals(clickedStyle)) {
+                button.setStyle(hoverStyle);
+            }
+        });
+        button.setOnMouseExited(e -> {
+            if (!button.getStyle().equals(clickedStyle)) {
+                button.setStyle(defaultStyle);
+            }
+        });
         button.setPrefWidth(80);
         button.setAlignment(Pos.BASELINE_LEFT);
         button.setOnAction(event -> {
@@ -22,8 +32,8 @@ public class ButtonTableCell extends TableCell<Item, String> {
             if (move != null) {
                 int rowIndex = getIndex() * 2;
                 int colIndex = getTableView().getColumns().indexOf(getTableColumn()) - 1;
-                System.out.println("Button clicked at Row: " + rowIndex + ", Column: " + colIndex);
                 int number = rowIndex + colIndex + 1;
+                ServerController.currentPositionNr = number;
                 ApplicationData.getInstance().getServerController().showBoardAt(number);
             }
         });

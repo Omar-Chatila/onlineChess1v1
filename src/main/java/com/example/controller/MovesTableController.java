@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import tableView.ButtonTableCell;
 import tableView.IntegerTableCell;
 import tableView.Item;
@@ -31,6 +32,14 @@ public class MovesTableController {
         nextBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showNextBoard());
         lastBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showLastBoard());
         firstBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showFirstBoard());
+        movesTable.skinProperty().addListener((a, b, newSkin) ->
+        {
+            Pane header = (Pane) movesTable.lookup("TableHeaderRow");
+            header.setMinHeight(0);
+            header.setPrefHeight(0);
+            header.setMaxHeight(0);
+            header.setVisible(false);
+        });
     }
 
     private void createMovesTable() {
