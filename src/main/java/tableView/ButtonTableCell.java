@@ -1,5 +1,7 @@
 package tableView;
 
+import com.example.controller.ClientController;
+import com.example.controller.GameStates;
 import com.example.controller.ServerController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -33,8 +35,13 @@ public class ButtonTableCell extends TableCell<Item, String> {
                 int rowIndex = getIndex() * 2;
                 int colIndex = getTableView().getColumns().indexOf(getTableColumn()) - 1;
                 int number = rowIndex + colIndex + 1;
-                ServerController.currentPositionNr = number;
-                ApplicationData.getInstance().getServerController().showBoardAt(number);
+                if (GameStates.isServer()) {
+                    ServerController.currentPositionNr = number;
+                    ApplicationData.getInstance().getServerController().showBoardAt(number);
+                } else {
+                    ClientController.currentPositionNr = number;
+                    ApplicationData.getInstance().getClientController().showBoardAt(number);
+                }
             }
         });
     }

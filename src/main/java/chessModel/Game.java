@@ -297,6 +297,7 @@ public class Game {
     public static void executeMove(String move, boolean white) {
         System.out.println("Current Move:  " + move);
         ServerController.currentPositionNr++;
+        ClientController.currentPositionNr++;
         if (movesTableController == null) {
             if (GameStates.isServer()) {
                 movesTableController = ServerController.getMtc();

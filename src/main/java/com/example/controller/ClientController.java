@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import Networking.Client;
+import chessModel.Game;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.*;
@@ -47,18 +48,24 @@ public class ClientController implements Initializable, Client.ClientCallback {
     private JFXButton toggleButton;
     @FXML
     private FontAwesomeIcon toggleIcon;
+    @FXML
+    private StackPane boardStackPane;
 
     private static String ip_Address;
     private static int portNr;
     private static MovesTableController mtc;
     private static ChatController chatController;
+    public static int currentPositionNr;
+
+    private ScaleTransition scaleTransition;
     private AnchorPane chatBox;
     private AnchorPane tablePane;
     private boolean tableOpened;
-    private Theme theme;
+    private GridPane gameStates;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ApplicationData.getInstance().setClientController(this);
         try {
             Client client = new Client(new Socket(ip_Address, portNr));
             ApplicationData.getInstance().setClient(client);
@@ -183,7 +190,6 @@ public class ClientController implements Initializable, Client.ClientCallback {
         }
     }
 
-    private ScaleTransition scaleTransition;
 
     private void playScaleAnimation(FontAwesomeIcon button) {
         scaleTransition = new ScaleTransition(Duration.seconds(0.5), button);
@@ -216,12 +222,13 @@ public class ClientController implements Initializable, Client.ClientCallback {
 
 
     private void loadUIElements() throws Exception {
-        this.theme = ApplicationData.getInstance().getTheme();
+        Theme theme = ApplicationData.getInstance().getTheme();
         backGroundPane.setStyle(theme.getBackGround());
         loadMovesTable();
         loadChatBox();
         loadInfoPane();
         loadGraveyards();
+        loadStateBoard();
     }
 
     public static ChatController getChatController() {
@@ -235,6 +242,60 @@ public class ClientController implements Initializable, Client.ClientCallback {
     public void close() {
         Platform.exit();
     }
+
+
+    private void loadStateBoard() throws IOException {
+        FXMLLoader loader;
+        loader = new FXMLLoader(getClass().getResource("gamestate.fxml"));
+        this.gameStates = loader.load();
+        ApplicationData.getInstance().setGameStatesController(loader.getController());
+        boardStackPane.getChildren().add(gameStates);
+        gameStates.toBack();
+    }
+
+    public void showPreviousBoard() {
+        chessBoardPane.toBack();
+        chessBoardPane.setVisible(false);
+        gameStates.toFront();
+        if (currentPositionNr > 0)
+            ApplicationData.getInstance().getGameStatesController().initBoard(--currentPositionNr);
+    }
+
+    public void showNextBoard() {
+        chessBoardPane.toBack();
+        chessBoardPane.setVisible(false);
+        gameStates.toFront();
+        if (currentPositionNr < Game.moveList.size()) {
+            ApplicationData.getInstance().getGameStatesController().initBoard(++currentPositionNr);
+        } else {
+            chessBoardPane.toFront();
+            chessBoardPane.setVisible(true);
+        }
+    }
+
+    public void showBoardAt(int posNumber) {
+        if (posNumber == Game.moveList.size()) {
+            showLastBoard();
+        } else {
+            chessBoardPane.toBack();
+            chessBoardPane.setVisible(false);
+            gameStates.toFront();
+            ApplicationData.getInstance().getGameStatesController().initBoard(posNumber);
+        }
+    }
+
+    public void showLastBoard() {
+        chessBoardPane.toFront();
+        chessBoardPane.setVisible(true);
+    }
+
+    public void showFirstBoard() {
+        chessBoardPane.toBack();
+        chessBoardPane.setVisible(false);
+        gameStates.toFront();
+        ApplicationData.getInstance().getGameStatesController().initBoard(0);
+    }
+
 
     @Override
     public void onRoleReceived(boolean isServerWhite) {

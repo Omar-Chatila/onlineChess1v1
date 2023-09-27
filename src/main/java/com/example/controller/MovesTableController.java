@@ -28,10 +28,30 @@ public class MovesTableController {
     private void initialize() {
         createMovesTable();
         movesTable.setItems(movesList);
-        priorBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showPreviousBoard());
-        nextBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showNextBoard());
-        lastBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showLastBoard());
-        firstBoard.setOnAction(event -> ApplicationData.getInstance().getServerController().showFirstBoard());
+        priorBoard.setOnAction(event -> {
+            if (GameStates.isServer())
+                ApplicationData.getInstance().getServerController().showPreviousBoard();
+            else
+                ApplicationData.getInstance().getClientController().showPreviousBoard();
+        });
+        nextBoard.setOnAction(event -> {
+            if (GameStates.isServer())
+                ApplicationData.getInstance().getServerController().showNextBoard();
+            else
+                ApplicationData.getInstance().getClientController().showNextBoard();
+        });
+        lastBoard.setOnAction(event -> {
+            if (GameStates.isServer())
+                ApplicationData.getInstance().getServerController().showLastBoard();
+            else
+                ApplicationData.getInstance().getClientController().showLastBoard();
+        });
+        firstBoard.setOnAction(event -> {
+            if (GameStates.isServer())
+                ApplicationData.getInstance().getServerController().showFirstBoard();
+            else
+                ApplicationData.getInstance().getClientController().showFirstBoard();
+        });
         movesTable.skinProperty().addListener((a, b, newSkin) ->
         {
             Pane header = (Pane) movesTable.lookup("TableHeaderRow");

@@ -23,6 +23,7 @@ public class ApplicationData {
     private ChessClock clientClock2;
     private Theme theme;
     private ServerController serverController;
+    private ClientController clientController;
     private GameStatesController gameStatesController;
 
     private ApplicationData() {
@@ -146,5 +147,13 @@ public class ApplicationData {
 
     public void setGameStatesController(GameStatesController gameStatesController) {
         this.gameStatesController = gameStatesController;
+    }
+
+    public ClientController getClientController() {
+        return clientController;
+    }
+
+    public void setClientController(ClientController clientController) {
+        this.clientController = clientController;
     }
 }

@@ -34,9 +34,11 @@ public class GameStatesController {
                 label.setPrefHeight(50);
                 label.setMaxWidth(50);
                 label.setMaxHeight(50);
-                String style = ((i + j) % 2 == 0) ? theme.getLightPastStyle() : theme.getDarkPastStyle();
+                int r = GameStates.iAmWhite() ? i : 7 - i;
+                int c = GameStates.iAmWhite() ? j : 7 - j;
+                String style = ((r + c) % 2 == 0) ? theme.getLightPastStyle() : theme.getDarkPastStyle();
                 label.setStyle(style);
-                String imageName = getImageName(i, j, posNumber);
+                String imageName = getImageName(r, c, posNumber);
                 if (!imageName.isBlank()) {
                     Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + imageName + ".png")));
                     ImageView imageView = new ImageView(image);
