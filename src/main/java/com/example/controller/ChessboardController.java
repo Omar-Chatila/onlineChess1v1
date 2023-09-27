@@ -165,20 +165,34 @@ public class ChessboardController {
 
     private void setOnDragDropped(Button currentButton, DragEvent event) {
         clearHighlighting();
-        if (!GameStates.isIsMyTurn() || selectedPiece == null || !isMyPiece()) return;
+        if (!GameStates.isIsMyTurn() || selectedPiece == null || !isMyPiece()) {
+            return;
+        }
         StackPane cell = (StackPane) currentButton.getParent();
-        IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0));
+        IntIntPair destinationSquare = new IntIntPair(
+                Objects.requireNonNullElse(GridPane.getRowIndex(cell), 0),
+                Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0)
+        );
+        if (!possibleSquares.contains(destinationSquare.toString())) {
+            return;
+        }
+        this.lastStart = getPaneFromCoordinate(startingSquare);
+        this.lastEnd = cell;
+        clearHighlighting();
         this.destinationsSquare = destinationSquare;
-        if (!this.possibleSquares.contains(destinationSquare.toString())) return;
+        if (!this.possibleSquares.contains(destinationSquare.toString())) {
+            return;
+        }
         String move = generateMove(destinationSquare, cell);
-        if (ApplicationData.getInstance().isIllegalMove()) return;
-        if (this.destinationsSquare.equals(this.startingSquare)) return;
-        if (move.equals("wrong")) return;
+        if (ApplicationData.getInstance().isIllegalMove() || move.equals("wrong")) {
+            return;
+        }
         handleMoveTransmission(destinationSquare);
         applyMoveToBoardAndUI(cell);
         selectedPiece = null;
         event.setDropCompleted(true);
     }
+
 
     private void updateCheckStatus() {
         if (Game.kingChecked(false) && !Game.checkMated(false)) {
@@ -275,9 +289,11 @@ public class ChessboardController {
                 if (!found) button.setGraphic(null);
             }
         }
+        highlightLastMove(this.lastStart, this.lastEnd);
     }
 
     private void highlightLastMove(StackPane startCell, StackPane endCell) {
+        if (startCell == null || endCell == null) return;
         int scRi = Objects.requireNonNullElse(GridPane.getRowIndex(startCell), 0);
         int scCi = Objects.requireNonNullElse(GridPane.getColumnIndex(startCell), 0);
         int ecRi = Objects.requireNonNullElse(GridPane.getRowIndex(endCell), 0);
@@ -294,13 +310,14 @@ public class ChessboardController {
         } else {
             endCell.getChildren().get(0).setStyle(endCell.getChildren().get(0).getStyle() + dark);
         }
+        this.lastStart = startCell;
+        this.lastEnd = endCell;
     }
 
     public void updateBoard(String opponentMove) {
         this.destinationsSquare = null;
         this.myTurn = true;
         updateCheckStatus();
-        clearHighlighting();
         int startRow = 7 - Character.getNumericValue(opponentMove.charAt(0));
         int startCol = 7 - Character.getNumericValue(opponentMove.charAt(1));
         int destRow = 7 - Character.getNumericValue(opponentMove.charAt(3));
@@ -309,7 +326,8 @@ public class ChessboardController {
         IntIntPair endCoordinates = new IntIntPair(destRow, destCol);
         StackPane startCell = getPaneFromCoordinate(startCoordinates);
         StackPane endCell = getPaneFromCoordinate(endCoordinates);
-        highlightLastMove(startCell, endCell);
+        this.lastStart = startCell;
+        this.lastEnd = endCell;
         boolean enpassant = Game.moveList.get(Game.moveList.size() - 1).contains("x") && endCell.getChildren().size() == 1;
         Button movingPiece = (Button) startCell.getChildren().remove(1);
         if (opponentMove.matches("[0-9]{2}\\.[0-9]{2}[A-R]")) {
@@ -325,6 +343,7 @@ public class ChessboardController {
             StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(endCell) - 1, GridPane.getColumnIndex(endCell)));
             removablePawn.getChildren().remove(1);
         }
+        clearHighlighting();
     }
 
     private String generateMove(IntIntPair destinationSquare, StackPane cell) {
@@ -568,9 +587,7 @@ public class ChessboardController {
         updateCheckStatus();
         if (GameStates.isIsMyTurn() || !isLegalDragDrop()) {
             new SoundPlayer().playIllegalMoveSound();
-        }
-        if (!myTurn) {
-            highlightLastMove(this.lastStart, this.lastEnd);
+            clearHighlighting();
         }
     }
 
