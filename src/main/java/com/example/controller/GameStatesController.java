@@ -3,6 +3,7 @@ package com.example.controller;
 import chessModel.Game;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -42,12 +43,18 @@ public class GameStatesController {
                     imageView.setFitWidth(50);
                     imageView.setFitHeight(50);
                     label.setGraphic(imageView);
+                    if (imageName.equals("wK") && Game.kingChecked(true, Game.playedPositions.get(posNumber))
+                            || imageName.equals("bK") && Game.kingChecked(false, Game.playedPositions.get(posNumber))) {
+                        label.setEffect(new Glow(0.7));
+                        label.setStyle(theme.getKingCheckedStyle());
+                    }
                 }
                 chessboardGrid.add(label, j, i);
 
             }
         }
     }
+
 
     private static String getImageName(int i, int j, int posNumber) {
         String imageName = "";
