@@ -315,6 +315,11 @@ public class ChessboardController {
     }
 
     public void updateBoard(String opponentMove) {
+        if (GameStates.isServer()) {
+            ApplicationData.getInstance().getServerController().showLastBoard();
+        } else {
+            ApplicationData.getInstance().getClientController().showLastBoard();
+        }
         this.destinationsSquare = null;
         this.myTurn = true;
         updateCheckStatus();
