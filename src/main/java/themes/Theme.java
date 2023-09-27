@@ -5,6 +5,10 @@ public abstract class Theme {
 
     public abstract String getDarkSquareStyle();
 
+    public abstract String getLightPastStyle();
+
+    public abstract String getDarkPastStyle();
+
     public abstract String getLastMoveLight();
 
     public abstract String getLastMoveDark();

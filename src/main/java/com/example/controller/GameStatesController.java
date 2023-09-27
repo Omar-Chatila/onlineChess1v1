@@ -33,7 +33,7 @@ public class GameStatesController {
                 label.setPrefHeight(50);
                 label.setMaxWidth(50);
                 label.setMaxHeight(50);
-                String style = ((i + j) % 2 == 0) ? theme.getLightSquareStyle() : theme.getDarkSquareStyle();
+                String style = ((i + j) % 2 == 0) ? theme.getLightPastStyle() : theme.getDarkPastStyle();
                 label.setStyle(style);
                 String imageName = getImageName(i, j, posNumber);
                 if (!imageName.isBlank()) {

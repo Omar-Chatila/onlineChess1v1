@@ -11,6 +11,16 @@ public class StandardTheme extends Theme {
     }
 
     @Override
+    public String getLightPastStyle() {
+        return "-fx-background-radius: 0;" + "-fx-background-color: #E3E9EC;";
+    }
+
+    @Override
+    public String getDarkPastStyle() {
+        return "-fx-background-radius: 0;" + "-fx-background-color: #A9B4BD;";
+    }
+
+    @Override
     public String getLastMoveLight() {
         /* Green color */
         return "-fx-background-color: #d1f0d5;";
