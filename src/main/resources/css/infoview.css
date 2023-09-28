@@ -1,0 +1,85 @@
+/* Apply modern styles to the entire anchor pane */
+#infoAnchorPane {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Style the top HBox containing opponent's time */
+.white-label {
+    -fx-background-color: white;
+    -fx-border-color: #000000;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+    -fx-padding: 3;
+    -fx-font-size: 18px;
+    -fx-text-fill: black;
+}
+
+/* Style class for black player label */
+.black-label {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+    -fx-padding: 3;
+    -fx-border-width: 2;
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+}
+
+.resign-button {
+    -fx-background-color: transparent; /* Red background color */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 1);
+}
+
+
+.draw-button {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 1);
+}
+
+.modern-label {
+    -fx-font-family: "Segoe UI", Helvetica, sans-serif; /* Font family */
+    -fx-font-size: 14px; /* Font size for content */
+    -fx-text-fill: #333; /* Text color */
+    -fx-padding: 5px; /* Padding */
+}
+
+
+.modern-anchor {
+    -fx-background-color: transparent;
+    -fx-border-color: #1E3050; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-radius: 6px; /* Border radius */
+    -fx-padding: 5px; /* Padding */
+}
+
+/* Style the VBox containing player information */
+.player-info {
+    -fx-background-color: white;
+}
+
+/* Style the HBox for player's turn indicator */
+.player-turn-indicator {
+    -fx-background-color: #2196F3;
+    -fx-border-color: #1565C0;
+    -fx-padding: 10;
+}
+
+/* Style the RadioButton for player's turn indicator */
+.player-turn-indicator .radio-button {
+    -fx-padding: 0 10 0 0;
+}
+
+/* Style the player name label */
+.player-name {
+    -fx-padding: 0 0 0 10;
+}
+
+/* Style the info text label */
+#infoText {
+    -fx-padding: 20 0 0 10;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+/* Style the bottom HBox containing player's time */
+

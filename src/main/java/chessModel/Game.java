@@ -311,6 +311,8 @@ public class Game {
             if (stalemated(!white)) {
                 System.out.println("Game over! - Draw by stalemate");
                 ApplicationData.getInstance().getIvc().updateInfoText("Game over! - Draw by stalemate");
+                ApplicationData.getInstance().getIvc().showWinner(white);
+                ApplicationData.getInstance().getIvc().showWinner(!white);
             }
             if (isThreefoldRepetition()) {
                 System.out.println("3-Fold repetition: One player can claim draw");
@@ -318,6 +320,7 @@ public class Game {
             }
             if (kingChecked(!white) && checkMated(!white)) {
                 ApplicationData.getInstance().getIvc().updateInfoText("Game over! - " + (!white ? "Black won!" : "White won!"));
+                ApplicationData.getInstance().getIvc().showWinner(white);
                 System.out.println("Game over! - " + (!white ? "Black won!" : "White won!"));
             }
             if (reset50moveRule(move)) {

@@ -49,8 +49,10 @@ public class ChessClock {
         Platform.runLater(() -> {
             if (isMyClock && GameStates.iAmWhite() || !isMyClock && !GameStates.iAmWhite()) {
                 ApplicationData.getInstance().getIvc().updateInfoText("Time Up! Black won!");
+                ApplicationData.getInstance().getIvc().showWinner(false);
             } else if (isMyClock && !GameStates.iAmWhite() || !isMyClock && GameStates.iAmWhite()) {
                 ApplicationData.getInstance().getIvc().updateInfoText("Time Up! White won!");
+                ApplicationData.getInstance().getIvc().showWinner(true);
             }
         });
     }
