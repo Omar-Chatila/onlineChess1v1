@@ -16,11 +16,12 @@ import java.net.Socket;
 
 public class Server {
 
+    static boolean soundPlayed;
+    private final ChessClock serverClock;
+    private final ChessClock clientClock;
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    private final ChessClock serverClock;
-    private final ChessClock clientClock;
 
     public Server(ServerSocket serverSocket) {
         serverClock = new ChessClock(GameStates.getTimeControl(), true);
@@ -66,8 +67,6 @@ public class Server {
 
     }
 
-    static boolean soundPlayed;
-
     public void receiveMessageFromClient() {
         new Thread(() -> {
             while (socket.isConnected()) {
@@ -81,6 +80,14 @@ public class Server {
                     if (messageFromClient.startsWith("/t")) {
                         ServerController.getChatController().addLabel(messageFromClient.substring(2));
                         LoginViewController.getServerController().setMessageIndicatorVisibility(true);
+                    } else if (messageFromClient.startsWith("/rdraw")) {
+                        //ApplicationData.getInstance().getIvc().getOfferDraw().fire();
+                        Platform.runLater(() -> {
+                            Game.drawClaimable = true;
+                            ApplicationData.getInstance().getIvc().updateInfoText("Opponent offers a draw");
+                        });
+                    } else if (messageFromClient.startsWith("/adraw")) {
+                        ApplicationData.getInstance().getIvc().getOfferDraw().fire();
                     } else {
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-R]?")) {
                             ApplicationData.getInstance().setIllegalMove(false);

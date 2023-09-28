@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import chessModel.Game;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -14,6 +15,7 @@ import javafx.util.Duration;
 import util.ApplicationData;
 
 public class InfoViewController {
+    private static boolean doubleClicked;
     @FXML
     private Label myName;
     @FXML
@@ -40,9 +42,23 @@ public class InfoViewController {
     private FontAwesomeIcon myWinEmblem;
     @FXML
     private FontAwesomeIcon oppWinEmblem;
-
     private boolean iamWhite;
-    private static boolean doubleClicked;
+
+    private static void requestDraw() {
+        if (GameStates.isServer()) {
+            ApplicationData.getInstance().getServer().sendMessageToClient("/rdraw");
+        } else {
+            ApplicationData.getInstance().getClient().sendMessageToServer("/rdraw");
+        }
+    }
+
+    private static void acceptDraw() {
+        if (GameStates.isServer()) {
+            ApplicationData.getInstance().getServer().sendMessageToClient("/adraw");
+        } else {
+            ApplicationData.getInstance().getClient().sendMessageToServer("/adraw");
+        }
+    }
 
     @FXML
     private void initialize() {
@@ -91,7 +107,6 @@ public class InfoViewController {
         oppTurnIndicator.setSelected(!oppTurnIndicator.isSelected());
     }
 
-
     private void setResignButton() {
         buttonEffects(resignButton, true);
     }
@@ -107,29 +122,40 @@ public class InfoViewController {
         scaleTransition.setToX(1.1);
         scaleTransition.setToY(1.1);
         scaleTransition.setToZ(1.1);
-
         scaleTransition.setAutoReverse(true);
-
         button.setOnAction(event -> {
             if (doubleClicked) {
                 if (this.iamWhite) {
-                    if (resign)
+                    if (resign) {
                         infoText.setText("You resigned - Black is victorious!");
-                    else
-                        infoText.setText("Game ends in a Draw!");
+                    } else {
+                        if (Game.drawClaimable) {
+                            infoText.setText("Game ends in a Draw!");
+                            acceptDraw();
+                            GameStates.setGameOver(true);
+                        }
+                    }
                 } else {
                     if (resign)
                         infoText.setText("You resigned - White is victorious!");
-                    else
-                        infoText.setText("Game ends in a Draw!");
+                    else {
+                        if (Game.drawClaimable) {
+                            acceptDraw();
+                            infoText.setText("Game ends in a Draw!");
+                            GameStates.setGameOver(true);
+                        }
+                    }
                 }
                 ApplicationData.getInstance().closeTimers();
-                GameStates.setGameOver(true);
+                if (resign)
+                    GameStates.setGameOver(true);
                 resignButton.setDisable(true);
                 offerDraw.setDisable(true);
                 oppWinEmblem.setVisible(true);
                 if (!resign)
                     myWinEmblem.setVisible(true);
+            } else {
+                requestDraw();
             }
             if (resign)
                 button.setStyle("-fx-background-color: #d32f2f;");
@@ -182,4 +208,7 @@ public class InfoViewController {
         }
     }
 
+    public JFXButton getOfferDraw() {
+        return this.offerDraw;
+    }
 }

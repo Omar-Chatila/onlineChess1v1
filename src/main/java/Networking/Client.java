@@ -16,20 +16,6 @@ import java.net.Socket;
 @SuppressWarnings("CallToPrintStackTrace")
 public class Client {
 
-    public void setCallback(ClientCallback callback) {
-        this.callback = callback;
-    }
-
-    public interface ClientCallback {
-        void onRoleReceived(boolean isServerWhite);
-    }
-
-    private void handleRoleInformation(boolean isServerWhite) {
-        if (callback != null) {
-            callback.onRoleReceived(isServerWhite);
-        }
-    }
-
     private Socket socket;
     private BufferedWriter bufferedWriter;
     private BufferedReader bufferedReader;
@@ -45,6 +31,16 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
             closeEverything(socket, bufferedReader, bufferedWriter);
+        }
+    }
+
+    public void setCallback(ClientCallback callback) {
+        this.callback = callback;
+    }
+
+    private void handleRoleInformation(boolean isServerWhite) {
+        if (callback != null) {
+            callback.onRoleReceived(isServerWhite);
         }
     }
 
@@ -89,6 +85,14 @@ public class Client {
                     } else if (messageFromServer.startsWith("/t")) {
                         ClientController.getChatController().addLabel(messageFromServer.substring(2));
                         LoginViewController.getClientController().setMessageIndicatorVisibility(true);
+                    } else if (messageFromServer.startsWith("/rdraw")) {
+                        Platform.runLater(() -> {
+                            Game.drawClaimable = true;
+                            //ApplicationData.getInstance().getIvc().getOfferDraw().fire();
+                            ApplicationData.getInstance().getIvc().updateInfoText("Opponent offers a draw");
+                        });
+                    } else if (messageFromServer.startsWith("/adraw")) {
+                        Platform.runLater(() -> ApplicationData.getInstance().getIvc().getOfferDraw().fire());
                     } else {
                         if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                             GameStates.setServerIswhite(messageFromServer.equals("true"));
@@ -139,5 +143,9 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public interface ClientCallback {
+        void onRoleReceived(boolean isServerWhite);
     }
 }

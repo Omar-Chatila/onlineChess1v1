@@ -20,13 +20,15 @@ import static util.GameHelper.print;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class Game {
+    private static final Graveyard whiteGraveyard = new Graveyard(true);
+    private static final Graveyard blackGraveyard = new Graveyard(false);
     public static List<String> moveList = new ArrayList<>();
     public static List<String[][]> playedPositions = new ArrayList<>();
     public static String[][] board = new String[8][8];
+    public static boolean drawClaimable;
+    public static boolean isDrawClaimable;
     private static int fiftyMoveRule;
     private static MovesTableController movesTableController;
-    private static final Graveyard whiteGraveyard = new Graveyard(true);
-    private static final Graveyard blackGraveyard = new Graveyard(false);
     private static int materialDifference;
 
     private static String[][] movePieces(String move, boolean white) throws IllegalMoveException {
@@ -317,6 +319,8 @@ public class Game {
             if (isThreefoldRepetition()) {
                 System.out.println("3-Fold repetition: One player can claim draw");
                 ApplicationData.getInstance().getIvc().updateInfoText("3-Fold repetition: One player can claim draw");
+                isDrawClaimable = true;
+                ApplicationData.getInstance().getIvc().getOfferDraw().fire();
             }
             if (kingChecked(!white) && checkMated(!white)) {
                 ApplicationData.getInstance().getIvc().updateInfoText("Game over! - " + (!white ? "Black won!" : "White won!"));
@@ -330,7 +334,10 @@ public class Game {
             }
             if (fiftyMoveRule >= 100) {
                 ApplicationData.getInstance().getIvc().updateInfoText("50 move rule applied: One player can claim draw!");
+                ApplicationData.getInstance().getIvc().getOfferDraw().fire();
+                isDrawClaimable = true;
                 System.out.println("50 move rule applied: One player can claim draw!");
+                drawClaimable = true;
             }
             moveList.add(move);
             playedPositions.add(copyBoard(board));
