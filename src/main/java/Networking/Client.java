@@ -86,16 +86,20 @@ public class Client {
                     } else if (messageFromServer.startsWith("/t")) {
                         ClientController.getChatController().addLabel(messageFromServer.substring(2));
                         LoginViewController.getClientController().setMessageIndicatorVisibility(true);
-                    } else if (messageFromServer.startsWith("/rdraw")) {
+                    } else if (messageFromServer.startsWith(InfoViewController.REQUEST_DRAW)) {
                         Platform.runLater(() -> {
                             Game.drawClaimable = true;
                             ApplicationData.getInstance().getIvc().updateInfoText("Opponent offers a draw");
+                            ApplicationData.getInstance().getIvc().highlightDrawButton();
                         });
-                    } else if (messageFromServer.startsWith("/adraw")) {
+                    } else if (messageFromServer.startsWith(InfoViewController.ACCCEPT_DRAW)) {
+                        GameStates.setGameOver(true);
                         Platform.runLater(() -> {
-                            ApplicationData.getInstance().getIvc().updateInfoText("Game ends in a Draw");
+                            InfoViewController ivc = ApplicationData.getInstance().getIvc();
+                            ivc.updateInfoText("Game ends in a Draw");
+                            ivc.setEmblems(true, true);
+                            ivc.disableButtons();
                             ApplicationData.getInstance().closeTimers();
-                            ApplicationData.getInstance().getIvc().setEmblems(true, true);
                         });
                     } else if (messageFromServer.equals(InfoViewController.RESIGN)) {
                         GameStates.setGameOver(true);

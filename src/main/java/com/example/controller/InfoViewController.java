@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import chessModel.Game;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import util.ApplicationData;
+import util.SoundPlayer;
 
 public class InfoViewController {
     public static boolean doubleClicked;
@@ -47,10 +49,6 @@ public class InfoViewController {
     public static final String RESIGN = "/resign";
     public static final String ACCCEPT_DRAW = "/adraw";
 
-    private static void resign() {
-
-    }
-
     private static void sendMessage(String text) {
         if (GameStates.isServer()) {
             ApplicationData.getInstance().getServer().sendMessageToClient(text);
@@ -62,7 +60,7 @@ public class InfoViewController {
     @FXML
     private void initialize() {
         setResignButton();
-        //setOfferDrawButton();
+        setOfferDrawButton();
         myTurnIndicator.setDisable(true);
         oppTurnIndicator.setDisable(true);
         myTurnIndicator.setOpacity(1);
@@ -104,23 +102,45 @@ public class InfoViewController {
         oppTurnIndicator.setSelected(!oppTurnIndicator.isSelected());
     }
 
-    private void setResignButton() {
-        setResignButton(resignButton);
+    private void setOfferDrawButton() {
+        offerDraw.setOnAction(event -> {
+            if (Game.drawClaimable) {
+                sendMessage(ACCCEPT_DRAW);
+                ApplicationData.getInstance().closeTimers();
+                GameStates.setGameOver(true);
+                new SoundPlayer().playGameEndSound();
+                infoText.setText("Game ends in a Draw!");
+                setEmblems(true, true);
+            } else {
+                highlightDrawButton();
+                sendMessage(REQUEST_DRAW);
+            }
+        });
     }
 
-    //private void setOfferDrawButton() {
-    //buttonEffects(offerDraw);
-    //}
-
-    private void setResignButton(JFXButton button) {
+    public void highlightDrawButton() {
         DropShadow dropShadow = new DropShadow();
-        button.setEffect(dropShadow);
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), button);
+        offerDraw.setEffect(dropShadow);
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), offerDraw);
         scaleTransition.setToX(1.1);
         scaleTransition.setToY(1.1);
         scaleTransition.setToZ(1.1);
         scaleTransition.setAutoReverse(true);
-        button.setOnAction(event -> {
+        if (scaleTransition.getStatus() == ScaleTransition.Status.RUNNING) {
+            scaleTransition.stop();
+        }
+        scaleTransition.play();
+    }
+
+    private void setResignButton() {
+        DropShadow dropShadow = new DropShadow();
+        resignButton.setEffect(dropShadow);
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), resignButton);
+        scaleTransition.setToX(1.1);
+        scaleTransition.setToY(1.1);
+        scaleTransition.setToZ(1.1);
+        scaleTransition.setAutoReverse(true);
+        resignButton.setOnAction(event -> {
             if (doubleClicked) {
                 if (this.iamWhite) {
                     infoText.setText("White resigned - Black is victorious!");
@@ -132,27 +152,27 @@ public class InfoViewController {
                 sendMessage(RESIGN);
                 disableButtons();
                 oppWinEmblem.setVisible(true);
-                button.setStyle("-fx-background-color: #d32f2f;");
-                button.setStyle("-fx-background-color: #0d90dc;");
+                resignButton.setStyle("-fx-background-color: #d32f2f;");
+                resignButton.setStyle("-fx-background-color: #0d90dc;");
                 if (scaleTransition.getStatus() == ScaleTransition.Status.RUNNING) {
                     scaleTransition.stop();
                 }
                 scaleTransition.play();
             } else {
-                button.setStyle("-fx-background-color: #d32f2f;");
+                resignButton.setStyle("-fx-background-color: #d32f2f;");
                 doubleClicked = true;
             }
         });
 
-        button.setOnMouseExited(event -> {
+        resignButton.setOnMouseExited(event -> {
             doubleClicked = false;
-            button.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 1);" +
+            resignButton.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 1);" +
                     "-fx-background-color: transparent;");
-            button.setScaleX(1);
-            button.setScaleY(1);
-            button.setScaleZ(1);
+            resignButton.setScaleX(1);
+            resignButton.setScaleY(1);
+            resignButton.setScaleZ(1);
         });
-        button.setOnMouseEntered(event -> button.setStyle("-fx-background-color: #d3b22f;"));
+        resignButton.setOnMouseEntered(event -> resignButton.setStyle("-fx-background-color: #d3b22f;"));
     }
 
     public void updateMyClock(String time) {
@@ -189,7 +209,7 @@ public class InfoViewController {
     }
 
     public void setEmblems(boolean mine, boolean opp) {
-        this.myWinEmblem.setVisible(true);
+        this.myWinEmblem.setVisible(mine);
         this.oppWinEmblem.setVisible(opp);
     }
 }

@@ -23,7 +23,6 @@ public class Game {
     public static List<String[][]> playedPositions = new ArrayList<>();
     public static String[][] board = new String[8][8];
     public static boolean drawClaimable;
-    public static boolean isDrawClaimable;
     private static int fiftyMoveRule;
     private static MovesTableController movesTableController;
     private static int materialDifference;
@@ -317,7 +316,7 @@ public class Game {
             if (isThreefoldRepetition()) {
                 System.out.println("3-Fold repetition: One player can claim draw");
                 ApplicationData.getInstance().getIvc().updateInfoText("3-Fold repetition: One player can claim draw");
-                isDrawClaimable = true;
+                drawClaimable = true;
                 // ApplicationData.getInstance().getIvc().getOfferDraw().fire();
             }
             if (kingChecked(!white) && checkMated(!white)) {
@@ -333,7 +332,6 @@ public class Game {
             if (fiftyMoveRule >= 100) {
                 ApplicationData.getInstance().getIvc().updateInfoText("50 move rule applied: One player can claim draw!");
                 //ApplicationData.getInstance().getIvc().getOfferDraw().fire();
-                isDrawClaimable = true;
                 System.out.println("50 move rule applied: One player can claim draw!");
                 drawClaimable = true;
             }

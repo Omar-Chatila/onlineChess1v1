@@ -589,45 +589,49 @@ public class ChessboardController {
     }
 
     private void handleDragDone(DragEvent event) {
-        updateCheckStatus();
-        if (GameStates.isIsMyTurn() || !isLegalDragDrop()) {
-            new SoundPlayer().playIllegalMoveSound();
-            clearHighlighting();
+        if (!GameStates.isGameOver()) {
+            updateCheckStatus();
+            if (GameStates.isIsMyTurn() || !isLegalDragDrop()) {
+                new SoundPlayer().playIllegalMoveSound();
+                clearHighlighting();
+            }
         }
     }
 
     private void handleButtonClick(ActionEvent event, Button currentButton) {
-        clearHighlighting();
-        Node button = (Node) event.getSource();
-        StackPane square = (StackPane) button.getParent();
-        int rank = Objects.requireNonNullElse(GridPane.getRowIndex(square), 0);
-        int file = Objects.requireNonNullElse(GridPane.getColumnIndex(square), 0);
-        boolean isWhite = GameStates.iAmWhite();
-        if (!isWhite) {
-            rank = 7 - rank;
-            file = 7 - file;
-        }
-        boolean myPiece = GameStates.iAmWhite() && Character.isUpperCase(Game.board[rank][file].charAt(0))
-                || !GameStates.iAmWhite() && Character.isLowerCase(Game.board[rank][file].charAt(0));
-        if (myPiece) {
-            // this.startingSquare = new IntIntPair(rank, file);
-            this.selectedPiece = (Button) button;
-            square.getChildren().get(0).setStyle((rank + file) % 2 == 0 ? theme.getLastMoveLight() : theme.getLastMoveDark());
-            startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
-            initMove(currentButton);
-        } else {
+        if (!GameStates.isGameOver()) {
             clearHighlighting();
-            IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(square), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(square), 0));
-            if (possibleSquares.contains(destinationSquare.toString())) {
-                this.destinationsSquare = destinationSquare;
-                String move = generateMove(destinationSquare, square);
-                if (ApplicationData.getInstance().isIllegalMove()) return;
-                if (move.equals("wrong")) return;
-                handleMoveTransmission(destinationSquare);
-                applyMoveToBoardAndUI(square);
-                selectedPiece = null;
+            Node button = (Node) event.getSource();
+            StackPane square = (StackPane) button.getParent();
+            int rank = Objects.requireNonNullElse(GridPane.getRowIndex(square), 0);
+            int file = Objects.requireNonNullElse(GridPane.getColumnIndex(square), 0);
+            boolean isWhite = GameStates.iAmWhite();
+            if (!isWhite) {
+                rank = 7 - rank;
+                file = 7 - file;
             }
-            updateCheckStatus();
+            boolean myPiece = GameStates.iAmWhite() && Character.isUpperCase(Game.board[rank][file].charAt(0))
+                    || !GameStates.iAmWhite() && Character.isLowerCase(Game.board[rank][file].charAt(0));
+            if (myPiece) {
+                // this.startingSquare = new IntIntPair(rank, file);
+                this.selectedPiece = (Button) button;
+                square.getChildren().get(0).setStyle((rank + file) % 2 == 0 ? theme.getLastMoveLight() : theme.getLastMoveDark());
+                startingSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(currentButton.getParent()), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(currentButton.getParent()), 0));
+                initMove(currentButton);
+            } else {
+                clearHighlighting();
+                IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(square), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(square), 0));
+                if (possibleSquares.contains(destinationSquare.toString())) {
+                    this.destinationsSquare = destinationSquare;
+                    String move = generateMove(destinationSquare, square);
+                    if (ApplicationData.getInstance().isIllegalMove()) return;
+                    if (move.equals("wrong")) return;
+                    handleMoveTransmission(destinationSquare);
+                    applyMoveToBoardAndUI(square);
+                    selectedPiece = null;
+                }
+                updateCheckStatus();
+            }
         }
     }
 }
