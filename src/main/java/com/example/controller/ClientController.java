@@ -79,11 +79,7 @@ public class ClientController implements Initializable, Client.ClientCallback {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            loadUIElements();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         newMessage.setOnMouseClicked(e -> toggle());
         addKeyListeners();
         roleLabel.setText("Chess - " + (!GameStates.isServerWhite() ? "White" : "Black"));
@@ -324,6 +320,7 @@ public class ClientController implements Initializable, Client.ClientCallback {
             Platform.runLater(() -> {
                 try {
                     loadChessBoard(isServerWhite);
+                    loadUIElements();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

@@ -29,5 +29,6 @@ public class SettingsController {
     @FXML
     private void initialize() {
         backButton.setOnAction(e -> ApplicationData.getInstance().getLoginViewController().switchPanes());
+        
     }
 }
