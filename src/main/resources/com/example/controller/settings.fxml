@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="312.0" prefWidth="255.0" style="-fx-background-color: #1E3050;" stylesheets="@../../../css/settings.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.SettingsController">
+   <children>
+      <VBox prefHeight="312.0" prefWidth="255.0" spacing="10.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="28.0" prefWidth="59.0" styleClass="modern-content" text="Theme:" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <JFXComboBox fx:id="themeselector" focusColor="WHITE" prefHeight="25.0" prefWidth="131.0" promptText="Standard" styleClass="combo-box">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </JFXComboBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="28.0" prefWidth="59.0" styleClass="modern-content" text="Sound:" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Group>
+                     <children>
+                        <JFXRadioButton layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="soundToggle" />
+                           </toggleGroup>
+                        </JFXRadioButton>
+                        <JFXRadioButton layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$soundToggle" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                  </Group>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="28.0" prefWidth="108.0" styleClass="modern-content" text="Highlighting:" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Group>
+                     <children>
+                        <JFXRadioButton layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="highlightToggle" />
+                           </toggleGroup>
+                        </JFXRadioButton>
+                        <JFXRadioButton layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$highlightToggle" />
+                     </children>
+                  </Group>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="28.0" prefWidth="97.0" styleClass="modern-content" text="Animations:" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Group>
+                     <children>
+                        <JFXRadioButton layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="animationstoggle" />
+                           </toggleGroup>
+                        </JFXRadioButton>
+                        <JFXRadioButton layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="highlightToggle1" />
+                           </toggleGroup>
+                        </JFXRadioButton>
+                     </children>
+                  </Group>
+               </children>
+            </HBox>
+            <Separator prefHeight="1.0" prefWidth="238.0" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="39.0" prefWidth="215.0">
+               <children>
+                  <JFXButton fx:id="backButton" prefHeight="27.0" prefWidth="53.0" styleClass="clean-white-button" text="Back" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

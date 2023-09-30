@@ -1,108 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.controller.LoginViewController">
+
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.LoginViewController">
     <left>
-        <AnchorPane prefHeight="312.0" prefWidth="255.0" style="-fx-background-color: #1E3050;"
-                    BorderPane.alignment="CENTER">
-            <ImageView fitHeight="106.0" fitWidth="98.0" layoutX="79.0" layoutY="58.0"
-                       pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@../../../images/chessicon.png"/>
-                </image>
-            </ImageView>
-            <HBox layoutX="18.0" layoutY="186.0" prefHeight="88.0" prefWidth="236.0" spacing="8.0">
-                <children>
-                    <FontAwesomeIcon fill="WHITE" glyphName="INFO_CIRCLE" size="30">
-                        <HBox.margin>
-                            <Insets/>
-                        </HBox.margin>
-                    </FontAwesomeIcon>
-                    <Label fx:id="infoLabel" prefHeight="88.0" prefWidth="193.0" style="-fx-alignment: TOP_LEFT;"
-                           text="Welcome!" textFill="WHITE" wrapText="true">
-                        <font>
-                            <Font size="20.0"/>
-                        </font>
-                    </Label>
-                </children>
-            </HBox>
-            <HBox layoutX="102.0" layoutY="274.0">
-                <children>
-                    <FontAwesomeIcon fill="WHITE" glyphName="GITHUB" selectionStart="0" size="20">
-                        <HBox.margin>
-                            <Insets top="2.0"/>
-                        </HBox.margin>
-                    </FontAwesomeIcon>
-                    <Hyperlink fx:id="helpLink" layoutX="28.0" layoutY="10.0" onAction="#openGithub" text="Help"
-                               textFill="WHITE" underline="true"/>
-                </children>
-            </HBox>
-        </AnchorPane>
+      <StackPane fx:id="stackpane" BorderPane.alignment="CENTER">
+         <children>
+              <AnchorPane prefHeight="312.0" prefWidth="255.0" style="-fx-background-color: #1E3050;">
+                  <ImageView fitHeight="106.0" fitWidth="98.0" layoutX="79.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@../../../images/chessicon.png" />
+                      </image>
+                  </ImageView>
+                  <HBox layoutX="18.0" layoutY="186.0" prefHeight="88.0" prefWidth="236.0" spacing="8.0">
+                      <children>
+                          <FontAwesomeIcon fill="WHITE" glyphName="INFO_CIRCLE" size="30">
+                              <HBox.margin>
+                                  <Insets />
+                              </HBox.margin>
+                          </FontAwesomeIcon>
+                          <Label fx:id="infoLabel" prefHeight="88.0" prefWidth="193.0" style="-fx-alignment: TOP_LEFT;" text="Welcome!" textFill="WHITE" wrapText="true">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                      </children>
+                  </HBox>
+                  <HBox layoutX="102.0" layoutY="274.0">
+                      <children>
+                          <FontAwesomeIcon fill="WHITE" glyphName="GITHUB" selectionStart="0" size="20">
+                              <HBox.margin>
+                                  <Insets top="2.0" />
+                              </HBox.margin>
+                          </FontAwesomeIcon>
+                          <Hyperlink fx:id="helpLink" layoutX="28.0" layoutY="10.0" onAction="#openGithub" text="Help" textFill="WHITE" underline="true" />
+                      </children>
+                  </HBox>
+               <FontAwesomeIcon fx:id="settingsMenu" fill="WHITE" glyphName="GEAR" layoutX="219.0" layoutY="35.0" onMouseClicked="#openSettings" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" size="25" />
+              </AnchorPane>
+         </children>
+      </StackPane>
     </left>
     <right>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                    prefHeight="312.0" prefWidth="321.0" style="-fx-background-color: white;"
-                    BorderPane.alignment="CENTER">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="321.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="ipField" accessibleText="IP" disable="true" layoutX="45.0" layoutY="84.0"
-                           onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0"
-                           prefWidth="250.0" promptText="IP Address"
-                           style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;"/>
-                <TextField fx:id="portField" accessibleText="Port" layoutX="45.0" layoutY="134.0"
-                           onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0"
-                           prefWidth="250.0" promptText="Port Number"
-                           style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;"/>
+                <TextField fx:id="ipField" accessibleText="IP" disable="true" layoutX="45.0" layoutY="84.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0" prefWidth="250.0" promptText="IP Address" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
+                <TextField fx:id="portField" accessibleText="Port" layoutX="45.0" layoutY="134.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0" prefWidth="250.0" promptText="Port Number" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
                 <HBox layoutX="65.0" layoutY="236.0" prefHeight="50.0" prefWidth="191.0" spacing="20.0">
                     <children>
-                        <Button fx:id="blackPieceColor" accessibleText="black" layoutX="20.0" maxHeight="50.0"
-                                maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
-                                onAction="#blackPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited"
-                                prefHeight="50.0" prefWidth="50.0"
-                                style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
+                        <Button fx:id="blackPieceColor" accessibleText="black" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#blackPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
                             <graphic>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0"
-                                           onMouseEntered="#mouseEntered" onMouseExited="#mouseExited"
-                                           pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../../images/cB.png"/>
+                                        <Image url="@../../../images/cB.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="randomPieceColor" accessibleText="random" layoutX="20.0" maxHeight="50.0"
-                                maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
-                                onAction="#randomPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited"
-                                prefHeight="50.0" prefWidth="50.0"
-                                style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
+                        <Button fx:id="randomPieceColor" accessibleText="random" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#randomPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
                             <graphic>
-                                <ImageView fitHeight="61.0" fitWidth="60.0" layoutX="20.0"
-                                           onMouseEntered="#mouseEntered" onMouseExited="#mouseExited"
-                                           pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="61.0" fitWidth="60.0" layoutX="20.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../../images/cR.png"/>
+                                        <Image url="@../../../images/cR.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="whitePieceColor" accessibleText="white" layoutX="20.0" maxHeight="50.0"
-                                maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false"
-                                onAction="#whitePieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited"
-                                prefHeight="50.0" prefWidth="50.0"
-                                style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
+                        <Button fx:id="whitePieceColor" accessibleText="white" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#whitePieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
                             <graphic>
-                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0"
-                                           onMouseEntered="#mouseEntered" onMouseExited="#mouseExited"
-                                           pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../../images/cW.png"/>
+                                        <Image url="@../../../images/cW.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
@@ -111,80 +97,69 @@
                 </HBox>
                 <VBox layoutX="21.0" layoutY="175.0" prefHeight="49.0" prefWidth="280.0">
                     <children>
-                        <Label fx:id="tcLabel" layoutX="20.0" prefHeight="16.0" prefWidth="121.0"
-                               style="-fx-text-fill: #1E3050;" text="Time Control" textFill="#354253">
+                        <Label fx:id="tcLabel" layoutX="20.0" prefHeight="16.0" prefWidth="121.0" style="-fx-text-fill: #1E3050;" text="Time Control" textFill="#354253">
                             <font>
-                                <Font size="15.0"/>
+                                <Font size="15.0" />
                             </font>
                             <VBox.margin>
-                                <Insets/>
+                                <Insets />
                             </VBox.margin>
                         </Label>
                         <HBox layoutX="20.0" spacing="5.0">
                             <children>
-                                <JFXSlider fx:id="timeSlider" layoutX="20.0" prefHeight="14.0" prefWidth="208.0"
-                                           stylesheets="@../../../css/button.css">
+                                <JFXSlider fx:id="timeSlider" layoutX="20.0" prefHeight="14.0" prefWidth="208.0" stylesheets="@../../../css/button.css">
                                     <HBox.margin>
-                                        <Insets top="8.0"/>
+                                        <Insets top="8.0" />
                                     </HBox.margin>
                                 </JFXSlider>
-                                <Label fx:id="timeLabel" layoutX="20.0" prefHeight="28.0" prefWidth="64.0"
-                                       style="-fx-text-fill: #1E3050;" text="00:00" textFill="#354253">
+                                <Label fx:id="timeLabel" layoutX="20.0" prefHeight="28.0" prefWidth="64.0" style="-fx-text-fill: #1E3050;" text="00:00" textFill="#354253">
                                     <font>
-                                        <Font size="19.0"/>
+                                        <Font size="19.0" />
                                     </font>
                                 </Label>
                             </children>
                         </HBox>
                     </children>
                 </VBox>
-                <JFXRadioButton layoutX="83.0" layoutY="53.0" onAction="#serverToggle"
-                                onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" selected="true"
-                                text="Create">
+                <JFXRadioButton layoutX="83.0" layoutY="53.0" onAction="#serverToggle" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" selected="true" text="Create">
                     <selectedColor>
-                        <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044"/>
+                        <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044" />
                     </selectedColor>
                     <unSelectedColor>
-                        <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044"/>
+                        <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044" />
                     </unSelectedColor>
                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleGroup"/>
+                        <ToggleGroup fx:id="toggleGroup" />
                     </toggleGroup>
                 </JFXRadioButton>
-                <JFXRadioButton fx:id="clientRadioButton" layoutX="183.0" layoutY="53.0" onAction="#clientToggle"
-                                onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" text="Join"
-                                toggleGroup="$toggleGroup">
+                <JFXRadioButton fx:id="clientRadioButton" layoutX="183.0" layoutY="53.0" onAction="#clientToggle" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" text="Join" toggleGroup="$toggleGroup">
                     <unSelectedColor>
-                        <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044"/>
+                        <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044" />
                     </unSelectedColor>
                     <selectedColor>
-                        <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044"/>
+                        <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044" />
                     </selectedColor>
                 </JFXRadioButton>
-                <FontAwesomeIcon fill="#1e3050" glyphName="USER" layoutX="21.0" layoutY="108.0" size="20"/>
-                <FontAwesomeIcon fill="#1e3050" glyphName="KEY" layoutX="21.0" layoutY="156.0" size="20"/>
+                <FontAwesomeIcon fill="#1e3050" glyphName="USER" layoutX="21.0" layoutY="108.0" size="20" />
+                <FontAwesomeIcon fill="#1e3050" glyphName="KEY" layoutX="21.0" layoutY="156.0" size="20" />
                 <HBox layoutX="271.0" layoutY="-4.0" prefHeight="32.0" prefWidth="48.0">
                     <children>
                         <JFXButton maxWidth="0.0" onAction="#minimize" text=" ">
                             <graphic>
-                                <FontAwesomeIcon fill="#1e3050" glyphName="MINUS" size="20" wrappingWidth="1.0"/>
+                                <FontAwesomeIcon fill="#1e3050" glyphName="MINUS" size="20" wrappingWidth="1.0" />
                             </graphic>
                             <HBox.margin>
-                                <Insets top="5.0"/>
+                                <Insets top="5.0" />
                             </HBox.margin>
                         </JFXButton>
                         <JFXButton fx:id="closeButton" text=" ">
                             <graphic>
-                                <FontAwesomeIcon fill="#1e3050" glyphName="CLOSE" size="20" translateX="-4.0"
-                                                 wrappingWidth="1.0"/>
+                                <FontAwesomeIcon fill="#1e3050" glyphName="CLOSE" size="20" translateX="-4.0" wrappingWidth="1.0" />
                             </graphic>
                         </JFXButton>
                     </children>
                 </HBox>
-                <Button fx:id="connectButton" layoutX="225.0" layoutY="192.0" mnemonicParsing="false"
-                        onAction="#connectClient" prefHeight="34.0" prefWidth="71.0"
-                        style="-fx-background-color: #1E3050; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;"
-                        text="Connect" visible="false"/>
+                <Button fx:id="connectButton" layoutX="225.0" layoutY="192.0" mnemonicParsing="false" onAction="#connectClient" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #1E3050; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;" text="Connect" visible="false" />
             </children>
         </AnchorPane>
     </right>

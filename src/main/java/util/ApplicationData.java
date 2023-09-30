@@ -25,9 +25,9 @@ public class ApplicationData {
     private ServerController serverController;
     private ClientController clientController;
     private GameStatesController gameStatesController;
+    private LoginViewController loginViewController;
 
     private ApplicationData() {
-
     }
 
     public static ApplicationData getInstance() {
@@ -155,5 +155,13 @@ public class ApplicationData {
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
+    }
+
+    public LoginViewController getLoginViewController() {
+        return loginViewController;
+    }
+
+    public void setLoginViewController(LoginViewController loginViewController) {
+        this.loginViewController = loginViewController;
     }
 }

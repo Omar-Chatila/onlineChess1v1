@@ -7,6 +7,7 @@ import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -56,14 +58,18 @@ public class LoginViewController {
     private JFXRadioButton clientRadioButton;
     @FXML
     private Hyperlink helpLink;
+    @FXML
+    private StackPane stackpane;
     private ScaleTransition scaleTransition;
     private Theme theme;
+    private Node settingsMenu;
     private static ServerController serverController;
     private static ClientController clientController;
 
 
     @FXML
     private void initialize() {
+        ApplicationData.getInstance().setLoginViewController(this);
         setTimeSlider();
         closeButton.setOnAction(e -> Platform.exit());
         helpLink.setBorder(Border.EMPTY);
@@ -227,8 +233,7 @@ public class LoginViewController {
             } else {
                 infoLabel.setText("Join an existing game");
             }
-        } else {
-            TextField hovered = (TextField) event.getSource();
+        } else if (event.getSource() instanceof TextField hovered) {
             if (hovered.getAccessibleText().equals("Port")) {
                 if (clientRadioButton.isSelected()) {
                     infoLabel.setText("Enter the Host's Port");
@@ -240,6 +245,8 @@ public class LoginViewController {
                     infoLabel.setText("Enter the Host's IP-Address");
                 }
             }
+        } else {
+            infoLabel.setText("Settings");
         }
     }
 
@@ -279,5 +286,27 @@ public class LoginViewController {
         Scene scene = new Scene(webView, 800, 600);
         helpStage.setScene(scene);
         helpStage.show();
+    }
+
+    @FXML
+    void openSettings(MouseEvent event) {
+        try {
+            if (this.settingsMenu == null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+                Parent settingsMenu = loader.load();
+                Pane root = loader.getRoot();
+                this.settingsMenu = root;
+                stackpane.getChildren().add(root);
+                root.toFront();
+            } else {
+                switchPanes();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void switchPanes() {
+        stackpane.getChildren().get(1).toBack();
     }
 }

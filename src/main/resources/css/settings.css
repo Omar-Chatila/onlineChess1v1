@@ -1,0 +1,18 @@
+.modern-content {
+    -fx-font-family: "Segoe UI", Helvetica, sans-serif; /* Font family */
+    -fx-font-size: 14px; /* Font size for content */
+    -fx-text-fill: #ffffff; /* Text color */
+    -fx-padding: 5px; /* Padding */
+}
+
+.clean-white-button {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-text-fill: #000000; /* Black text color */
+    -fx-background-radius: 5px; /* Rounded corners */
+    -fx-border-width: 1px; /* Border width */
+    -fx-border-color: #000000; /* Border color */
+}
+
+.clean-white-button:hover {
+    -fx-background-color: #f0f0f0; /* Light gray background on hover */
+}
