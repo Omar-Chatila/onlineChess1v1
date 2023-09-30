@@ -37,7 +37,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wR.png"/>
+                                <Image url="@../../../images/standard/wR.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -53,7 +53,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wN.png"/>
+                                <Image url="@../../../images/standard/wN.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -82,7 +82,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wR.png"/>
+                                <Image url="@../../../images/standard/wR.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -98,7 +98,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wN.png"/>
+                                <Image url="@../../../images/standard/wN.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -116,7 +116,7 @@
                         <ImageView fx:id="whiteKing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true"
                                    preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wK.png"/>
+                                <Image url="@../../../images/standard/wK.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -132,7 +132,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wB.png"/>
+                                <Image url="@../../../images/standard/wB.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -148,7 +148,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wQ.png"/>
+                                <Image url="@../../../images/standard/wQ.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -164,7 +164,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wB.png"/>
+                                <Image url="@../../../images/standard/wB.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -180,7 +180,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png"/>
+                                <Image url="@../../../images/standard/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -196,7 +196,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png"/>
+                                <Image url="@../../../images/standard/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -212,7 +212,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png"/>
+                                <Image url="@../../../images/standard/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -228,7 +228,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png"/>
+                                <Image url="@../../../images/standard/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -244,7 +244,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png"/>
+                                <Image url="@../../../images/standard/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -260,7 +260,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png"/>
+                                <Image url="@../../../images/standard/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -276,7 +276,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png"/>
+                                <Image url="@../../../images/standard/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -305,7 +305,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/wP.png"/>
+                                <Image url="@../../../images/standard/wP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -565,7 +565,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png"/>
+                                <Image url="@../../../images/standard/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -581,7 +581,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png"/>
+                                <Image url="@../../../images/standard/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -597,7 +597,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png"/>
+                                <Image url="@../../../images/standard/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -613,7 +613,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png"/>
+                                <Image url="@../../../images/standard/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -629,7 +629,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png"/>
+                                <Image url="@../../../images/standard/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -645,7 +645,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png"/>
+                                <Image url="@../../../images/standard/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -661,7 +661,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png"/>
+                                <Image url="@../../../images/standard/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -690,7 +690,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bP.png"/>
+                                <Image url="@../../../images/standard/bP.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -719,7 +719,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bR.png"/>
+                                <Image url="@../../../images/standard/bR.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -748,7 +748,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bB.png"/>
+                                <Image url="@../../../images/standard/bB.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -777,7 +777,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bQ.png"/>
+                                <Image url="@../../../images/standard/bQ.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -806,7 +806,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bN.png"/>
+                                <Image url="@../../../images/standard/bN.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -835,7 +835,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bN.png"/>
+                                <Image url="@../../../images/standard/bN.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -866,7 +866,7 @@
                         <ImageView fx:id="blackKing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true"
                                    preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bK.png"/>
+                                <Image url="@../../../images/standard/bK.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -895,7 +895,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bB.png"/>
+                                <Image url="@../../../images/standard/bB.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -934,7 +934,7 @@
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/bR.png"/>
+                                <Image url="@../../../images/standard/bR.png"/>
                             </image>
                         </ImageView>
                     </graphic>

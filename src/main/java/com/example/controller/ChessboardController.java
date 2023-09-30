@@ -29,6 +29,8 @@ import util.SoundPlayer;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChessboardController {
     @FXML
@@ -68,6 +70,20 @@ public class ChessboardController {
                 for (Node button : current.getChildren()) {
                     if (button instanceof Button currentButton) {
                         setButtonListeners(currentButton);
+                        if (((Button) button).getGraphic() instanceof ImageView imv) {
+                            String url = imv.getImage().getUrl().substring(imv.getImage().getUrl().lastIndexOf("/images"));
+                            String themeUrl = url.replaceAll("standard/", theme.getPiecesPath());
+                            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(themeUrl)));
+                            ImageView imageView = new ImageView(image);
+                            imageView.setFitWidth(50);
+                            imageView.setFitHeight(50);
+                            Pattern pattern = Pattern.compile("[wb][RQPKNB]");
+                            Matcher matcher = pattern.matcher(themeUrl);
+                            if (matcher.find()) {
+                                button.setId(matcher.group());
+                            }
+                            System.out.println(button.getId());
+                        }
                     }
                 }
             }
@@ -128,13 +144,15 @@ public class ChessboardController {
     }
 
     private void initMove(Button currentButton) {
-        String imageUrl = ((ImageView) currentButton.getGraphic()).getImage().getUrl();
+        String imageUrl = currentButton.getId();
+        System.out.println(imageUrl);
         boolean isWhitePiece;
         if (imageUrl != null) {
-            String movedP = imageUrl.substring(imageUrl.length() - 6);
-            isWhitePiece = Character.toString(movedP.charAt(0)).equals("w");
-            movedPiece = movedP.charAt(1) != ('P') ? "" + movedP.charAt(1) : "";
+            String movedP = imageUrl.charAt(1) + "";
+            isWhitePiece = Character.toString(imageUrl.charAt(0)).equals("w");
+            movedPiece = movedP.equals("P") ? "" : movedP;
         } else {
+            System.out.println("NUUUUUUUUUL");
             movedPiece = currentButton.getAccessibleText().charAt(1) + "";
             isWhitePiece = currentButton.getAccessibleText().charAt(0) == 'w';
         }
@@ -566,12 +584,13 @@ public class ChessboardController {
     }
 
     private void setPromotedPiece(String piece, Button selectedPiece) {
-        Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + piece + ".png")));
+        Image promotion = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + piece + ".png")));
         ImageView h = new ImageView(promotion);
         h.setFitHeight(50);
         h.setFitWidth(50);
         selectedPiece.setGraphic(h);
         selectedPiece.setAccessibleText(piece);
+        selectedPiece.setId(piece);
     }
 
     private boolean isLegalDragDrop() {

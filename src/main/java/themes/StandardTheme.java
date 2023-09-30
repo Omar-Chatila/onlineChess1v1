@@ -50,4 +50,9 @@ public class StandardTheme extends Theme {
     public String getBackGround() {
         return "-fx-background-color: linear-gradient(to bottom, #1E3050, #1E3050E0); -fx-background-size: cover;";
     }
+
+    @Override
+    public String getPiecesPath() {
+        return "standard/";
+    }
 }

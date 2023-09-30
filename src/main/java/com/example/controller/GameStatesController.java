@@ -40,7 +40,7 @@ public class GameStatesController {
                 label.setStyle(style);
                 String imageName = getImageName(r, c, posNumber);
                 if (!imageName.isBlank()) {
-                    Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + imageName + ".png")));
+                    Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + imageName + ".png")));
                     ImageView imageView = new ImageView(image);
                     imageView.setFitWidth(50);
                     imageView.setFitHeight(50);

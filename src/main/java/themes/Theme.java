@@ -20,4 +20,6 @@ public abstract class Theme {
     public abstract String getKingCheckedStyle();
 
     public abstract String getBackGround();
+
+    public abstract String getPiecesPath();
 }

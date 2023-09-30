@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import themes.Theme;
 import util.ApplicationData;
 
 import java.util.Objects;
@@ -29,19 +30,21 @@ public class PawnPromotionController {
     private ImageView rookButton;
     @FXML
     private VBox selectionBox;
+    private Theme theme;
 
     @FXML
     private void initialize() {
+        theme = ApplicationData.getInstance().getTheme();
         if (ApplicationData.getInstance().isWhitePlaying()) {
-            queenButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/wQ.png"))));
-            knightButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/wN.png"))));
-            rookButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/wR.png"))));
-            bishopButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/wB.png"))));
+            queenButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + "wQ.png"))));
+            knightButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + "wN.png"))));
+            rookButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + "wR.png"))));
+            bishopButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + "wB.png"))));
         } else {
-            queenButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/bQ.png"))));
-            knightButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/bN.png"))));
-            rookButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/bR.png"))));
-            bishopButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/bB.png"))));
+            queenButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + "bQ.png"))));
+            knightButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + "bN.png"))));
+            rookButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + "bR.png"))));
+            bishopButton.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + theme.getPiecesPath() + "bB.png"))));
         }
         setStyles();
         promote();
