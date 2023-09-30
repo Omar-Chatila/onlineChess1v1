@@ -9,7 +9,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -57,6 +60,7 @@ public class ClientController implements Initializable, Client.ClientCallback {
     private static ChatController chatController;
     public static int currentPositionNr;
 
+    private boolean keyPressHandled = false;
     private ScaleTransition scaleTransition;
     private AnchorPane chatBox;
     private AnchorPane tablePane;
@@ -81,6 +85,7 @@ public class ClientController implements Initializable, Client.ClientCallback {
             e.printStackTrace();
         }
         newMessage.setOnMouseClicked(e -> toggle());
+        addKeyListeners();
         roleLabel.setText("Chess - " + (!GameStates.isServerWhite() ? "White" : "Black"));
     }
 
@@ -296,12 +301,27 @@ public class ClientController implements Initializable, Client.ClientCallback {
         ApplicationData.getInstance().getGameStatesController().initBoard(0);
     }
 
+    private void addKeyListeners() {
+        backGroundPane.boundsInParentProperty().addListener((observable, oldValue, newValue) -> {
+            Scene scene = backGroundPane.getScene();
+            scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (!keyPressHandled) {
+                    if (event.getCode() == KeyCode.LEFT) {
+                        showPreviousBoard();
+                    } else if (event.getCode() == KeyCode.RIGHT) {
+                        showNextBoard();
+                    }
+                    keyPressHandled = true;
+                }
+            });
+            scene.addEventFilter(KeyEvent.KEY_RELEASED, event -> keyPressHandled = false);
+        });
+    }
 
     @Override
     public void onRoleReceived(boolean isServerWhite) {
         try {
-            Platform.runLater(() ->
-            {
+            Platform.runLater(() -> {
                 try {
                     loadChessBoard(isServerWhite);
                 } catch (Exception e) {

@@ -9,7 +9,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -28,7 +31,6 @@ import java.util.ResourceBundle;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class ServerController implements Initializable {
-
     @FXML
     private AnchorPane backGroundPane;
     @FXML
@@ -51,10 +53,10 @@ public class ServerController implements Initializable {
     private FontAwesomeIcon toggleIcon;
     @FXML
     private StackPane boardStackPane;
-
     private AnchorPane chatBox;
     private AnchorPane tablePane;
     private boolean tableOpened;
+    private boolean keyPressHandled = false;
     private static int serverPort;
     private static MovesTableController mtc;
     private static ChatController chatController;
@@ -66,11 +68,29 @@ public class ServerController implements Initializable {
         loadUIElements();
         new Thread(this::startServer).start();
         newMessage.setOnMouseClicked(e -> toggle());
+        addKeyListeners();
         ApplicationData.getInstance().setServerController(this);
     }
 
     public static void setServerPort(int serverPort) {
         ServerController.serverPort = serverPort;
+    }
+
+    private void addKeyListeners() {
+        backGroundPane.boundsInParentProperty().addListener((observable, oldValue, newValue) -> {
+            Scene scene = backGroundPane.getScene();
+            scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (!keyPressHandled) {
+                    if (event.getCode() == KeyCode.LEFT) {
+                        showPreviousBoard();
+                    } else if (event.getCode() == KeyCode.RIGHT) {
+                        showNextBoard();
+                    }
+                    keyPressHandled = true;
+                }
+            });
+            scene.addEventFilter(KeyEvent.KEY_RELEASED, event -> keyPressHandled = false);
+        });
     }
 
     private void loadChessBoard() throws Exception {
@@ -154,7 +174,7 @@ public class ServerController implements Initializable {
         chessBoardPane.toBack();
         chessBoardPane.setVisible(false);
         gameStates.toFront();
-        if (currentPositionNr < Game.moveList.size()) {
+        if (currentPositionNr < Game.moveList.size() - 1) {
             ApplicationData.getInstance().getGameStatesController().initBoard(++currentPositionNr);
         } else {
             chessBoardPane.toFront();

@@ -590,12 +590,12 @@ public class ChessboardController {
 
     private void handleDragDone(DragEvent event) {
         if (!GameStates.isGameOver()) {
-            updateCheckStatus();
             if (GameStates.isIsMyTurn() || !isLegalDragDrop()) {
                 new SoundPlayer().playIllegalMoveSound();
                 clearHighlighting();
             }
         }
+        updateCheckStatus();
     }
 
     private void handleButtonClick(ActionEvent event, Button currentButton) {
@@ -621,7 +621,7 @@ public class ChessboardController {
             } else {
                 clearHighlighting();
                 IntIntPair destinationSquare = new IntIntPair(Objects.requireNonNullElse(GridPane.getRowIndex(square), 0), Objects.requireNonNullElse(GridPane.getColumnIndex(square), 0));
-                if (possibleSquares.contains(destinationSquare.toString())) {
+                if (possibleSquares != null && possibleSquares.contains(destinationSquare.toString())) {
                     this.destinationsSquare = destinationSquare;
                     String move = generateMove(destinationSquare, square);
                     if (ApplicationData.getInstance().isIllegalMove()) return;
