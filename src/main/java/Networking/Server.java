@@ -3,6 +3,7 @@ package Networking;
 import Exceptions.IllegalMoveException;
 import chessModel.Game;
 import com.example.controller.GameStates;
+import com.example.controller.InfoViewController;
 import com.example.controller.LoginViewController;
 import com.example.controller.ServerController;
 import javafx.application.Platform;
@@ -45,7 +46,7 @@ public class Server {
     public void sendMessageToClient(String messageToClient) {
         try {
             if (GameStates.isIsMyTurn()) {
-                if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?") && !messageToClient.startsWith("/t") && !messageToClient.startsWith("/cl")) {
+                if (!messageToClient.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?") && !messageToClient.startsWith("/")) {
                     Game.executeMove(messageToClient, GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
@@ -81,13 +82,27 @@ public class Server {
                         ServerController.getChatController().addLabel(messageFromClient.substring(2));
                         LoginViewController.getServerController().setMessageIndicatorVisibility(true);
                     } else if (messageFromClient.startsWith("/rdraw")) {
-                        //ApplicationData.getInstance().getIvc().getOfferDraw().fire();
                         Platform.runLater(() -> {
                             Game.drawClaimable = true;
                             ApplicationData.getInstance().getIvc().updateInfoText("Opponent offers a draw");
                         });
                     } else if (messageFromClient.startsWith("/adraw")) {
-                        ApplicationData.getInstance().getIvc().getOfferDraw().fire();
+                        Platform.runLater(() -> {
+                            ApplicationData.getInstance().getIvc().updateInfoText("Game ends in a Draw");
+                            ApplicationData.getInstance().closeTimers();
+                            ApplicationData.getInstance().getIvc().setEmblems(true, true);
+                        });
+                    } else if (messageFromClient.equals(InfoViewController.RESIGN)) {
+                        GameStates.setGameOver(true);
+                        Platform.runLater(() -> {
+                            InfoViewController ivc = ApplicationData.getInstance().getIvc();
+                            ivc.showWinner(GameStates.iAmWhite());
+                            ivc.updateInfoText(GameStates.iAmWhite() ?
+                                    "Black resigned - White is victorious"
+                                    : "White resigned - Black is victorious");
+                            ivc.disableButtons();
+                        });
+                        new SoundPlayer().playGameEndSound();
                     } else {
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-R]?")) {
                             ApplicationData.getInstance().setIllegalMove(false);

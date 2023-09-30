@@ -4,6 +4,7 @@ import Exceptions.IllegalMoveException;
 import chessModel.Game;
 import com.example.controller.ClientController;
 import com.example.controller.GameStates;
+import com.example.controller.InfoViewController;
 import com.example.controller.LoginViewController;
 import javafx.application.Platform;
 import util.ApplicationData;
@@ -47,7 +48,7 @@ public class Client {
     public void sendMessageToServer(String messageToServer) {
         try {
             if (GameStates.isIsMyTurn()) {
-                if (!messageToServer.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?") && !messageToServer.startsWith("/t")) {
+                if (!messageToServer.matches("[0-9]{2}\\.[0-9]{2}[A-Q]?") && !messageToServer.startsWith("/")) {
                     Game.executeMove(messageToServer, !GameStates.isServerWhite());
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
@@ -88,11 +89,26 @@ public class Client {
                     } else if (messageFromServer.startsWith("/rdraw")) {
                         Platform.runLater(() -> {
                             Game.drawClaimable = true;
-                            //ApplicationData.getInstance().getIvc().getOfferDraw().fire();
                             ApplicationData.getInstance().getIvc().updateInfoText("Opponent offers a draw");
                         });
                     } else if (messageFromServer.startsWith("/adraw")) {
-                        Platform.runLater(() -> ApplicationData.getInstance().getIvc().getOfferDraw().fire());
+                        Platform.runLater(() -> {
+                            ApplicationData.getInstance().getIvc().updateInfoText("Game ends in a Draw");
+                            ApplicationData.getInstance().closeTimers();
+                            ApplicationData.getInstance().getIvc().setEmblems(true, true);
+                        });
+                    } else if (messageFromServer.equals(InfoViewController.RESIGN)) {
+                        GameStates.setGameOver(true);
+                        System.out.println("GAME OVER");
+                        Platform.runLater(() -> {
+                            InfoViewController ivc = ApplicationData.getInstance().getIvc();
+                            ivc.showWinner(GameStates.iAmWhite());
+                            ivc.updateInfoText(GameStates.iAmWhite() ?
+                                    "Black resigned - White is victorious"
+                                    : "White resigned - Black is victorious");
+                            ivc.disableButtons();
+                        });
+                        new SoundPlayer().playGameEndSound();
                     } else {
                         if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                             GameStates.setServerIswhite(messageFromServer.equals("true"));

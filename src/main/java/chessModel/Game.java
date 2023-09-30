@@ -1,10 +1,7 @@
 package chessModel;
 
 import Exceptions.IllegalMoveException;
-import com.example.controller.ClientController;
-import com.example.controller.GameStates;
-import com.example.controller.MovesTableController;
-import com.example.controller.ServerController;
+import com.example.controller.*;
 import javafx.application.Platform;
 import util.ApplicationData;
 import util.GameHelper;
@@ -297,6 +294,7 @@ public class Game {
     }
 
     public static void executeMove(String move, boolean white) {
+        InfoViewController.doubleClicked = false;
         System.out.println("Current Move:  " + move);
         ServerController.currentPositionNr++;
         ClientController.currentPositionNr++;
@@ -320,7 +318,7 @@ public class Game {
                 System.out.println("3-Fold repetition: One player can claim draw");
                 ApplicationData.getInstance().getIvc().updateInfoText("3-Fold repetition: One player can claim draw");
                 isDrawClaimable = true;
-                ApplicationData.getInstance().getIvc().getOfferDraw().fire();
+                // ApplicationData.getInstance().getIvc().getOfferDraw().fire();
             }
             if (kingChecked(!white) && checkMated(!white)) {
                 ApplicationData.getInstance().getIvc().updateInfoText("Game over! - " + (!white ? "Black won!" : "White won!"));
@@ -334,7 +332,7 @@ public class Game {
             }
             if (fiftyMoveRule >= 100) {
                 ApplicationData.getInstance().getIvc().updateInfoText("50 move rule applied: One player can claim draw!");
-                ApplicationData.getInstance().getIvc().getOfferDraw().fire();
+                //ApplicationData.getInstance().getIvc().getOfferDraw().fire();
                 isDrawClaimable = true;
                 System.out.println("50 move rule applied: One player can claim draw!");
                 drawClaimable = true;
