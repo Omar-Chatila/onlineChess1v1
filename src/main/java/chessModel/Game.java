@@ -292,6 +292,28 @@ public class Game {
         }
     }
 
+    private static boolean isInsufficientMaterial() {
+        List<String> pieces = GameHelper.boardToList(board);
+        int whiteKnights = 0;
+        int blackKnights = 0;
+        int whiteBishop = 0;
+        int blackBishop = 0;
+        for (String piece : pieces) {
+            if (piece.matches("[pPrRqQ]")) {
+                return false;
+            } else if (piece.equals("N")) {
+                whiteKnights++;
+            } else if (piece.equals("n")) {
+                blackKnights++;
+            } else if (piece.equals("B")) {
+                whiteBishop++;
+            } else if (piece.equals("b")) {
+                blackBishop++;
+            }
+        }
+        return !((blackKnights > 0) && whiteBishop > 0 || (whiteKnights > 0) && blackBishop > 0) && (whiteKnights < 2 && blackKnights < 2 || whiteBishop < 2 && blackBishop < 2);
+    }
+
     public static void executeMove(String move, boolean white) {
         drawClaimable = false;
         ApplicationData.getInstance().getIvc().clearDrawButtonStyle();
@@ -310,9 +332,15 @@ public class Game {
             print(movePieces(move, white));
             updateMovesTable(move, white);
             if (stalemated(!white)) {
-                System.out.println("Game over! - Draw by stalemate");
                 GameStates.setGameOver(true);
                 ApplicationData.getInstance().getIvc().updateInfoText("Game over! - Draw by stalemate");
+                ApplicationData.getInstance().getIvc().showWinner(white);
+                ApplicationData.getInstance().getIvc().showWinner(!white);
+                new SoundPlayer().playGameEndSound();
+            }
+            if (isInsufficientMaterial()) {
+                GameStates.setGameOver(true);
+                ApplicationData.getInstance().getIvc().updateInfoText("Game over! - Draw by insufficient material");
                 ApplicationData.getInstance().getIvc().showWinner(white);
                 ApplicationData.getInstance().getIvc().showWinner(!white);
                 new SoundPlayer().playGameEndSound();

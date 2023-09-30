@@ -71,6 +71,8 @@ public class PawnMoveTracker {
             if (rank == (white ? 4 : 3)) {
                 if (copy[rank + (white ? 2 : -2)][file].equals(white ? "P" : "p") && copy[rank + (white ? 1 : -1)][file].equals(".")) {
                     copy[rank + (white ? 2 : -2)][file] = ".";
+                } else {
+                    copy[rank + (white ? 1 : -1)][file] = ".";
                 }
             } else {
                 copy[rank + (white ? 1 : -1)][file] = ".";
