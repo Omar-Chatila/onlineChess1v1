@@ -293,6 +293,8 @@ public class Game {
     }
 
     public static void executeMove(String move, boolean white) {
+        drawClaimable = false;
+        ApplicationData.getInstance().getIvc().clearDrawButtonStyle();
         InfoViewController.doubleClicked = false;
         System.out.println("Current Move:  " + move);
         ServerController.currentPositionNr++;
@@ -309,15 +311,21 @@ public class Game {
             updateMovesTable(move, white);
             if (stalemated(!white)) {
                 System.out.println("Game over! - Draw by stalemate");
+                GameStates.setGameOver(true);
                 ApplicationData.getInstance().getIvc().updateInfoText("Game over! - Draw by stalemate");
                 ApplicationData.getInstance().getIvc().showWinner(white);
                 ApplicationData.getInstance().getIvc().showWinner(!white);
+                new SoundPlayer().playGameEndSound();
             }
             if (isThreefoldRepetition()) {
-                System.out.println("3-Fold repetition: One player can claim draw");
                 ApplicationData.getInstance().getIvc().updateInfoText("3-Fold repetition: One player can claim draw");
+                ApplicationData.getInstance().getIvc().highlightDrawButton();
                 drawClaimable = true;
-                // ApplicationData.getInstance().getIvc().getOfferDraw().fire();
+            }
+            if (fiftyMoveRule >= 100) {
+                ApplicationData.getInstance().getIvc().updateInfoText("50 move rule applied: One player can claim draw!");
+                ApplicationData.getInstance().getIvc().highlightDrawButton();
+                drawClaimable = true;
             }
             if (kingChecked(!white) && checkMated(!white)) {
                 ApplicationData.getInstance().getIvc().updateInfoText("Game over! - " + (!white ? "Black won!" : "White won!"));
@@ -329,16 +337,11 @@ public class Game {
             } else {
                 fiftyMoveRule++;
             }
-            if (fiftyMoveRule >= 100) {
-                ApplicationData.getInstance().getIvc().updateInfoText("50 move rule applied: One player can claim draw!");
-                //ApplicationData.getInstance().getIvc().getOfferDraw().fire();
-                System.out.println("50 move rule applied: One player can claim draw!");
-                drawClaimable = true;
-            }
             moveList.add(move);
             playedPositions.add(copyBoard(board));
             if (!GameStates.isGameOver()) {
-                ApplicationData.getInstance().getIvc().updateInfoText((white ? "White " : "Black ") + "played: " + move);
+                if (!drawClaimable)
+                    ApplicationData.getInstance().getIvc().updateInfoText((white ? "White " : "Black ") + "played: " + move);
             } else {
                 new SoundPlayer().playGameEndSound();
             }

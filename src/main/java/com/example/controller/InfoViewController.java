@@ -111,6 +111,8 @@ public class InfoViewController {
                 new SoundPlayer().playGameEndSound();
                 infoText.setText("Game ends in a Draw!");
                 setEmblems(true, true);
+                clearDrawButtonStyle();
+                disableButtons();
             } else {
                 highlightDrawButton();
                 sendMessage(REQUEST_DRAW);
@@ -121,6 +123,7 @@ public class InfoViewController {
     public void highlightDrawButton() {
         DropShadow dropShadow = new DropShadow();
         offerDraw.setEffect(dropShadow);
+        offerDraw.setStyle("-fx-background-color: #0d90dc");
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), offerDraw);
         scaleTransition.setToX(1.1);
         scaleTransition.setToY(1.1);
@@ -130,6 +133,13 @@ public class InfoViewController {
             scaleTransition.stop();
         }
         scaleTransition.play();
+    }
+
+    public void clearDrawButtonStyle() {
+        offerDraw.setStyle("");
+        offerDraw.setScaleX(1);
+        offerDraw.setScaleY(1);
+        offerDraw.setScaleZ(1);
     }
 
     private void setResignButton() {

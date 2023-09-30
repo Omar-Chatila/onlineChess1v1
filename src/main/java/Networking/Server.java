@@ -94,6 +94,7 @@ public class Server {
                             ivc.updateInfoText("Game ends in a Draw");
                             ivc.setEmblems(true, true);
                             ivc.disableButtons();
+                            ivc.clearDrawButtonStyle();
                             ApplicationData.getInstance().closeTimers();
                         });
                     } else if (messageFromClient.equals(InfoViewController.RESIGN)) {
