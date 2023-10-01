@@ -73,4 +73,9 @@ public class ChessClock {
         this.remainingTime += GameStates.getIncrement();
         updateTimeLabels();
     }
+
+    public void addTime() {
+        this.remainingTime += 15;
+        updateTimeLabels();
+    }
 }

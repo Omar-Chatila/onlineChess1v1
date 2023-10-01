@@ -17,32 +17,37 @@ import util.SoundPlayer;
 
 public class InfoViewController {
     public static boolean doubleClicked;
+
+    @FXML
+    private JFXButton addOppTime;
+    @FXML
+    private Label infoText;
     @FXML
     private Label myName;
+    @FXML
+    private HBox myTimeBox;
     @FXML
     private Label myTimeLabel;
     @FXML
     private JFXRadioButton myTurnIndicator;
     @FXML
+    private FontAwesomeIcon myWinEmblem;
+    @FXML
+    private JFXButton offerDraw;
+    @FXML
+    private FontAwesomeIcon oppPlus;
+    @FXML
     private Label oppTimeLabel;
     @FXML
     private JFXRadioButton oppTurnIndicator;
     @FXML
-    private Label infoText;
+    private FontAwesomeIcon oppWinEmblem;
     @FXML
     private Label opponentName;
-    @FXML
-    private HBox myTimeBox;
     @FXML
     private HBox opptimeBox;
     @FXML
     private JFXButton resignButton;
-    @FXML
-    private JFXButton offerDraw;
-    @FXML
-    private FontAwesomeIcon myWinEmblem;
-    @FXML
-    private FontAwesomeIcon oppWinEmblem;
     private boolean iamWhite;
 
     public static final String REQUEST_DRAW = "/rdraw";
@@ -61,6 +66,15 @@ public class InfoViewController {
     private void initialize() {
         setResignButton();
         setOfferDrawButton();
+        addOppTime.setOnAction(e -> {
+            if (GameStates.isServer()) {
+                ApplicationData.getInstance().getServerClock2().addTime();
+            } else {
+                ApplicationData.getInstance().getClientClock1().addTime();
+            }
+            sendMessage("/pt");
+        });
+
         myTurnIndicator.setDisable(true);
         oppTurnIndicator.setDisable(true);
         myTurnIndicator.setOpacity(1);
@@ -79,6 +93,8 @@ public class InfoViewController {
             myTimeLabel.getStyleClass().add("white-label");
             opptimeBox.setStyle("-fx-background-color: black");
             myTimeBox.setStyle("-fx-background-color: white");
+            oppPlus.setGlyphName("PLUS_SQUARE_ALT");
+            oppPlus.setFill(Color.WHITE);
             myWinEmblem.setFill(Color.BLACK);
             oppWinEmblem.setFill(Color.WHITE);
         } else {
@@ -87,6 +103,7 @@ public class InfoViewController {
             oppTurnIndicator.setSelected(true);
             myName.setText("Black Player");
             opponentName.setText("White Player");
+            oppPlus.setGlyphName("PLUS_SQUARE");
             infoText.setText("You play the black pieces! It's your opponents turn");
             oppTimeLabel.getStyleClass().add("white-label");
             myTimeLabel.getStyleClass().add("black-label");

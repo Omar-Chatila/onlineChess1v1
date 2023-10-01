@@ -110,6 +110,8 @@ public class Server {
                             ivc.disableButtons();
                         });
                         new SoundPlayer().playGameEndSound();
+                    } else if (messageFromClient.equals("/pt")) {
+                        serverClock.addTime();
                     } else {
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-R]?")) {
                             ApplicationData.getInstance().setIllegalMove(false);

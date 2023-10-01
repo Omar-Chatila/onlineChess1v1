@@ -115,6 +115,8 @@ public class Client {
                             ivc.disableButtons();
                         });
                         new SoundPlayer().playGameEndSound();
+                    } else if (messageFromServer.equals("/pt")) {
+                        clientClock.addTime();
                     } else {
                         if (messageFromServer.equals("true") || messageFromServer.equals("false")) {
                             GameStates.setServerIswhite(messageFromServer.equals("true"));

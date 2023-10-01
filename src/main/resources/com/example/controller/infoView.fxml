@@ -12,11 +12,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane prefHeight="307.0" prefWidth="175.0" stylesheets="@../../../css/infoview.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.InfoViewController">
     <children>
         <VBox prefHeight="308.0" prefWidth="175.0" style="-fx-background-color: white;">
             <children>
-                <HBox fx:id="opptimeBox" alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="175.0" spacing="60.0" style="-fx-background-color: transparent;">
+                <HBox fx:id="opptimeBox" alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="175.0" style="-fx-background-color: transparent;">
                     <children>
                         <Label fx:id="oppTimeLabel" prefHeight="29.0" prefWidth="53.0" text="05:00">
                             <HBox.margin>
@@ -26,7 +27,16 @@
                                 <Font size="23.0" />
                             </font>
                         </Label>
-                  <FontAwesomeIcon fx:id="oppWinEmblem" glyphName="TROPHY" size="30" visible="false" wrappingWidth="24.0" />
+                  <JFXButton fx:id="addOppTime" prefHeight="28.0" prefWidth="36.0" text=" ">
+                     <graphic>
+                        <FontAwesomeIcon fx:id="oppPlus" glyphName="PLUS_SQUARE" size="20" />
+                     </graphic>
+                  </JFXButton>
+                  <FontAwesomeIcon fx:id="oppWinEmblem" glyphName="TROPHY" size="30" visible="false" wrappingWidth="24.0">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
                     </children>
                 </HBox>
                 <VBox prefHeight="258.0" style="-fx-background-color: white;">
@@ -87,7 +97,7 @@
                         </HBox>
                     </children>
                 </VBox>
-                <HBox fx:id="myTimeBox" alignment="CENTER_LEFT" prefHeight="100.0" spacing="60.0" style="-fx-background-color: black;">
+                <HBox fx:id="myTimeBox" alignment="CENTER_LEFT" prefHeight="100.0" style="-fx-background-color: white;">
                     <children>
                         <Label fx:id="myTimeLabel" prefHeight="29.0" prefWidth="53.0" text="05:00">
                             <HBox.margin>
@@ -97,7 +107,11 @@
                                 <Font size="23.0" />
                             </font>
                         </Label>
-                        <FontAwesomeIcon fx:id="myWinEmblem" fill="WHITE" glyphName="TROPHY" size="30" visible="false" />
+                        <FontAwesomeIcon fx:id="myWinEmblem" fill="WHITE" glyphName="TROPHY" size="30" visible="false">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
                     </children>
                 </HBox>
             </children>

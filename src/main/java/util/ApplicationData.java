@@ -118,6 +118,22 @@ public class ApplicationData {
         this.clientClock2 = clientClock2;
     }
 
+    public ChessClock getServerClock1() {
+        return serverClock1;
+    }
+
+    public ChessClock getServerClock2() {
+        return serverClock2;
+    }
+
+    public ChessClock getClientClock1() {
+        return clientClock1;
+    }
+
+    public ChessClock getClientClock2() {
+        return clientClock2;
+    }
+
     public Theme getTheme() {
         return theme;
     }
