@@ -13,6 +13,10 @@
     -fx-border-color: #000000; /* Border color */
 }
 
+.jfx-combo-box-popup > .jfx-list-view {
+    -fx-background-color: transparent;
+}
+
 .clean-white-button:hover {
     -fx-background-color: #f0f0f0; /* Light gray background on hover */
 }

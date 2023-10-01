@@ -4,10 +4,13 @@ import chessModel.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Dialog;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
@@ -73,10 +76,17 @@ public class ChessboardController {
                         if (((Button) button).getGraphic() instanceof ImageView imv) {
                             String url = imv.getImage().getUrl().substring(imv.getImage().getUrl().lastIndexOf("/images"));
                             String themeUrl = url.replaceAll("standard/", theme.getPiecesPath());
+                            System.out.println(themeUrl);
                             Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(themeUrl)));
                             ImageView imageView = new ImageView(image);
-                            imageView.setFitWidth(50);
                             imageView.setFitHeight(50);
+                            imageView.setFitWidth(50);
+                            imageView.setScaleX(0.95);
+                            imageView.setScaleY(0.95);
+                            currentButton.setGraphic(imageView);
+                            currentButton.setContentDisplay(ContentDisplay.CENTER);
+                            currentButton.setAlignment(Pos.CENTER);
+                            currentButton.setPadding(new Insets(0, 0, 2, 0));
                             Pattern pattern = Pattern.compile("[wb][RQPKNB]");
                             Matcher matcher = pattern.matcher(themeUrl);
                             if (matcher.find()) {

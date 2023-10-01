@@ -19,7 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import themes.StandardTheme;
+import themes.SwagTheme;
 import themes.Theme;
 import util.ApplicationData;
 import util.StageMover;
@@ -76,7 +76,7 @@ public class LoginViewController {
         portField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) connectButton.fire();
         });
-        theme = new StandardTheme();
+        theme = new SwagTheme();
         ApplicationData.getInstance().setTheme(theme);
     }
 

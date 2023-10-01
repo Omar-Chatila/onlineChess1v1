@@ -27,7 +27,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <JFXComboBox fx:id="themeselector" focusColor="WHITE" prefHeight="25.0" prefWidth="131.0" promptText="Standard" styleClass="combo-box">
+                  <JFXComboBox fx:id="themeselector" focusColor="WHITE" prefHeight="25.0" prefWidth="131.0" promptText="Standard" styleClass="jfx-combo-box-popup">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
