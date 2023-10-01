@@ -24,7 +24,7 @@
     <left>
       <StackPane fx:id="stackpane" BorderPane.alignment="CENTER">
          <children>
-              <AnchorPane prefHeight="312.0" prefWidth="255.0" style="-fx-background-color: #1E3050;">
+              <AnchorPane fx:id="leftPane" prefHeight="312.0" prefWidth="255.0" style="-fx-background-color: #1E3050;">
                   <ImageView fitHeight="106.0" fitWidth="98.0" layoutX="79.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                           <Image url="@../../../images/chessicon.png" />

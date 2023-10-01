@@ -13,13 +13,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import themes.SwagTheme;
+import themes.StandardTheme;
 import themes.Theme;
 import util.ApplicationData;
 import util.StageMover;
@@ -30,6 +31,8 @@ import java.util.Arrays;
 
 public class LoginViewController {
 
+    @FXML
+    private AnchorPane leftPane;
     @FXML
     private Button blackPieceColor;
     @FXML
@@ -76,7 +79,7 @@ public class LoginViewController {
         portField.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER)) connectButton.fire();
         });
-        theme = new SwagTheme();
+        theme = new StandardTheme();
         ApplicationData.getInstance().setTheme(theme);
     }
 
@@ -304,6 +307,10 @@ public class LoginViewController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setLeftPane(String style) {
+        leftPane.setStyle(style);
     }
 
     public void switchPanes() {

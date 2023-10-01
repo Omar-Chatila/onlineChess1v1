@@ -58,4 +58,14 @@ public class SwagTheme extends Theme {
     public String getPiecesPath() {
         return "swag/";
     }
+
+    @Override
+    public String getLoginViewPaneStyle() {
+        return getBackGround();
+    }
+
+    @Override
+    public String getSettingsStyle() {
+        return getBackGround();
+    }
 }

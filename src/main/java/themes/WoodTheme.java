@@ -2,7 +2,7 @@ package themes;
 
 import java.util.Objects;
 
-public class LibraTheme extends Theme {
+public class WoodTheme extends Theme {
 
     public String getLightSquareStyle() {
         String imageUrl = Objects.requireNonNull(getClass().getResource("/images/libra/lightwood.png")).toExternalForm();
@@ -65,5 +65,17 @@ public class LibraTheme extends Theme {
     @Override
     public String getPiecesPath() {
         return "libra/";
+    }
+
+    @Override
+    public String getLoginViewPaneStyle() {
+        String imageUrl = Objects.requireNonNull(getClass().getResource("/images/libra/woodwp.jpg")).toExternalForm();
+        return "-fx-background-image: url('" + imageUrl + "'); " +
+                "-fx-background-size: cover;";
+    }
+
+    @Override
+    public String getSettingsStyle() {
+        return getBackGround();
     }
 }

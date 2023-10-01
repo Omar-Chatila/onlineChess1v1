@@ -1,0 +1,7 @@
+.anchor-pane-left {
+    -fx-background-image: url(lightwood.png);
+}
+
+.anchor-pane-right {
+    -fx-background-image: url(darkwood.png);
+}

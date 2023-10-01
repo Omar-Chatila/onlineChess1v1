@@ -22,4 +22,8 @@ public abstract class Theme {
     public abstract String getBackGround();
 
     public abstract String getPiecesPath();
+
+    public abstract String getLoginViewPaneStyle();
+
+    public abstract String getSettingsStyle();
 }

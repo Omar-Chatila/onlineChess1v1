@@ -55,4 +55,14 @@ public class StandardTheme extends Theme {
     public String getPiecesPath() {
         return "standard/";
     }
+
+    @Override
+    public String getLoginViewPaneStyle() {
+        return "-fx-background-color:  #1E3050;";
+    }
+
+    @Override
+    public String getSettingsStyle() {
+        return getLoginViewPaneStyle();
+    }
 }

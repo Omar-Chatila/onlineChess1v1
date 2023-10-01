@@ -17,6 +17,14 @@
     -fx-background-color: transparent;
 }
 
+.jfx-combo-box .list-cell {
+    -fx-border-radius: 0px;
+    -fx-pref-width: 110px;
+    -fx-pref-height: 31px;
+    -fx-max-height: 31px;
+    -fx-max-width: 110px;
+}
+
 .clean-white-button:hover {
     -fx-background-color: #f0f0f0; /* Light gray background on hover */
 }

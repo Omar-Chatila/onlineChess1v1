@@ -1,0 +1,32 @@
+.anchor-pane-left {
+    -fx-background-image: url(../images/libra/lightwood.png);
+}
+
+.anchor-pane-right {
+    -fx-background-image: url(../images/libra/darkwood.png);
+}
+
+.anchor-pane-left-swag {
+    -fx-background-radius: 0;
+    -fx-background-color: #F4F4F4;
+}
+
+.anchor-pane-right-swag {
+    -fx-background-radius: 0;
+    -fx-background-color: #333333A0;
+}
+
+.pane-left-standard {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #DEE3E6;
+    -fx-border-color: black;
+}
+
+.pane-right-standard {
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #8CA2AD;
+    -fx-border-color: black;
+}
