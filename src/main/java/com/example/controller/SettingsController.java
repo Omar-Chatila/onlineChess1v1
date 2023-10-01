@@ -2,10 +2,10 @@ package com.example.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXRadioButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import themes.StandardTheme;
@@ -13,35 +13,42 @@ import themes.SwagTheme;
 import themes.Theme;
 import themes.WoodTheme;
 import util.ApplicationData;
+import util.SoundPlayer;
 
 import java.io.IOException;
 
 public class SettingsController {
 
     @FXML
-    private VBox backgroundPane;
-    @FXML
-    private ToggleGroup animationstoggle;
-    @FXML
     private JFXButton backButton;
     @FXML
-    private ToggleGroup highlightToggle;
+    private VBox backgroundPane;
 
     @FXML
-    private ToggleGroup highlightToggle1;
-
+    private JFXRadioButton highlightOff;
     @FXML
-    private ToggleGroup soundToggle;
-
+    private JFXRadioButton highlightOn;
+    @FXML
+    private JFXRadioButton soundOff;
+    @FXML
+    private JFXRadioButton soundOn;
     @FXML
     private JFXComboBox<AnchorPane> themeselector;
     private Theme theme;
 
     @FXML
     private void initialize() throws IOException {
+        setCombobox();
+        soundOff.setOnAction(e -> SoundPlayer.muted = true);
+        soundOn.setOnAction(e -> SoundPlayer.muted = false);
+        highlightOff.setOnAction(e -> Theme.setNoHighlighting(true));
+        highlightOn.setOnAction(e -> Theme.setNoHighlighting(false));
+    }
+
+    private void setCombobox() throws IOException {
         themeselector.setStyle("-fx-background-color: transparent");
         backButton.setOnAction(e -> ApplicationData.getInstance().getLoginViewController().switchPanes());
-        themeselector.setCellFactory(param -> new ListCell<AnchorPane>() {
+        themeselector.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(AnchorPane item, boolean empty) {
                 super.updateItem(item, empty);

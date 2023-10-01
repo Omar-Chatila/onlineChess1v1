@@ -17,16 +17,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import themes.Theme;
 import util.ApplicationData;
+import util.SoundPlayer;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("CallToPrintStackTrace")
@@ -213,10 +211,7 @@ public class ClientController implements Initializable, Client.ClientCallback {
             newMessage.setVisible(visible);
             playScaleAnimation(newMessage);
             if (visible) {
-                String soundFile = Objects.requireNonNull(getClass().getResource("/sounds/notify.mp3")).toString();
-                Media sound = new Media(soundFile);
-                MediaPlayer mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.play();
+                new SoundPlayer().playNotificationSound();
             }
         }
     }

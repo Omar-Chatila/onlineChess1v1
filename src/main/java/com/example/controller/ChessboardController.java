@@ -282,7 +282,11 @@ public class ChessboardController {
                 IntIntPair c = new IntIntPair(Character.getNumericValue(coordinate.charAt(0)), Character.getNumericValue(coordinate.charAt(1)));
                 StackPane square = getPaneFromCoordinate(c);
                 Button b = (Button) square.getChildren().get(0);
-                Image highlight = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/transparent.png")));
+                String file = "transparent.png";
+                if (Theme.isNoHighlighting()) {
+                    file = "fullytransparent.png";
+                }
+                Image highlight = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + file)));
                 ImageView h = new ImageView(highlight);
                 h.setOpacity(0.7);
                 boolean found = false;

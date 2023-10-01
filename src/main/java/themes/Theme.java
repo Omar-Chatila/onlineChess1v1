@@ -1,6 +1,8 @@
 package themes;
 
 public abstract class Theme {
+    private static boolean noHighlighting;
+
     public abstract String getLightSquareStyle();
 
     public abstract String getDarkSquareStyle();
@@ -26,4 +28,12 @@ public abstract class Theme {
     public abstract String getLoginViewPaneStyle();
 
     public abstract String getSettingsStyle();
+
+    public static boolean isNoHighlighting() {
+        return noHighlighting;
+    }
+
+    public static void setNoHighlighting(boolean nhl) {
+        noHighlighting = nhl;
+    }
 }

@@ -20,25 +20,36 @@ public class SwagTheme extends Theme {
         return "-fx-background-radius: 0;" + "-fx-background-color: #888888A0;"; // Dark gray for past dark squares
     }
 
-
     @Override
     public String getLastMoveLight() {
         /* Green color */
+        if (isNoHighlighting()) {
+            return "-fx-background-color: transparent;";
+        }
         return "-fx-background-color: #d1f0d5;";
     }
 
     @Override
     public String getLastMoveDark() {
+        if (isNoHighlighting()) {
+            return "-fx-background-color: transparent;";
+        }
         return "-fx-background-color: derive(#d1f0d5, -20%);";
     }
 
     @Override
     public String getHoveredXStyle() {
+        if (isNoHighlighting()) {
+            return "-fx-background-color: transparent;";
+        }
         return "-fx-background-color: rgba(236,88,88,0.44);" + "-fx-background-radius: 0;";
     }
 
     @Override
     public String getHoveredStyle() {
+        if (isNoHighlighting()) {
+            return "-fx-background-color: transparent;";
+        }
         return "-fx-background-color: #87CEEB80;" + "-fx-background-radius: 0;";
     }
 

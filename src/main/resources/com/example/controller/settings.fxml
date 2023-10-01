@@ -42,12 +42,12 @@
                   </Label>
                   <Group>
                      <children>
-                        <JFXRadioButton layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
+                        <JFXRadioButton fx:id="soundOn" layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="soundToggle" />
                            </toggleGroup>
                         </JFXRadioButton>
-                        <JFXRadioButton layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$soundToggle" />
+                        <JFXRadioButton fx:id="soundOff" layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$soundToggle" />
                      </children>
                      <HBox.margin>
                         <Insets left="40.0" />
@@ -64,12 +64,12 @@
                   </Label>
                   <Group>
                      <children>
-                        <JFXRadioButton layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
+                        <JFXRadioButton fx:id="highlightOn" layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="highlightToggle" />
                            </toggleGroup>
                         </JFXRadioButton>
-                        <JFXRadioButton layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$highlightToggle" />
+                        <JFXRadioButton fx:id="highlightOff" layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$highlightToggle" />
                      </children>
                   </Group>
                </children>
