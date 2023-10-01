@@ -53,8 +53,8 @@ public class Client {
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                         clientClock.pauseClock();
-                        if (Game.moveList.size() > 1)
-                            serverClock.startTimer();
+                        if (Game.moveList.size() > 1) serverClock.startTimer();
+                        if (Game.moveList.size() > 2) clientClock.applyIncrement();
                         ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                     }
                 }
@@ -78,7 +78,8 @@ public class Client {
                 try {
                     String messageFromServer = bufferedReader.readLine();
                     if (messageFromServer.startsWith("/cl")) {
-                        GameStates.setTimeControl(Integer.parseInt(messageFromServer.substring(3)));
+                        GameStates.setTimeControl(Integer.parseInt(messageFromServer.substring(3, messageFromServer.indexOf(":"))));
+                        GameStates.setIncrement(Integer.parseInt(messageFromServer.substring(messageFromServer.indexOf(":") + 1)));
                         serverClock = new ChessClock(GameStates.getTimeControl(), false);
                         clientClock = new ChessClock(GameStates.getTimeControl(), true);
                         ApplicationData.getInstance().setClientClock1(serverClock);
@@ -125,6 +126,8 @@ public class Client {
                             if (!messageFromServer.matches("[0-9]{2}\\.[0-9]{2}[A-R]?")) {
                                 ApplicationData.getInstance().setIllegalMove(false);
                                 Game.executeMove(messageFromServer, GameStates.isServerWhite());
+                                if (Game.moveList.size() > 1)
+                                    serverClock.applyIncrement();
                                 if (!ApplicationData.getInstance().isIllegalMove()) {
                                     GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                                     serverClock.pauseClock();

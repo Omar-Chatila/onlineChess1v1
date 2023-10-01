@@ -51,8 +51,10 @@ public class Server {
                     if (!ApplicationData.getInstance().isIllegalMove()) {
                         GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                         serverClock.pauseClock();
-                        if (Game.moveList.size() > 1)
+                        if (Game.moveList.size() > 1) {
                             clientClock.startTimer();
+                            serverClock.applyIncrement();
+                        }
                         ApplicationData.getInstance().getIvc().toggleTurnIndicator();
                     }
                 }
@@ -74,7 +76,7 @@ public class Server {
                 if (!soundPlayed) {
                     soundPlayed = true;
                     new SoundPlayer().playGameStartSound();
-                    ApplicationData.getInstance().getServer().sendMessageToClient("/cl" + GameStates.getTimeControl());
+                    this.sendMessageToClient("/cl" + GameStates.getTimeControl() + ":" + GameStates.getIncrement());
                 }
                 try {
                     String messageFromClient = bufferedReader.readLine();
@@ -112,6 +114,8 @@ public class Server {
                         if (!messageFromClient.matches("[0-9]{2}\\.[0-9]{2}[A-R]?")) {
                             ApplicationData.getInstance().setIllegalMove(false);
                             Game.executeMove(messageFromClient, !GameStates.isServerWhite());
+                            if (Game.moveList.size() > 2)
+                                clientClock.applyIncrement();
                             if (!ApplicationData.getInstance().isIllegalMove()) {
                                 GameStates.setIsMyTurn(!GameStates.isIsMyTurn());
                                 if (Game.moveList.size() > 1)

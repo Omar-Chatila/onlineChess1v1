@@ -12,11 +12,13 @@ public class GameStates {
         return timeControl;
     }
 
+    private static Integer timeControl;
+    private static Integer increment = 0;
+
     public static void setTimeControl(Integer timeControl) {
         GameStates.timeControl = timeControl;
     }
 
-    private static Integer timeControl;
 
     public static boolean isGameOver() {
         return gameOver;
@@ -53,5 +55,13 @@ public class GameStates {
 
     public static void setIsMyTurn(boolean isMyTurn) {
         GameStates.isMyTurn = isMyTurn;
+    }
+
+    public static Integer getIncrement() {
+        return increment;
+    }
+
+    public static void setIncrement(Integer increment) {
+        GameStates.increment = increment;
     }
 }

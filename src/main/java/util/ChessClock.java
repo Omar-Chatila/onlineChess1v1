@@ -68,4 +68,9 @@ public class ChessClock {
     public void pauseClock() {
         this.timer.cancel();
     }
+
+    public void applyIncrement() {
+        this.remainingTime += GameStates.getIncrement();
+        updateTimeLabels();
+    }
 }

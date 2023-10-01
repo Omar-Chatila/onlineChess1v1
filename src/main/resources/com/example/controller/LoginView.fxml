@@ -62,9 +62,9 @@
     <right>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="321.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="ipField" accessibleText="IP" disable="true" layoutX="45.0" layoutY="84.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0" prefWidth="250.0" promptText="IP Address" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
-                <TextField fx:id="portField" accessibleText="Port" layoutX="45.0" layoutY="134.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0" prefWidth="250.0" promptText="Port Number" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
-                <HBox layoutX="65.0" layoutY="236.0" prefHeight="50.0" prefWidth="191.0" spacing="20.0">
+                <TextField fx:id="ipField" accessibleText="IP" disable="true" layoutX="45.0" layoutY="76.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0" prefWidth="250.0" promptText="IP Address" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
+                <TextField fx:id="portField" accessibleText="Port" layoutX="45.0" layoutY="115.0" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="27.0" prefWidth="250.0" promptText="Port Number" style="-fx-background-color: transparent; -fx-text-fill: #333333; -fx-border-color: #1E3050; -fx-border-width: 0 0 2 0;" />
+                <HBox layoutX="66.0" layoutY="254.0" prefHeight="50.0" prefWidth="191.0" spacing="20.0">
                     <children>
                         <Button fx:id="blackPieceColor" accessibleText="black" layoutX="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#blackPieces" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-padding: 6px 12px;">
                             <graphic>
@@ -95,14 +95,14 @@
                         </Button>
                     </children>
                 </HBox>
-                <VBox layoutX="21.0" layoutY="175.0" prefHeight="49.0" prefWidth="280.0">
+                <VBox layoutX="22.0" layoutY="165.0" prefHeight="49.0" prefWidth="280.0">
                     <children>
-                        <Label fx:id="tcLabel" layoutX="20.0" prefHeight="16.0" prefWidth="121.0" style="-fx-text-fill: #1E3050;" text="Time Control" textFill="#354253">
+                        <Label fx:id="tcLabel" layoutX="20.0" prefHeight="21.0" prefWidth="258.0" style="-fx-text-fill: #1E3050; -fx-alignment: center;" text="Time Control + Increment" textFill="#354253">
                             <font>
                                 <Font size="15.0" />
                             </font>
                             <VBox.margin>
-                                <Insets />
+                                <Insets top="3.0" />
                             </VBox.margin>
                         </Label>
                         <HBox layoutX="20.0" spacing="5.0">
@@ -119,9 +119,23 @@
                                 </Label>
                             </children>
                         </HBox>
+                  <HBox spacing="5.0">
+                     <children>
+                        <JFXSlider fx:id="incrementSlider" layoutX="20.0" prefHeight="14.0" prefWidth="225.0" stylesheets="@../../../css/button.css">
+                           <HBox.margin>
+                              <Insets top="8.0" />
+                           </HBox.margin>
+                        </JFXSlider>
+                        <Label fx:id="incrementLabel" layoutX="20.0" prefHeight="28.0" prefWidth="85.0" style="-fx-text-fill: #1E3050;" text="00:00" textFill="#354253">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                     </children>
                 </VBox>
-                <JFXRadioButton layoutX="83.0" layoutY="53.0" onAction="#serverToggle" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" selected="true" text="Create">
+                <JFXRadioButton layoutX="83.0" layoutY="46.0" onAction="#serverToggle" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" selected="true" text="Create">
                     <selectedColor>
                         <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044" />
                     </selectedColor>
@@ -132,7 +146,7 @@
                         <ToggleGroup fx:id="toggleGroup" />
                     </toggleGroup>
                 </JFXRadioButton>
-                <JFXRadioButton fx:id="clientRadioButton" layoutX="183.0" layoutY="53.0" onAction="#clientToggle" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" text="Join" toggleGroup="$toggleGroup">
+                <JFXRadioButton fx:id="clientRadioButton" layoutX="183.0" layoutY="46.0" onAction="#clientToggle" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" text="Join" toggleGroup="$toggleGroup">
                     <unSelectedColor>
                         <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044" />
                     </unSelectedColor>
@@ -140,8 +154,8 @@
                         <Color red="0.11764705926179886" green="0.1882352977991104" blue="0.3137255012989044" />
                     </selectedColor>
                 </JFXRadioButton>
-                <FontAwesomeIcon fill="#1e3050" glyphName="USER" layoutX="21.0" layoutY="108.0" size="20" />
-                <FontAwesomeIcon fill="#1e3050" glyphName="KEY" layoutX="21.0" layoutY="156.0" size="20" />
+                <FontAwesomeIcon fill="#1e3050" glyphName="USER" layoutX="21.0" layoutY="100.0" size="20" />
+                <FontAwesomeIcon fill="#1e3050" glyphName="KEY" layoutX="21.0" layoutY="137.0" size="20" />
                 <HBox layoutX="271.0" layoutY="-4.0" prefHeight="32.0" prefWidth="48.0">
                     <children>
                         <JFXButton maxWidth="0.0" onAction="#minimize" text=" ">

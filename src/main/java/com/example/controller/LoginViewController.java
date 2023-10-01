@@ -63,6 +63,10 @@ public class LoginViewController {
     private Hyperlink helpLink;
     @FXML
     private StackPane stackpane;
+    @FXML
+    private Label incrementLabel;
+    @FXML
+    private JFXSlider incrementSlider;
     private ScaleTransition scaleTransition;
     private Theme theme;
     private Node settingsMenu;
@@ -74,6 +78,7 @@ public class LoginViewController {
     private void initialize() {
         ApplicationData.getInstance().setLoginViewController(this);
         setTimeSlider();
+        setIncrementSlider();
         closeButton.setOnAction(e -> Platform.exit());
         helpLink.setBorder(Border.EMPTY);
         portField.setOnKeyPressed(e -> {
@@ -96,6 +101,24 @@ public class LoginViewController {
                     int tc = (int) Math.ceil(newValue.doubleValue());
                     GameStates.setTimeControl(tc * 60);
                     timeLabel.setText(tc + ":00");
+                });
+    }
+
+    private void setIncrementSlider() {
+        incrementLabel.setText("0 s");
+        incrementSlider.setMin(0);
+        incrementSlider.setMax(60);
+        incrementSlider.setValue(0);
+        incrementSlider.setBlockIncrement(1);
+        incrementSlider.valueProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    int tc = (int) Math.ceil(newValue.doubleValue());
+                    GameStates.setIncrement(tc);
+                    if (tc > 59) {
+                        incrementLabel.setText(tc / 60 + " min " + ((tc % 60 != 0) ? tc % 60 + "s" : ""));
+                    } else {
+                        incrementLabel.setText(tc + " s");
+                    }
                 });
     }
 
@@ -211,6 +234,8 @@ public class LoginViewController {
         this.timeLabel.setVisible(visible);
         this.timeSlider.setVisible(visible);
         this.tcLabel.setVisible(visible);
+        incrementSlider.setVisible(visible);
+        incrementLabel.setVisible(visible);
     }
 
     @FXML
