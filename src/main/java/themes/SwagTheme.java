@@ -1,5 +1,7 @@
 package themes;
 
+import java.util.Objects;
+
 public class SwagTheme extends Theme {
     public String getLightSquareStyle() {
         return "-fx-background-radius: 0;" + "-fx-background-color: #F4F4F4;";
@@ -10,15 +12,14 @@ public class SwagTheme extends Theme {
         return "-fx-background-radius: 0;" + "-fx-background-color: #333333A0;";
     }
 
-    @Override
     public String getLightPastStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #E3E9EC;";
+        return "-fx-background-radius: 0;" + "-fx-background-color: #D6D6D6;"; // Light gray for past light squares
     }
 
-    @Override
     public String getDarkPastStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #A9B4BD;";
+        return "-fx-background-radius: 0;" + "-fx-background-color: #888888A0;"; // Dark gray for past dark squares
     }
+
 
     @Override
     public String getLastMoveLight() {
@@ -48,7 +49,9 @@ public class SwagTheme extends Theme {
 
     @Override
     public String getBackGround() {
-        return "-fx-background-color: linear-gradient(to bottom, #00173C 0%, #00173C 50%, #FF6666 100%);";
+        String imageUrl = Objects.requireNonNull(getClass().getResource("/images/swag/wallpaper.jpg")).toExternalForm();
+        return "-fx-background-image: url('" + imageUrl + "'); " +
+                "-fx-background-size: cover;";
     }
 
     @Override

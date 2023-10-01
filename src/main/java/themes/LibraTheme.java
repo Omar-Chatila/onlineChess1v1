@@ -1,24 +1,34 @@
 package themes;
 
+import java.util.Objects;
+
 public class LibraTheme extends Theme {
 
     public String getLightSquareStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #D3A359;";
+        String imageUrl = Objects.requireNonNull(getClass().getResource("/images/libra/lightwood.png")).toExternalForm();
+        return "-fx-background-insets: 0; -fx-border-width: 0;" + "-fx-background-image: url('" + imageUrl + "'); " +
+                "-fx-background-size: cover;";
     }
 
     @Override
     public String getDarkSquareStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #85471E;";
+        String imageUrl = Objects.requireNonNull(getClass().getResource("/images/libra/darkwood.png")).toExternalForm();
+        return "-fx-background-insets: 0; -fx-border-width: 0;" + "-fx-background-image: url('" + imageUrl + "'); " +
+                "-fx-background-size: cover;";
     }
 
     @Override
     public String getLightPastStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #E3E9EC;";
+        String imageUrl = Objects.requireNonNull(getClass().getResource("/images/libra/lightwood.png")).toExternalForm();
+        return "-fx-background-insets: 0; -fx-border-width: 0;" + "-fx-background-image: url('" + imageUrl + "'); " +
+                "-fx-background-size: cover; -fx-background-color: rgba(255, 255, 255, 0.7);";
     }
 
     @Override
     public String getDarkPastStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #A9B4BD;";
+        String imageUrl = Objects.requireNonNull(getClass().getResource("/images/libra/darkwood.png")).toExternalForm();
+        return "-fx-background-insets: 0; -fx-border-width: 0;" + "-fx-background-image: url('" + imageUrl + "'); " +
+                "-fx-background-size: cover; -fx-background-color: rgba(255, 255, 255, 0.7);";
     }
 
     @Override

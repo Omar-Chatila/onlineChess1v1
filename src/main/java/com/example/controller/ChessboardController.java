@@ -24,6 +24,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import themes.SwagTheme;
 import themes.Theme;
 import util.ApplicationData;
 import util.IntIntPair;
@@ -74,29 +75,33 @@ public class ChessboardController {
                     if (button instanceof Button currentButton) {
                         setButtonListeners(currentButton);
                         if (((Button) button).getGraphic() instanceof ImageView imv) {
-                            String url = imv.getImage().getUrl().substring(imv.getImage().getUrl().lastIndexOf("/images"));
-                            String themeUrl = url.replaceAll("standard/", theme.getPiecesPath());
-                            System.out.println(themeUrl);
-                            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(themeUrl)));
-                            ImageView imageView = new ImageView(image);
-                            imageView.setFitHeight(50);
-                            imageView.setFitWidth(50);
-                            imageView.setScaleX(0.95);
-                            imageView.setScaleY(0.95);
-                            currentButton.setGraphic(imageView);
-                            currentButton.setContentDisplay(ContentDisplay.CENTER);
-                            currentButton.setAlignment(Pos.CENTER);
-                            currentButton.setPadding(new Insets(0, 0, 2, 0));
-                            Pattern pattern = Pattern.compile("[wb][RQPKNB]");
-                            Matcher matcher = pattern.matcher(themeUrl);
-                            if (matcher.find()) {
-                                button.setId(matcher.group());
-                            }
-                            System.out.println(button.getId());
+                            applyPieceTheme(imv, currentButton);
                         }
                     }
                 }
             }
+        }
+    }
+
+    private void applyPieceTheme(ImageView imv, Button currentButton) {
+        String url = imv.getImage().getUrl().substring(imv.getImage().getUrl().lastIndexOf("/images"));
+        String themeUrl = url.replaceAll("standard/", theme.getPiecesPath());
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(themeUrl)));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+        if (theme instanceof SwagTheme) {
+            imageView.setScaleX(0.95);
+            imageView.setScaleY(0.95);
+        }
+        currentButton.setGraphic(imageView);
+        currentButton.setContentDisplay(ContentDisplay.CENTER);
+        currentButton.setAlignment(Pos.CENTER);
+        currentButton.setPadding(new Insets(0, 0, 2, 0));
+        Pattern pattern = Pattern.compile("[wb][RQPKNB]");
+        Matcher matcher = pattern.matcher(themeUrl);
+        if (matcher.find()) {
+            currentButton.setId(matcher.group());
         }
     }
 

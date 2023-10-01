@@ -2,22 +2,22 @@ package themes;
 
 public class StandardTheme extends Theme {
     public String getLightSquareStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #DEE3E6;";
+        return "-fx-background-insets: 0; -fx-border-width: 0;" + "-fx-background-radius: 0;" + "-fx-background-color: #DEE3E6;";
     }
 
     @Override
     public String getDarkSquareStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #8CA2AD;";
+        return "-fx-background-insets: 0; -fx-border-width: 0;" + "-fx-background-radius: 0;" + "-fx-background-color: #8CA2AD;";
     }
 
     @Override
     public String getLightPastStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #E3E9EC;";
+        return "-fx-background-insets: 0; -fx-border-width: 0;" + "-fx-background-radius: 0;" + "-fx-background-color: #E3E9EC;";
     }
 
     @Override
     public String getDarkPastStyle() {
-        return "-fx-background-radius: 0;" + "-fx-background-color: #A9B4BD;";
+        return "-fx-background-insets: 0; -fx-border-width: 0;" + "-fx-background-radius: 0;" + "-fx-background-color: #A9B4BD;";
     }
 
     @Override
