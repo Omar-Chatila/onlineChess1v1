@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 
 <AnchorPane prefHeight="312.0" prefWidth="255.0" style="-fx-background-color: #1E3050;" stylesheets="@../../../css/settings.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.SettingsController">
    <children>
@@ -46,8 +47,14 @@
                            <toggleGroup>
                               <ToggleGroup fx:id="soundToggle" />
                            </toggleGroup>
+                           <unSelectedColor>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </unSelectedColor>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="soundOff" layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$soundToggle" />
+                        <JFXRadioButton fx:id="soundOff" layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$soundToggle">
+                           <unSelectedColor>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </unSelectedColor></JFXRadioButton>
                      </children>
                      <HBox.margin>
                         <Insets left="40.0" />
@@ -68,8 +75,14 @@
                            <toggleGroup>
                               <ToggleGroup fx:id="highlightToggle" />
                            </toggleGroup>
+                           <unSelectedColor>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </unSelectedColor>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="highlightOff" layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$highlightToggle" />
+                        <JFXRadioButton fx:id="highlightOff" layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$highlightToggle">
+                           <unSelectedColor>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </unSelectedColor></JFXRadioButton>
                      </children>
                   </Group>
                </children>
@@ -87,11 +100,17 @@
                            <toggleGroup>
                               <ToggleGroup fx:id="animationstoggle" />
                            </toggleGroup>
+                           <unSelectedColor>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </unSelectedColor>
                         </JFXRadioButton>
                         <JFXRadioButton layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE">
                            <toggleGroup>
                               <ToggleGroup fx:id="highlightToggle1" />
                            </toggleGroup>
+                           <unSelectedColor>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </unSelectedColor>
                         </JFXRadioButton>
                      </children>
                   </Group>

@@ -23,7 +23,6 @@ public class SettingsController {
     private JFXButton backButton;
     @FXML
     private VBox backgroundPane;
-
     @FXML
     private JFXRadioButton highlightOff;
     @FXML

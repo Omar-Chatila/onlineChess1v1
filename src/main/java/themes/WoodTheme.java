@@ -70,7 +70,9 @@ public class WoodTheme extends Theme {
 
     @Override
     public String getBackGround() {
-        return "-fx-background-color: linear-gradient(to bottom, #171513FF, #171513E0); -fx-background-size: cover;";
+        String imageUrl = Objects.requireNonNull(getClass().getResource("/images/libra/landscape.jpg")).toExternalForm();
+        return "-fx-background-image: url('" + imageUrl + "'); " +
+                "-fx-background-size: cover;";
     }
 
     @Override
@@ -87,6 +89,6 @@ public class WoodTheme extends Theme {
 
     @Override
     public String getSettingsStyle() {
-        return getBackGround();
+        return getLoginViewPaneStyle();
     }
 }
