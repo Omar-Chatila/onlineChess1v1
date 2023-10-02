@@ -619,6 +619,7 @@ public class ChessboardController {
     private void playTransition(StackPane startPane, StackPane endPane, Button button) {
         button.toFront();
         button.setTranslateZ(10);
+        endPane.toFront();
         TranslateTransition transition = new TranslateTransition(Duration.seconds(1), button);
         // Define the source and target positions
         transition.setFromX(startPane.getBoundsInParent().getMinX() - endPane.getBoundsInParent().getMinX());
