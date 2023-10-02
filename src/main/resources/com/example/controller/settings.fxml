@@ -96,18 +96,15 @@
                   </Label>
                   <Group>
                      <children>
-                        <JFXRadioButton layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="animationstoggle" />
-                           </toggleGroup>
+                        <JFXRadioButton fx:id="animationsOn" layoutX="12.0" layoutY="12.0" selected="true" text="On" textFill="WHITE">
                            <unSelectedColor>
                               <Color red="1.0" green="1.0" blue="1.0" />
                            </unSelectedColor>
-                        </JFXRadioButton>
-                        <JFXRadioButton layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE">
                            <toggleGroup>
-                              <ToggleGroup fx:id="highlightToggle1" />
+                              <ToggleGroup fx:id="animationstoggle" />
                            </toggleGroup>
+                        </JFXRadioButton>
+                        <JFXRadioButton fx:id="animationsOff" layoutX="65.0" layoutY="12.0" text="Off" textFill="WHITE" toggleGroup="$animationstoggle">
                            <unSelectedColor>
                               <Color red="1.0" green="1.0" blue="1.0" />
                            </unSelectedColor>

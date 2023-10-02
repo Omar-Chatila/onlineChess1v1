@@ -63,6 +63,7 @@ public class ChessboardController {
     private StackPane lastEnd;
     private Theme theme;
     private List<String> possibleSquares;
+    public static boolean animations = true;
 
     @FXML
     private void initialize() {
@@ -639,22 +640,21 @@ public class ChessboardController {
     }
 
     private void playTransition(StackPane startPane, StackPane endPane, Button button) {
-        button.toFront();
-        endPane.toFront();
-        double deltaX = startPane.getBoundsInParent().getMinX() - endPane.getBoundsInParent().getMinX();
-        double deltaY = startPane.getBoundsInParent().getMinY() - endPane.getBoundsInParent().getMinY();
-        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        final int pixelsPerSecond = 450;
-        double duration = distance / pixelsPerSecond;
-        System.out.println("DISTANCE   " + distance);
-        System.out.println("DURATION   " + duration);
-        System.out.println("VELOCITY   " + distance / duration);
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(duration), button);
-        transition.setFromX(deltaX);
-        transition.setFromY(deltaY);
-        transition.setToX(0);
-        transition.setToY(0);
-        transition.play();
+        if (animations) {
+            button.toFront();
+            endPane.toFront();
+            double deltaX = startPane.getBoundsInParent().getMinX() - endPane.getBoundsInParent().getMinX();
+            double deltaY = startPane.getBoundsInParent().getMinY() - endPane.getBoundsInParent().getMinY();
+            double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            final int pixelsPerSecond = 450;
+            double duration = distance / pixelsPerSecond;
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(duration), button);
+            transition.setFromX(deltaX);
+            transition.setFromY(deltaY);
+            transition.setToX(0);
+            transition.setToY(0);
+            transition.play();
+        }
     }
 
     private boolean isLegalDragDrop() {

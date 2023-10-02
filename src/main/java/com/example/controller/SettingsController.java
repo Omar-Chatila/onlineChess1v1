@@ -33,6 +33,10 @@ public class SettingsController {
     private JFXRadioButton soundOn;
     @FXML
     private JFXComboBox<AnchorPane> themeselector;
+    @FXML
+    private JFXRadioButton animationsOff;
+    @FXML
+    private JFXRadioButton animationsOn;
     private Theme theme;
 
     @FXML
@@ -42,6 +46,8 @@ public class SettingsController {
         soundOn.setOnAction(e -> SoundPlayer.muted = false);
         highlightOff.setOnAction(e -> Theme.setNoHighlighting(true));
         highlightOn.setOnAction(e -> Theme.setNoHighlighting(false));
+        animationsOn.setOnAction(e -> ChessboardController.animations = true);
+        animationsOff.setOnAction(e -> ChessboardController.animations = false);
     }
 
     private void setCombobox() throws IOException {
