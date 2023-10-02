@@ -261,7 +261,7 @@ public class ClientController implements Initializable, Client.ClientCallback {
         chessBoardPane.toBack();
         chessBoardPane.setVisible(false);
         gameStates.toFront();
-        if (currentPositionNr < Game.moveList.size()) {
+        if (currentPositionNr < Game.moveList.size() - 1) {
             ApplicationData.getInstance().getGameStatesController().initBoard(++currentPositionNr);
         } else {
             chessBoardPane.toFront();

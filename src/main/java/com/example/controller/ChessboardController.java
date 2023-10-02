@@ -131,7 +131,7 @@ public class ChessboardController {
             }
         });
         currentButton.setOnDragEntered(event -> {
-            if (GameStates.isIsMyTurn() && isMyPiece()) {
+            if (GameStates.isIsMyTurn() && isMyPiece() && this.myTurn) {
                 Button hovered = (Button) event.getSource();
                 String coordinate = Objects.requireNonNullElse(GridPane.getRowIndex(hovered.getParent()), 0) + "" +
                         Objects.requireNonNullElse(GridPane.getColumnIndex(hovered.getParent()), 0);
@@ -147,7 +147,7 @@ public class ChessboardController {
             }
         });
         currentButton.setOnDragExited(event -> {
-            if (GameStates.isIsMyTurn() && isMyPiece()) {
+            if (GameStates.isIsMyTurn() && isMyPiece() && myTurn) {
                 Button exited = (Button) event.getSource();
                 if (exited == lastHoveredButton)
                     exited.setStyle(this.hoveredButtonStyle);
@@ -198,7 +198,7 @@ public class ChessboardController {
 
     private void setOnDragDropped(Button currentButton, DragEvent event) {
         clearHighlighting();
-        if (!GameStates.isIsMyTurn() || selectedPiece == null || !isMyPiece()) {
+        if (!GameStates.isIsMyTurn() || selectedPiece == null || !isMyPiece() && !myTurn) {
             return;
         }
         StackPane cell = (StackPane) currentButton.getParent();
@@ -637,7 +637,7 @@ public class ChessboardController {
     }
 
     private void handleButtonClick(ActionEvent event, Button currentButton) {
-        if (!GameStates.isGameOver()) {
+        if (!GameStates.isGameOver() && myTurn) {
             clearHighlighting();
             Node button = (Node) event.getSource();
             StackPane square = (StackPane) button.getParent();
