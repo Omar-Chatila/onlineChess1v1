@@ -223,7 +223,7 @@ public class ChessboardController {
             return;
         }
         handleMoveTransmission(destinationSquare);
-        applyMoveToBoardAndUI(cell);
+        applyMoveToBoardAndUI(cell, false);
         selectedPiece = null;
         event.setDropCompleted(true);
     }
@@ -374,6 +374,7 @@ public class ChessboardController {
         this.lastEnd = endCell;
         boolean enpassant = Game.moveList.get(Game.moveList.size() - 1).contains("x") && endCell.getChildren().size() == 1;
         Button movingPiece = (Button) startCell.getChildren().remove(1);
+        playTransition(startCell, endCell, movingPiece);
         if (opponentMove.matches("[0-9]{2}\\.[0-9]{2}[A-R]")) {
             String piece = (GameStates.iAmWhite() ? "b" : "w") + opponentMove.charAt(opponentMove.length() - 1);
             System.out.println(piece);
@@ -529,7 +530,7 @@ public class ChessboardController {
         }
     }
 
-    private void applyMoveToBoardAndUI(StackPane cell) {
+    private void applyMoveToBoardAndUI(StackPane cell, boolean animation) {
         if (!ApplicationData.getInstance().isIllegalMove() && !move.equals("O-O") && !move.equals("O-O-O")) {
             boolean enpassant = move.contains("x") && cell.getChildren().size() == 1;
             if (cell.getChildren().size() == 2) {
@@ -544,12 +545,18 @@ public class ChessboardController {
                     case "B" -> piece = (GameStates.iAmWhite()) ? "wB" : "bB";
                 }
                 setPromotedPiece(piece, selectedPiece);
-                ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                StackPane start = ((StackPane) selectedPiece.getParent());
+                start.getChildren().remove(selectedPiece);
                 cell.getChildren().add(selectedPiece);
                 setButtonListeners(selectedPiece);
+                if (animation) {
+                    playTransition(start, cell, selectedPiece);
+                }
             } else {
                 StackPane startPane = ((StackPane) selectedPiece.getParent());
-                playTransition(startPane, cell, selectedPiece);
+                if (animation) {
+                    playTransition(startPane, cell, selectedPiece);
+                }
                 startPane.getChildren().remove(selectedPiece);
                 if (enpassant) {
                     StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(cell) + 1, Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0)));
@@ -561,6 +568,7 @@ public class ChessboardController {
             if (GameStates.isServerWhite() && GameStates.isServer() || !GameStates.isServerWhite() && !GameStates.isServer()) {
                 StackPane kingSquare;
                 StackPane rookSquare;
+                StackPane kingStart, rookStart;
                 if (move.equals("O-O")) {
                     kingSquare = getPaneFromCoordinate(new IntIntPair(7, 6));
                     rookSquare = getPaneFromCoordinate(new IntIntPair(7, 5));
@@ -568,13 +576,19 @@ public class ChessboardController {
                     kingSquare = getPaneFromCoordinate(new IntIntPair(7, 2));
                     rookSquare = getPaneFromCoordinate(new IntIntPair(7, 3));
                 }
-                Button kingButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 4)).getChildren().get(1);
-                Button rookButton = (Button) getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 7 : 0)).getChildren().get(1);
+                kingStart = getPaneFromCoordinate(new IntIntPair(7, 4));
+                rookStart = getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 7 : 0));
+
+                Button kingButton = (Button) kingStart.getChildren().get(1);
+                Button rookButton = (Button) rookStart.getChildren().get(1);
                 kingSquare.getChildren().add(kingButton);
                 rookSquare.getChildren().add(rookButton);
-                StackPane startPane = getPaneFromCoordinate(new IntIntPair(7, 4));
-                if (startPane.getChildren().size() > 1) {
-                    startPane.getChildren().remove(1);
+                if (animation) {
+                    playTransition(kingStart, kingSquare, kingButton);
+                    playTransition(rookStart, rookSquare, rookButton);
+                }
+                if (kingStart.getChildren().size() > 1) {
+                    kingStart.getChildren().remove(1);
                 }
                 StackPane endPane = getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 7 : 0));
                 if (endPane.getChildren().size() > 1) {
@@ -590,8 +604,16 @@ public class ChessboardController {
                     kingSquare = getPaneFromCoordinate(new IntIntPair(7, 5));
                     rookSquare = getPaneFromCoordinate(new IntIntPair(7, 4));
                 }
-                Button kingButton = (Button) getPaneFromCoordinate(new IntIntPair(7, 3)).getChildren().get(1);
-                Button rookButton = (Button) getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 0 : 7)).getChildren().get(1);
+
+                StackPane kingStart = getPaneFromCoordinate(new IntIntPair(7, 3));
+                StackPane rookStart = getPaneFromCoordinate(new IntIntPair(7, move.equals("O-O") ? 0 : 7));
+                Button kingButton = (Button) kingStart.getChildren().get(1);
+                Button rookButton = (Button) rookStart.getChildren().get(1);
+                if (animation) {
+                    playTransition(kingStart, kingSquare, kingButton);
+                    playTransition(rookStart, rookSquare, rookButton);
+                }
+
                 kingSquare.getChildren().add(kingButton);
                 rookSquare.getChildren().add(rookButton);
                 StackPane startPane = getPaneFromCoordinate(new IntIntPair(7, 3));
@@ -620,16 +642,13 @@ public class ChessboardController {
         button.toFront();
         button.setTranslateZ(10);
         endPane.toFront();
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(1), button);
-        // Define the source and target positions
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), button);
         transition.setFromX(startPane.getBoundsInParent().getMinX() - endPane.getBoundsInParent().getMinX());
         transition.setFromY(startPane.getBoundsInParent().getMinY() - endPane.getBoundsInParent().getMinY());
         transition.setToX(0);
         transition.setToY(0);
         transition.setToZ(10);
-        // Move the button to the target pane with animation
         transition.play();
-
     }
 
     private boolean isLegalDragDrop() {
@@ -685,7 +704,7 @@ public class ChessboardController {
                     if (ApplicationData.getInstance().isIllegalMove()) return;
                     if (move.equals("wrong")) return;
                     handleMoveTransmission(destinationSquare);
-                    applyMoveToBoardAndUI(square);
+                    applyMoveToBoardAndUI(square, true);
                     clearHighlighting();
                     selectedPiece = null;
                 }
