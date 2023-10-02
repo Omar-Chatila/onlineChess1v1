@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import chessModel.*;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import themes.SwagTheme;
 import themes.Theme;
 import util.ApplicationData;
@@ -546,7 +548,9 @@ public class ChessboardController {
                 cell.getChildren().add(selectedPiece);
                 setButtonListeners(selectedPiece);
             } else {
-                ((StackPane) selectedPiece.getParent()).getChildren().remove(selectedPiece);
+                StackPane startPane = ((StackPane) selectedPiece.getParent());
+                playTransition(startPane, cell, selectedPiece);
+                startPane.getChildren().remove(selectedPiece);
                 if (enpassant) {
                     StackPane removablePawn = getPaneFromCoordinate(new IntIntPair(GridPane.getRowIndex(cell) + 1, Objects.requireNonNullElse(GridPane.getColumnIndex(cell), 0)));
                     removablePawn.getChildren().remove(1);
@@ -612,6 +616,21 @@ public class ChessboardController {
         selectedPiece.setId(piece);
     }
 
+    private void playTransition(StackPane startPane, StackPane endPane, Button button) {
+        button.toFront();
+        button.setTranslateZ(10);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(1), button);
+        // Define the source and target positions
+        transition.setFromX(startPane.getBoundsInParent().getMinX() - endPane.getBoundsInParent().getMinX());
+        transition.setFromY(startPane.getBoundsInParent().getMinY() - endPane.getBoundsInParent().getMinY());
+        transition.setToX(0);
+        transition.setToY(0);
+        transition.setToZ(10);
+        // Move the button to the target pane with animation
+        transition.play();
+
+    }
+
     private boolean isLegalDragDrop() {
         return !ApplicationData.getInstance().isIllegalMove() && this.destinationsSquare != null && !this.destinationsSquare.equals(this.startingSquare) && !move.equals("wrong");
     }
@@ -637,8 +656,8 @@ public class ChessboardController {
     }
 
     private void handleButtonClick(ActionEvent event, Button currentButton) {
+        clearHighlighting();
         if (!GameStates.isGameOver() && myTurn) {
-            clearHighlighting();
             Node button = (Node) event.getSource();
             StackPane square = (StackPane) button.getParent();
             int rank = Objects.requireNonNullElse(GridPane.getRowIndex(square), 0);
@@ -666,6 +685,7 @@ public class ChessboardController {
                     if (move.equals("wrong")) return;
                     handleMoveTransmission(destinationSquare);
                     applyMoveToBoardAndUI(square);
+                    clearHighlighting();
                     selectedPiece = null;
                 }
                 updateCheckStatus();
