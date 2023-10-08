@@ -3,6 +3,7 @@ package com.example.controller;
 import chessModel.*;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -133,32 +134,38 @@ public class ChessboardController {
                 event.acceptTransferModes(TransferMode.MOVE);
             }
         });
-        currentButton.setOnDragEntered(event -> {
-            if (GameStates.isIsMyTurn() && isMyPiece() && this.myTurn) {
-                Button hovered = (Button) event.getSource();
-                String coordinate = Objects.requireNonNullElse(GridPane.getRowIndex(hovered.getParent()), 0) + "" +
-                        Objects.requireNonNullElse(GridPane.getColumnIndex(hovered.getParent()), 0);
-                if (this.possibleSquares.contains(coordinate)) {
-                    hoveredButtonStyle = hovered.getParent().getStyle();
-                    if (hovered.getParent().getChildrenUnmodifiable().size() > 1) {
-                        hovered.setStyle(theme.getHoveredXStyle());
-                    } else {
-                        hovered.setStyle(theme.getHoveredStyle());
-                    }
-                    lastHoveredButton = hovered;
-                }
-            }
-        });
-        currentButton.setOnDragExited(event -> {
-            if (GameStates.isIsMyTurn() && isMyPiece() && myTurn) {
-                Button exited = (Button) event.getSource();
-                if (exited == lastHoveredButton)
-                    exited.setStyle(this.hoveredButtonStyle);
-            }
-        });
+        currentButton.setOnDragEntered(this::highlightMouseEntered);
+        currentButton.setOnDragExited(this::highlightMouseExited);
+        currentButton.setOnMouseEntered(this::highlightMouseEntered);
+        currentButton.setOnMouseExited(this::highlightMouseExited);
         currentButton.setOnDragDropped(event -> setOnDragDropped(currentButton, event));
         currentButton.setOnDragDone(this::handleDragDone);
         currentButton.setOnAction(event -> handleButtonClick(event, currentButton));
+    }
+
+    private void highlightMouseEntered(Event event) {
+        if (GameStates.isIsMyTurn() && isMyPiece() && this.myTurn) {
+            Button hovered = (Button) event.getSource();
+            String coordinate = Objects.requireNonNullElse(GridPane.getRowIndex(hovered.getParent()), 0) + "" +
+                    Objects.requireNonNullElse(GridPane.getColumnIndex(hovered.getParent()), 0);
+            if (this.possibleSquares.contains(coordinate)) {
+                hoveredButtonStyle = hovered.getParent().getStyle();
+                if (hovered.getParent().getChildrenUnmodifiable().size() > 1) {
+                    hovered.setStyle(theme.getHoveredXStyle());
+                } else {
+                    hovered.setStyle(theme.getHoveredStyle());
+                }
+                lastHoveredButton = hovered;
+            }
+        }
+    }
+
+    private void highlightMouseExited(Event event) {
+        if (GameStates.isIsMyTurn() && isMyPiece() && myTurn) {
+            Button exited = (Button) event.getSource();
+            if (exited == lastHoveredButton)
+                exited.setStyle(this.hoveredButtonStyle);
+        }
     }
 
     private void initMove(Button currentButton) {
@@ -662,13 +669,16 @@ public class ChessboardController {
     }
 
     private boolean isMyPiece() {
-        int rank = GameStates.iAmWhite() ? startingSquare.row() : 7 - startingSquare.row();
-        int file = GameStates.iAmWhite() ? startingSquare.column() : 7 - startingSquare.column();
-        if (GameStates.iAmWhite()) {
-            return Game.board[rank][file].matches("[BQRKNP]");
-        } else {
-            return Game.board[rank][file].matches("[bqrknp]");
+        if (startingSquare != null) {
+            int rank = GameStates.iAmWhite() ? startingSquare.row() : 7 - startingSquare.row();
+            int file = GameStates.iAmWhite() ? startingSquare.column() : 7 - startingSquare.column();
+            if (GameStates.iAmWhite()) {
+                return Game.board[rank][file].matches("[BQRKNP]");
+            } else {
+                return Game.board[rank][file].matches("[bqrknp]");
+            }
         }
+        return false;
     }
 
     private void handleDragDone(DragEvent event) {
